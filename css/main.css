@@ -1,21 +1,7 @@
 .masthead {
     background-color: #222222;
     color: white;
-}
-
-.masthead h1 {
-    line-height: 1;
-    letter-spacing: -2px;
     text-align: center;
-}
-
-.masthead h1 .k {
-    text-align: center;
-}
-
-.masthead h1 span{
-    text-align: center;
-    color: #0088cc;
 }
 
 .masthead span {
@@ -82,16 +68,8 @@
 }
 
 .masthead {
-    padding: 70px 0 40px 0;
+    padding: 70px 0 0 0;
     margin-bottom: 30px;
-}
-
-.masthead h1 {
-    font-size: 100px;
-}
-
-.masthead h1 .k {
-    font-size: 100px;
 }
 
 .masthead h1 span{
@@ -180,16 +158,8 @@
 }
 
 .masthead {
-    padding: 20px 0 15px 0;
+    padding: 20px 0 0 0;
     margin-bottom: 20px;
-}
-
-.masthead h1 {
-    font-size: 80px;
-}
-
-.masthead h1 .k {
-    font-size: 70px;
 }
 
 .masthead h1 span{
@@ -272,14 +242,6 @@ body {
     margin-bottom: 20px;
 }
 
-.masthead h1 {
-    font-size: 50px;
-}
-
-.masthead h1 .k {
-    font-size: 50px;
-}
-
 .masthead h1 span{
     font-size: 18px;
 }
@@ -353,14 +315,6 @@ body {
 .masthead {
     padding: 30px 0 0px 0;
     margin-bottom: 20px;
-}
-
-.masthead h1 {
-    font-size: 38px;
-}
-
-.masthead h1 .k {
-    font-size: 38px;
 }
 
 .masthead h1 span{
