@@ -1,0 +1,388 @@
+.masthead {
+    background-color: #222222;
+    color: white;
+}
+
+.masthead h1 {
+    line-height: 1;
+    letter-spacing: -2px;
+    text-align: center;
+}
+
+.masthead h1 .k {
+    text-align: center;
+}
+
+.masthead h1 span{
+    text-align: center;
+    color: #0088cc;
+}
+
+.masthead span {
+    color: #92b83e;
+}
+
+.catchword {
+    font-weight: 200;
+    line-height: 1.25;
+    color: #d1cfd1;  
+    text-align: center;  
+}
+
+.description p {
+    font-weight: 200;
+    line-height: 1.25;
+    color:white;
+}
+
+.description a {
+    -webkit-transition: all .2s ease-in-out;
+    -moz-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+}
+
+.description a:hover {
+    color: white;
+    text-decoration: none;
+}
+
+.libraries label {
+    font-weight: 200;
+    line-height: 1.25;
+}
+
+.libraries .controls input {
+    font-weight: 200;
+    line-height: 1.25;
+}
+
+.libraries .help-block {
+    font-style: italic;
+    font-weight: 200;
+}
+
+.details label {
+    text-decoration: underline;
+}
+
+.details .radio{
+    font-weight: normal;
+    text-decoration: none;
+}
+
+
+/* Dimensions */
+
+.navbar .container {
+    width: 1100px;
+}
+
+.container {
+    width: 1100px;
+}
+
+.masthead {
+    padding: 70px 0 40px 0;
+    margin-bottom: 30px;
+}
+
+.masthead h1 {
+    font-size: 100px;
+}
+
+.masthead h1 .k {
+    font-size: 100px;
+}
+
+.masthead h1 span{
+    font-size: 30px;
+}
+
+.catchword {
+    font-size: 40px;
+}
+
+.description {
+    margin-top: 50px;
+}
+
+.description p {
+    font-size: 18px;
+}
+
+.libraries label {
+    font-size: 18px;
+}
+
+.libraries .controls input {
+    font-size: 14px;
+}
+
+.libraries .help-block {
+    font-size:12px;
+    margin-bottom: 10px;
+}
+
+.libraries .checkbox {
+    margin-top: 20px;
+}
+
+.details label {
+    font-size:16px;
+    margin-left:15px;
+}
+
+.details .radio{
+    font-size:14px;
+    margin-left: 25px;
+}
+
+.kicker button {
+    font-size:40px;
+    padding: 10px 30px 10px 30px;
+}
+
+.kicker {
+    margin-top:50px;
+}
+
+
+/* Large desktop */
+@media (min-width: 1200px) {
+
+}
+
+/* Large desktop */
+@media (min-width: 979px) and (max-width: 1200px) {
+.navbar .container {
+    width: 900px;
+}
+
+.container {
+    width: 900px;
+}
+
+}
+ 
+/* Portrait tablet to landscape and desktop */
+@media (max-width: 979px) {
+
+.navbar-fixed-top {
+    margin-bottom: 0;
+}
+
+.navbar .container {
+    width: 768px;
+}
+
+.container {
+    width: 768px;
+}
+
+.masthead {
+    padding: 20px 0 15px 0;
+    margin-bottom: 20px;
+}
+
+.masthead h1 {
+    font-size: 80px;
+}
+
+.masthead h1 .k {
+    font-size: 70px;
+}
+
+.masthead h1 span{
+    font-size: 30px;
+}
+
+.catchword {
+    font-size: 25px;
+}
+
+.form-horizontal {
+}
+
+.description {
+    margin-top: 30px;
+}
+
+.description p {
+    font-size: 14px;
+}
+
+.libraries label {  
+    font-size: 16px;
+}
+
+.libraries .controls input {
+    font-size: 14px;
+}
+
+.libraries .help-block {
+    font-size:12px;
+    margin-bottom: 10px;
+}
+
+.libraries .checkbox {
+    margin-top: 15px;
+}
+
+.details label {
+    font-size:15px;
+    margin-left:15px;
+}
+
+.details .radio{
+    font-size:14px;
+    margin-left: 25px;
+}
+
+.kicker button {
+    font-size:25px;
+    padding: 10px 30px 10px 30px;
+}
+
+.kicker {
+    margin-top:30px;
+}
+}
+ 
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) {
+
+body {
+    padding:0;
+}
+
+.navbar-fixed-top {
+    margin-bottom: 0;
+}
+
+.navbar .container {
+    width: 450px;
+}
+
+.container {
+    width: 450px;
+}
+
+.masthead {
+    padding: 30px 0 0px 0;
+    margin-bottom: 20px;
+}
+
+.masthead h1 {
+    font-size: 50px;
+}
+
+.masthead h1 .k {
+    font-size: 50px;
+}
+
+.masthead h1 span{
+    font-size: 18px;
+}
+
+.catchword {
+    font-size: 18px;
+}
+
+.description {
+    margin-top: 30px;
+}
+
+.description p {
+    font-size: 12px;
+}
+
+.libraries h1 {
+    font-size: 24px;
+}
+
+.libraries label {
+    font-size: 18px;
+}
+
+.libraries .controls input {
+    font-size: 12px;
+}
+
+.libraries .help-block {
+    font-size:12px;
+    margin-bottom: 10px;
+}
+
+.libraries .checkbox {
+    margin-top: 20px;
+}
+
+.details label {
+    font-size:16px;
+    margin-left:15px;
+}
+
+.details .radio{
+    font-size:14px;
+    margin-left: 25px;
+}
+
+.kicker button {
+    font-size:25px;
+    padding: 10px 30px 10px 30px;
+}
+
+.kicker {
+    margin-top:20px;
+}
+
+}
+ 
+/* Landscape phones and down */
+@media (max-width: 480px) {
+
+
+.navbar .container {
+    width: 340px;
+}
+
+.container {
+    width: 340px;
+}
+
+.masthead {
+    padding: 30px 0 0px 0;
+    margin-bottom: 20px;
+}
+
+.masthead h1 {
+    font-size: 38px;
+}
+
+.masthead h1 .k {
+    font-size: 38px;
+}
+
+.masthead h1 span{
+    font-size: 18px;
+}
+
+.catchword {
+    font-size: 15px;
+}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
