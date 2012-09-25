@@ -56,6 +56,38 @@
     text-decoration: none;
 }
 
+.footer {
+    color:white;
+    height: 265px;
+    margin-top: 80px;   
+    background-color: #222222;
+    font-weight: 200;
+    line-height: 1.25;
+    font-size: 16px;
+}
+
+.footer p {
+    margin-top:30px;
+}
+
+.footer img {
+    margin-top:20px;
+    margin-left: 50px;
+}
+
+.footer a {
+    color: #6e943d;
+}
+
+.footer .copyright {
+    font-size: 14px;
+    margin-top: 160px;
+}
+
+.kicker {
+    text-align: center;
+}
+
 
 /* Dimensions */
 
