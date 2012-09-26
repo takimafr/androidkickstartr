@@ -129,20 +129,15 @@
 .footer {
     color:white;
     height: 265px;
-    margin-top: 30px;   
-    background-color: #222222;
+    margin-top: 30px;
     font-weight: 200;
     line-height: 1.25;
     font-size: 16px;
+    background:#222222 url('../img/footer.png') no-repeat right bottom;
 }
 
 .footer p {
     margin-top:30px;
-}
-
-.footer img {
-    margin-top:20px;
-    margin-left: 50px;
 }
 
 .footer a {
@@ -151,7 +146,8 @@
 
 .footer .copyright {
     font-size: 14px;
-    margin-top: 160px;
+    margin-top: 170px;
+    text-align: center;
 }
 
 .kicker {
