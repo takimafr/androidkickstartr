@@ -32,6 +32,11 @@
     text-decoration: none;
 }
 
+.libraries h1 {
+    text-align: left;
+    margin-bottom: 50px;
+}
+
 .libraries label {
     font-weight: 200;
     line-height: 1.25;
@@ -47,13 +52,43 @@
     font-weight: 200;
 }
 
+.library label {
+    color: #222222;
+    font-weight: 300;
+    background-color: #EEEEEE;
+    padding: 10px 15px 10px 30px;
+    border-radius:0.5em;
+    -moz-border-radius:0.5em;
+    -webkit-border-radius:0.5em;
+}
+
+.library label span {
+    float: right;
+    color: #7aab3a;
+    font-weight: 400;
+}
+
+.library-soon label {
+    color: #CCCCCC;
+    background-color: #999999;
+    padding: 10px 15px 10px 30px;
+    border-radius:0.5em;
+    -moz-border-radius:0.5em;
+    -webkit-border-radius:0.5em;
+}
+
 .details label {
+    padding: 0;
+    font-weight: 200;
     text-decoration: underline;
+    background-color: white;
+    color:black;
 }
 
 .details .radio{
     font-weight: normal;
     text-decoration: none;
+    background-color: none;
 }
 
 .footer {
