@@ -1,3 +1,7 @@
+.navbar img {
+    margin-top:7px;
+}
+
 .masthead {
     background-color: #222222;
     color: white;
@@ -32,9 +36,28 @@
     text-decoration: none;
 }
 
+.parameters {
+    color: #222222;
+    font-weight: 300;
+    background-color: #EEEEEE;
+    padding: 10px 0 25px 0;
+    border-radius:0.5em;
+    -moz-border-radius:0.5em;
+    -webkit-border-radius:0.5em;
+}
+
+.parameters .control-group {
+    margin:5px 0 0 10px;
+}
+
 .libraries h1 {
     text-align: left;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
+}
+
+.libraries .fix {
+    margin-left:0px;
+    margin-right: 30px;
 }
 
 .libraries label {
@@ -50,6 +73,18 @@
 .libraries .help-block {
     font-style: italic;
     font-weight: 200;
+}
+
+.libraries .row {
+    margin-top:40px;
+}
+
+.control-label {
+    margin-top: 10px;
+}
+
+.controls {
+    margin-top: 10px;
 }
 
 .library label {
