@@ -94,7 +94,7 @@
 .footer {
     color:white;
     height: 265px;
-    margin-top: 80px;   
+    margin-top: 30px;   
     background-color: #222222;
     font-weight: 200;
     line-height: 1.25;
@@ -121,6 +121,10 @@
 
 .kicker {
     text-align: center;
+}
+
+.kicker p {
+    margin-top: 5px;
 }
 
 
@@ -188,7 +192,7 @@
 }
 
 .kicker {
-    margin-top:50px;
+    margin-top:70px;
 }
 
 
