@@ -24,22 +24,23 @@ $("input:checkbox[name=actionBarSherlock]").click(function(event) {
   if (!$checked) {
     $("input:radio[value=none]").attr("checked", true);
   }
-  disableSupportV4();
+  disableAndCheckSupportV4();
 });
 
 $("input:checkbox[name=nineOldAndroids]").click(function(event) {
-  disableSupportV4();
+  disableAndCheckSupportV4();
 });
 
-function disableSupportV4() {
+function disableAndCheckSupportV4() {
   $checked1 = $("input:checkbox[name=nineOldAndroids]").prop("checked");
   $checked2 = $("input:checkbox[name=actionBarSherlock]").prop("checked");
   disableCheckbox("supportV4", $checked1 || $checked2);
+  checkBox("supportV4", $checked1 || $checked2);
 }
 
 function disableCheckbox(name, disabled) {
   $target = $("input:checkbox[name="+ name +"]");
-  $target.attr("checked", false).attr("disabled", disabled);
+  $target.attr("disabled", disabled);
 }
 
 $("#kickstartr-form").submit(function() {
