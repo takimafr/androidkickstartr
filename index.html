@@ -31,8 +31,8 @@
 </head>
 <body>
 <!--[if lt IE 7]>
-                    <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
-                    <![endif]--><!-- This code is taken from http://twitter.github.com/bootstrap/examples/hero.html -->
+<p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+<![endif]-->
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container">
@@ -42,7 +42,7 @@
       <ul class="nav pull-right">
         <li><img src="img/twitter.png"/></li>
         <li><a href="https://twitter.com/share?url=http%3A%2F%2Fandroidkickstartr.com/&via=AndroidKickstartr&text=AndroidKickstartr">Tweet</a></li>
-        <li><a href="http://twitter.com/AndKickstartr">Follow @AndKickstartr</a></li>
+        <li><a href="http://twitter.com/AndKickstartr">Follow @AndKickstartR</a></li>
       </ul> 
     </div>
   </div>
@@ -63,7 +63,7 @@
   <div class="row">
     <form id="kickstartr-form" class="form-horizontal" method="POST" action="http://ws.androidkickstartr.com/">
       <div class="span12">
-        <h1>1. Application</h1>
+        <h1>1. What's your application ?</h1>
         <div class="span5 parameters fix">
           <div class="control-group">
             <label class="control-label">
@@ -109,7 +109,7 @@
     </div>
     <div class="row">
       <div class="span12">
-        <h1>2. Libraries
+        <h1>2. Choose your libraries
           <button class="btn btn-small btn-danger" type="button" id="all">
             Check All
           </button>
@@ -119,18 +119,31 @@
         <label class="checkbox">
           <input type="checkbox" name="androidAnnotations" value="true"> AndroidAnnotations <span>2.6</span></input>
         </label>
-        <span class="help-block">AndroidAnnotations is an Open Source framework that speeds up Android development. It takes care of the plumbing, and lets you concentrate on what's really important. By simplifying your code, it facilitates its maintenance. [<a href="http://www.androidannotations.org">doc</a>].</span>
+        <div class="pull-right"><a data-toggle="collapse" data-target="#aa" class="label label-success">Effect</a> <a href="https://github.com/excilys/androidannotations/wiki/FirstActivity" class="label label-info">Usage</a> <a href="https://github.com/excilys/androidannotations/wiki" class="label label-info">Doc</a></div>
+        <span class="help-block">Simplify and clarify your code, increase your productivity by using the power of annotations.</span>
+        <div id="aa" class="collapse out">
+          <p><strong>Effect</strong>: Add AndroidAnnotations dependency, replace all the boilerplate code by annotations (view injection, events handling, thread model).</p>
+        </div>
         <label class="checkbox">
-          <input type="checkbox" name="restTemplate" value="true">Spring-Android RestTemplate <span>1.0.0.RELEASE</span></input>
+          <input type="checkbox" name="restTemplate" value="true">Spring RestTemplate <span>1.0.0.RELEASE</span></input>
         </label>
-        <span class="help-block">Spring's RestTemplate is a robust, popular Java-based REST client. The Spring for Android RestTemplate Module provides a version of RestTemplate that works in an Android environment. [<a href="http://www.springsource.org/spring-android">doc</a>]</span>
+        <div class="pull-right"><a data-toggle="collapse" data-target="#rt" class="label label-success">Effect</a> <a href="http://static.springsource.org/spring-android/docs/1.0.x/reference/htmlsingle/#d4e382" class="label label-info">Usage</a> <a href="http://static.springsource.org/spring-android/docs/1.0.x/reference/htmlsingle/#overview" class="label label-info">Doc</a></div>
+        <span class="help-block">The famous Spring's RestTemplate for Android platform.</span>
+        <div id="rt" class="collapse out">
+          <p><strong>Effect</strong>: Add Spring's RestTemplate dependency.</p>
+          <p><strong>Effect with AA</strong>: Create a simple rest client interface.</p>
+        </div>
       </div>
       <div class="span5 pull-right library">
         <label class="checkbox">
           <input type="checkbox" name="actionBarSherlock" value="true">ActionBarSherlock <span>4.1.0</span>
           </input>
         </label>
-        <span class="help-block">ActionBarSherlock is an extension of the compatibility library designed to facilitate the use of the action bar design pattern across all versions of Android with a single API. [<a href="http://actionbarsherlock.com/">doc</a>]</span>
+        <div class="pull-right"><a data-toggle="collapse" data-target="#abs" class="label label-success">Effect</a> <a href="http://actionbarsherlock.com/usage.html" class="label label-info">Usage</a> <a href="http://actionbarsherlock.com/" class="label label-info">Doc</a></div>
+        <span class="help-block">An extension of the compatibility library designed to facilitate the use of the action bar design pattern across all versions of Android.</span>
+        <div id="abs" class="collapse out">
+          <p><strong>Effect</strong>: Add ActionBarSherlock (ABS) dependency. Add ABS theme style. Use ABS classes instead. Get the code for a list or tab navigation (optional).</p>
+        </div>
         <div class="details"> 
           <label>
             Navigation type:
@@ -152,20 +165,28 @@
             <input type="checkbox" name="nineOldAndroids" value="true">NineOldAndroids <span>2.4.0</span>
             </input>
           </label>
-          <span class="help-block">Android library for using the Honeycomb (Android 3.0) animation API on all versions of the platform back to 1.0! [<a href="http://nineoldandroids.com/">doc</a>]</span>
+          <div class="pull-right"><a data-toggle="collapse" data-target="#noa" class="label label-success">Effect</a> <a href="http://nineoldandroids.com/#usage" class="label label-info">Usage</a> <a href="http://nineoldandroids.com/" class="label label-info">Doc</a></div>
+          <span class="help-block">Using the Honeycomb (Android 3.0) animation API on all versions of the platform.</span>
+          <div id="noa" class="collapse out">
+            <p><strong>Effect</strong>: Add NineOldAndroids dependency only.</p>
+          </div>
         </div>
         <div class="span5 pull-right">
           <label class="checkbox">
             <input type="checkbox" name="supportV4" value="true">Android support v4 <span>r7</span>
             </input>
           </label>
-          <span class="help-block">The support library for v4 provides access to several classes introduced with Android 3.0 and beyond, plus some updated version of existing classes, and even some APIs that currently don't exist in the Android platform.[<a href="http://developer.android.com/reference/android/support/v4/app/package-summary.html">doc</a>]</span>
+          <div class="pull-right"><a data-toggle="collapse" data-target="#v4" class="label label-success">Effect</a> <a href="http://developer.android.com/tools/extras/support-library.html" class="label label-info">Doc</a></div>
+          <span class="help-block">The support library v4 provides access to several classes introduced with Android 3.0 and beyond.</span>
+          <div id="v4" class="collapse out">
+            <p><strong>Effect</strong>: Add Support v4 dependency only.</p>
+          </div>
         </div>
       </div>
       <div class="row library-soon">
         <div class="span5">
           <label class="checkbox">
-            <input type="checkbox" disabled>ViewPager example (Soon)
+            <input type="checkbox" disabled>ViewPager sample (Soon)
             </input>
           </label>
         </div>
@@ -174,13 +195,18 @@
             <input type="checkbox" disabled>ViewPagerIndicator 2.4.1 (Soon)
             </input>
           </label>
-          <span class="help-block">Paging indicator widget compatible with the ViewPager from the Android Support Library and ActionBarSherlock. [<a href="http://viewpagerindicator.com/">doc</a>]</span>
         </div>
       </div>
       <div class="row library-soon">
         <div class="span5">
           <label class="checkbox">
             <input type="checkbox" disabled>Roboguice 2.0 (Soon)
+            </input>
+          </label>
+        </div>
+        <div class="span5 pull-right library-soon">
+          <label class="checkbox">
+            <input type="checkbox" disabled>ACRA 4.3.0 (Soon)
             </input>
           </label>
         </div>

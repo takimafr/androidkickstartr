@@ -72,7 +72,6 @@
 }
 
 .libraries .help-block {
-    font-style: italic;
     font-weight: 200;
 }
 
@@ -202,6 +201,11 @@
 
 .libraries .checkbox {
     margin-top: 20px;
+}
+
+
+.details {
+    margin-top: 15px;
 }
 
 .details label {
