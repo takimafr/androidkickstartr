@@ -4,6 +4,7 @@ $("#full").click(function(){
   checkBox("actionBarSherlock", true);
   checkBox("nineOldAndroids", true);
   checkBox("supportV4", true);
+  checkBox("acra", true);
   checkRadio("tabNavigation", true);
   $("input:radio[name=navigationType]").attr("disabled", false);
   disableCheckbox("supportV4", true);
@@ -15,6 +16,7 @@ $("#basic").click(function(){
   checkBox("actionBarSherlock", true);
   checkBox("nineOldAndroids", false);
   checkBox("supportV4", true);
+  checkBox("acra", false);
   checkRadio("tabNavigation", true);
   $("input:radio[name=navigationType]").attr("disabled", false);
   disableCheckbox("supportV4", true);
@@ -26,6 +28,7 @@ $("#rest").click(function(){
   checkBox("actionBarSherlock", true);
   checkBox("nineOldAndroids", false);
   checkBox("supportV4", true);
+  checkBox("acra", false);
   checkRadio("tabNavigation", true);
   $("input:radio[name=navigationType]").attr("disabled", false);
   disableCheckbox("supportV4", true);

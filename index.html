@@ -125,7 +125,7 @@
         <label class="checkbox">
           <input type="checkbox" name="androidAnnotations" value="true"> AndroidAnnotations <span>2.6</span></input>
         </label>
-        <div class="pull-right"><a data-toggle="collapse" data-target="#aa" class="label label-success">Effect</a> <a href="https://github.com/excilys/androidannotations/wiki/FirstActivity" class="label label-info">Usage</a> <a href="https://github.com/excilys/androidannotations/wiki" class="label label-info">Doc</a></div>
+        <div class="pull-right"><a data-toggle="collapse" data-target="#aa" class="label label-success">Effect</a> <a href="https://github.com/excilys/androidannotations/wiki/FirstActivity" target="_blank" class="label label-info">Usage</a> <a href="https://github.com/excilys/androidannotations/wiki" target="_blank" class="label label-info">Doc</a></div>
         <span class="help-block">Simplify and clarify your code, increase your productivity by using the power of annotations.</span>
         <div id="aa" class="collapse out">
           <p><strong>Effect</strong>: Add AndroidAnnotations dependency, replace all the boilerplate code by annotations (view injection, events handling, thread model).</p>
@@ -133,8 +133,8 @@
         <label class="checkbox">
           <input type="checkbox" name="restTemplate" value="true">Spring RestTemplate <span>1.0.0.RELEASE</span></input>
         </label>
-        <div class="pull-right"><a data-toggle="collapse" data-target="#rt" class="label label-success">Effect</a> <a href="http://static.springsource.org/spring-android/docs/1.0.x/reference/htmlsingle/#d4e382" class="label label-info">Usage</a> <a href="http://static.springsource.org/spring-android/docs/1.0.x/reference/htmlsingle/#overview" class="label label-info">Doc</a></div>
-        <span class="help-block">The famous Spring's RestTemplate for Android platform.</span>
+        <div class="pull-right"><a data-toggle="collapse" data-target="#rt" class="label label-success">Effect</a> <a href="http://static.springsource.org/spring-android/docs/1.0.x/reference/htmlsingle/#d4e382" target="_blank" class="label label-info">Usage</a> <a href="http://static.springsource.org/spring-android/docs/1.0.x/reference/htmlsingle/#overview" target="_blank" class="label label-info">Doc</a></div>
+        <span class="help-block">The famous Spring's RestTemplate for the Android platform.</span>
         <div id="rt" class="collapse out">
           <p><strong>Effect</strong>: Add Spring's RestTemplate dependency.</p>
           <p><strong>Effect with AA</strong>: Create a simple rest client interface.</p>
@@ -145,10 +145,10 @@
           <input type="checkbox" name="actionBarSherlock" value="true">ActionBarSherlock <span>4.1.0</span>
           </input>
         </label>
-        <div class="pull-right"><a data-toggle="collapse" data-target="#abs" class="label label-success">Effect</a> <a href="http://actionbarsherlock.com/usage.html" class="label label-info">Usage</a> <a href="http://actionbarsherlock.com/" class="label label-info">Doc</a></div>
+        <div class="pull-right"><a data-toggle="collapse" data-target="#abs" class="label label-success">Effect</a> <a href="http://actionbarsherlock.com/usage.html" target="_blank" class="label label-info">Usage</a> <a href="http://actionbarsherlock.com/" target="_blank" class="label label-info">Doc</a></div>
         <span class="help-block">An extension of the compatibility library designed to facilitate the use of the action bar design pattern across all versions of Android.</span>
         <div id="abs" class="collapse out">
-          <p><strong>Effect</strong>: Add ActionBarSherlock (ABS) dependency. Add ABS theme style. Use ABS classes instead. Get the code for a list or tab navigation (optional).</p>
+          <p><strong>Effect</strong>: Add ActionBarSherlock (ABS) dependency. Add ABS theme style. Use ABS classes instead. Get the code for a list or tab navigation (optional). Support v4 is included.</p>
         </div>
         <div class="details"> 
           <label>
@@ -171,10 +171,10 @@
             <input type="checkbox" name="nineOldAndroids" value="true">NineOldAndroids <span>2.4.0</span>
             </input>
           </label>
-          <div class="pull-right"><a data-toggle="collapse" data-target="#noa" class="label label-success">Effect</a> <a href="http://nineoldandroids.com/#usage" class="label label-info">Usage</a> <a href="http://nineoldandroids.com/" class="label label-info">Doc</a></div>
+          <div class="pull-right"><a data-toggle="collapse" data-target="#noa" class="label label-success">Effect</a> <a href="http://nineoldandroids.com/#usage" target="_blank" class="label label-info">Usage</a> <a href="http://nineoldandroids.com/" target="_blank" class="label label-info">Doc</a></div>
           <span class="help-block">Using the Honeycomb (Android 3.0) animation API on all versions of the platform.</span>
           <div id="noa" class="collapse out">
-            <p><strong>Effect</strong>: Add NineOldAndroids dependency only.</p>
+            <p><strong>Effect</strong>: Add NineOldAndroids dependency only. Support v4 is included.</p>
           </div>
         </div>
         <div class="span5 pull-right">
@@ -182,19 +182,24 @@
             <input type="checkbox" name="supportV4" value="true">Android support v4 <span>r7</span>
             </input>
           </label>
-          <div class="pull-right"><a data-toggle="collapse" data-target="#v4" class="label label-success">Effect</a> <a href="http://developer.android.com/tools/extras/support-library.html" class="label label-info">Doc</a></div>
+          <div class="pull-right"><a data-toggle="collapse" data-target="#v4" class="label label-success">Effect</a> <a href="http://developer.android.com/tools/extras/support-library.html" target="_blank" class="label label-info">Doc</a></div>
           <span class="help-block">The support library v4 provides access to several classes introduced with Android 3.0 and beyond.</span>
           <div id="v4" class="collapse out">
             <p><strong>Effect</strong>: Add Support v4 dependency only.</p>
           </div>
         </div>
       </div>
-      <div class="row library-soon">
-        <div class="span5">
+      <div class="row">
+        <div class="span5 library">
           <label class="checkbox">
-            <input type="checkbox" disabled>ViewPager sample (Soon)
+            <input type="checkbox" name="acra" value="true">ACRA <span>4.3.0</span>
             </input>
           </label>
+          <div class="pull-right"><a data-toggle="collapse" data-target="#acra" class="label label-success">Effect</a> <a href="https://code.google.com/p/acra/wiki/BasicSetup?tm=6#Introduction" target="_blank" class="label label-info">Usage</a> <a href="https://code.google.com/p/acra/" target="_blank" class="label label-info">Doc</a></div>
+          <span class="help-block">The support library v4 provides access to several classes introduced with Android 3.0 and beyond.</span>
+          <div id="acra" class="collapse out">
+            <p><strong>Effect</strong>: Add ACRA dependency, create a class extending Application with the basic ACRA configuration.</p>            
+          </div>
         </div>
         <div class="span5 pull-right library-soon">
           <label class="checkbox">
@@ -210,9 +215,9 @@
             </input>
           </label>
         </div>
-        <div class="span5 pull-right library-soon">
+        <div class="span5 pull-right">
           <label class="checkbox">
-            <input type="checkbox" disabled>ACRA 4.3.0 (Soon)
+            <input type="checkbox" disabled>ViewPager sample (Soon)
             </input>
           </label>
         </div>
