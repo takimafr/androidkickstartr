@@ -1,8 +1,30 @@
-$("#all").click(function(){
+$("#full").click(function(){
   checkBox("androidAnnotations", true);
   checkBox("restTemplate", true);
   checkBox("actionBarSherlock", true);
   checkBox("nineOldAndroids", true);
+  checkBox("supportV4", true);
+  checkRadio("tabNavigation", true);
+  $("input:radio[name=navigationType]").attr("disabled", false);
+  disableCheckbox("supportV4", true);
+});
+
+$("#basic").click(function(){
+  checkBox("androidAnnotations", true);
+  checkBox("restTemplate", false);
+  checkBox("actionBarSherlock", true);
+  checkBox("nineOldAndroids", false);
+  checkBox("supportV4", true);
+  checkRadio("tabNavigation", true);
+  $("input:radio[name=navigationType]").attr("disabled", false);
+  disableCheckbox("supportV4", true);
+});
+
+$("#rest").click(function(){
+  checkBox("androidAnnotations", true);
+  checkBox("restTemplate", true);
+  checkBox("actionBarSherlock", true);
+  checkBox("nineOldAndroids", false);
   checkBox("supportV4", true);
   checkRadio("tabNavigation", true);
   $("input:radio[name=navigationType]").attr("disabled", false);
