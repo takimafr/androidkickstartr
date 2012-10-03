@@ -50,6 +50,16 @@
     margin:5px 0 0 10px;
 }
 
+.tips {
+    text-decoration: none;
+    color: #92b83e;
+}
+
+.tips:hover {
+    text-decoration: underline;
+    color: #92b83e;
+}
+
 .libraries h1 {
     text-align: left;
     margin-top: 40px;
@@ -73,6 +83,20 @@
 
 .libraries .help-block {
     font-weight: 200;
+}
+
+.doc {
+    font-weight: 200;
+    line-height: 1.25;
+    margin-top: 130px;
+    border-top: solid #dddddd 1px;
+    background-color: #fcfcfc;
+    padding-top: 40px;
+    padding-bottom: 80px;
+}
+
+.doc h1 {
+    color: #5a5a5a;
 }
 
 .control-label {
@@ -125,7 +149,6 @@
 .footer {
     color:white;
     height: 265px;
-    margin-top: 30px;
     font-weight: 200;
     line-height: 1.25;
     font-size: 16px;
@@ -153,7 +176,6 @@
 .kicker p {
     margin-top: 5px;
 }
-
 
 /* Dimensions */
 
@@ -219,12 +241,12 @@
 }
 
 .kicker button {
-    font-size:40px;
+    font-size:50px;
     padding: 10px 30px 10px 30px;
 }
 
 .kicker {
-    margin-top:70px;
+    margin-top:100px;
 }
 
 

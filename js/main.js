@@ -90,3 +90,5 @@ $("#kickstartr-form").submit(function() {
 
 })
 
+$('.tips').tooltip();
+

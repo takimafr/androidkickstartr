@@ -128,7 +128,7 @@
         <div class="pull-right"><a data-toggle="collapse" data-target="#aa" class="label label-success">Effect</a> <a href="https://github.com/excilys/androidannotations/wiki/FirstActivity" target="_blank" class="label label-info">Usage</a> <a href="https://github.com/excilys/androidannotations/wiki" target="_blank" class="label label-info">Doc</a></div>
         <span class="help-block">Simplify and clarify your code, increase your productivity by using the power of annotations.</span>
         <div id="aa" class="collapse out">
-          <p><strong>Effect</strong>: Add AndroidAnnotations dependency, replace all the boilerplate code by annotations (view injection, events handling, thread model).</p>
+          <p><strong>Effect</strong>: Add AndroidAnnotations dependency, replace all the boilerplate code by annotations (view injection, events handling, thread model), Eclipse auto-configuration.</p>
         </div>
         <label class="checkbox">
           <input type="checkbox" name="restTemplate" value="true">Spring RestTemplate <span>1.0.0.RELEASE</span></input>
@@ -137,7 +137,7 @@
         <span class="help-block">The famous Spring's RestTemplate for the Android platform.</span>
         <div id="rt" class="collapse out">
           <p><strong>Effect</strong>: Add Spring's RestTemplate dependency.</p>
-          <p><strong>Effect with AA</strong>: Create a simple rest client interface.</p>
+          <p><strong>Effect with <a href="#" class="tips" data-title="AndroidAnnotations">AA</a></strong>: Create a simple rest client interface.</p>
         </div>
       </div>
       <div class="span5 pull-right library">
@@ -228,7 +228,6 @@
             <button class="btn btn-large btn-danger" type="submit" onclick="_gaq.push(['_trackEvent', 'Downloads', 'Download it']);">
               Download it!
             </button>
-            <p>More informations about your kickstarted project in the README file.</p>
           </div>
         </div>
       </div>
@@ -236,6 +235,28 @@
   </form>
 </div>
   </div>
+      <div class="doc">
+        <div class="container">
+          <div class="span5">
+            <h2>Maven</h2>
+            <p>1) <strong>Unzip</strong> the downloaded file.</p>
+            <p>2) <strong>Build and deploy</strong> your project by typing <code>mvn clean install android:deploy</code> in a command line from your project dir.</p>
+            <p>3) <strong>Import</strong> the project into Eclipse as an <img src="img/maven_project.png" /> in your workspace.</p>
+            <div class="well">
+              <p><span class="label label-important">Important</span> <strong>With ActionBarSherlock</strong></p><p>Kickstarting a project including the <a href="#" class="tips" data-title="ActionBarSherlock">ABS</a> library results to a zipped dir containing two folders: the generated project and the ABS library. </p>
+              <p>Just import the unzipped folder as an  <img src="img/maven_project.png" />. The two projects will be imported automatically.</p>
+            </div>
+          </div>
+          <div class="span5 pull-right">
+            <h2>Non-Maven</h2>
+            <p>1) <strong>Unzip</strong> the downloaded file.</p>
+            <p>2) <strong>Import</strong> your project into Eclipse as an <img src="img/eclipse_project.png" />.</p>
+            <div class="well">
+              <p><span class="label label-important">Important</span> <strong>With ActionBarSherlock</strong></p><p>Create a <img src="img/android_project.png" /> and set the path to the <code>library</code> dir. You <strong>must</strong> create the <a href="#" class="tips" data-title="ActionBarSherlock">ABS</a> project at <strong>first</strong>.</p>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="footer">
         <div class="container">
             <p>Created and developed by <a href="http://twitter.com/AleksThomas">Alexandre THOMAS</a></a>. <br/>Logo designed by <a>AkStudio</a>. </p>
