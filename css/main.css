@@ -16,19 +16,23 @@
     font-weight: 200;
     line-height: 1.25;
     color: #d1cfd1;  
-    text-align: center;  
+    text-align: center; 
+}
+
+.description {
+    width: 55%;
+    margin:auto;
 }
 
 .description p {
     font-weight: 200;
     line-height: 1.25;
-    color:white;
+    color:#888888;
+    font-size: 16px;
 }
 
-.description a {
-    -webkit-transition: all .2s ease-in-out;
-    -moz-transition: all .2s ease-in-out;
-    transition: all .2s ease-in-out;
+.description span {
+    color: #92b83e;
 }
 
 .description a:hover {
@@ -192,8 +196,7 @@
 }
 
 .masthead {
-    padding: 70px 0 0 0;
-    margin-bottom: 30px;
+    padding: 50px 0 20px 0;
 }
 
 .masthead h1 span{
@@ -202,14 +205,6 @@
 
 .catchword {
     font-size: 40px;
-}
-
-.description {
-    margin-top: 50px;
-}
-
-.description p {
-    font-size: 18px;
 }
 
 .libraries label {
@@ -299,17 +294,6 @@
     font-size: 25px;
 }
 
-.form-horizontal {
-}
-
-.description {
-    margin-top: 30px;
-}
-
-.description p {
-    font-size: 14px;
-}
-
 .libraries label {  
     font-size: 16px;
 }
@@ -377,14 +361,6 @@ body {
 
 .catchword {
     font-size: 18px;
-}
-
-.description {
-    margin-top: 30px;
-}
-
-.description p {
-    font-size: 12px;
 }
 
 .libraries h1 {
