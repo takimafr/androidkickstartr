@@ -96,7 +96,7 @@
 .doc {
     font-weight: 200;
     line-height: 1.25;
-    margin-top: 130px;
+    margin-top: 60px;
     border-top: solid #dddddd 1px;
     background-color: #fcfcfc;
     padding-top: 40px;
@@ -179,10 +179,20 @@
 
 .kicker {
     text-align: center;
+    font-weight: 200;
+    font-size: 16px;
 }
 
-.kicker p {
+.kicker p{
     margin-top: 5px;
+}
+
+.kicker img {
+    margin-bottom:4px;
+}
+
+.kicker a {
+    color: #444444;
 }
 
 /* Dimensions */
