@@ -60,9 +60,9 @@
 </div>
 <div class="container libraries">
   <div class="row">
-    <form id="kickstartr-form" class="form-horizontal" method="POST" action="http://localhost:8080">
+    <form id="kickstartr-form" class="form-horizontal" method="POST" action="http://ws.androidkickstartr.com/">
       <div class="span12">
-        <h1>1. Application parameters</h1>
+        <h1>1. Parameters</h1>
         <div class="span5 parameters fix">
           <div class="control-group">
             <label class="control-label">
@@ -80,8 +80,6 @@
               <input type="text" placeholder="com.androidkickstarter.app" name="packageName"/>
             </div>
           </div>
-        </div>
-        <div class="span5 offset1 parameters ">
           <div class="control-group">
             <label class="control-label">
               Main activity name:
@@ -90,6 +88,8 @@
               <input type="text" placeholder="MainActivity" name="activity"/>
             </div>
           </div>
+        </div>
+        <div class="span5 offset1 parameters ">
           <div class="control-group">
             <label class="control-label">
               Maven:
@@ -100,6 +100,19 @@
               </label>
               <label class="radio">
                 <input type="radio" name="maven" value="false" checked>Disabled</input>
+              </label>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">
+              Eclipse as IDE:
+            </label>
+            <div class="controls">
+              <label class="radio">
+                <input type="radio" name="eclipse" value="true" checked>Yes</input>
+              </label>
+              <label class="radio">
+                <input type="radio" name="eclipse" value="false">No</input>
               </label>
             </div>
           </div>
@@ -256,7 +269,7 @@
             <p>1) <strong>Unzip</strong> the downloaded file.</p>
             <p>2) <strong>Import</strong> your project into Eclipse as an <img src="img/eclipse_project.png" />.</p>
             <div class="well">
-              <p><span class="label label-important">Important</span> <strong>With ActionBarSherlock</strong></p><p>Create a second project as an <img src="img/android_project.png" /> and set the path to the <code>library</code> dir. You <strong>must</strong> create the <a class="tips" data-title="ActionBarSherlock">ABS</a> project at <strong>first</strong>.</p>
+              <p><span class="label label-important">Important</span> <strong>With ActionBarSherlock</strong></p><p>Kickstarting a project including the <a class="tips" data-title="ActionBarSherlock">ABS</a> library results to a zipped dir containing two folders: the generated project and the ABS library. </p><p>Create another project as an <img src="img/android_project.png" /> and set the path to the <code>library</code> dir before import your project.</p>
             </div>
           </div>
         </div>
