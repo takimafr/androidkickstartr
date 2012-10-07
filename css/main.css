@@ -57,6 +57,7 @@
 .tips {
     text-decoration: none;
     color: #92b83e;
+    cursor:help;
 }
 
 .tips:hover {
