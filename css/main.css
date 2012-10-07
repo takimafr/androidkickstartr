@@ -60,6 +60,10 @@
     color: #92b83e;
 }
 
+.label {
+    margin-left: 5px;
+}
+
 .libraries h1 {
     text-align: left;
     margin-top: 40px;
