@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]--><!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]--><!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!-->
-            <html class="no-js">
-                <!--<![endif]-->
+<html class="no-js">
+<!--<![endif]-->
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<title>AndroidKickstartR</title>
-<meta name="description" content="">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="css/bootstrap.min.css">
-<link rel="stylesheet" href="css/bootstrap-responsive.min.css">
-<link rel="stylesheet" href="css/main.css">
-<script src="js/vendor/modernizr-2.6.1-respond-1.1.0.min.js">
-</script>
-<script type="text/javascript">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>AndroidKickstartR</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
+  <link rel="stylesheet" href="css/main.css">
+  <script src="js/vendor/modernizr-2.6.1-respond-1.1.0.min.js">
+  </script>
+  <script type="text/javascript">
 
   // Analytics
   var _gaq = _gaq || [];
@@ -27,7 +27,7 @@
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
 
-</script>
+  </script>
 </head>
 <body>
 <!--[if lt IE 7]>
@@ -50,17 +50,17 @@
     <div class="row">
       <img class="logo" src="img/header.png" />
       <p class="catchword">
-      Start your next <span>Android</span> app in 10 seconds.
+        Start your next <span>Android</span> app in 10 seconds.
       </p>
       <div class="description">
-        <p>AndroidKickstartR helps you to quickly start a well configured Android application based on the most popular libraries. It creates and configures your project for you, you have just to focus on what you want: <span>code</span>.</p>
+        <p>AndroidKickstartR helps you to quickly create a well configured Android application using the most popular libraries. It creates and configures your project for you. Just focus on code!</p>
       </div>
     </div>
   </div>
 </div>
 <div class="container libraries">
   <div class="row">
-    <form id="kickstartr-form" class="form-horizontal" method="POST" action="http://ws.androidkickstartr.com/">
+    <form id="kickstartr-form" class="form-horizontal" method="POST" action="http://localhost:8080">
       <div class="span12">
         <h1>1. Parameters</h1>
         <div class="span5 parameters fix">
@@ -155,141 +155,141 @@
       <div class="span5 pull-right library">
         <label class="checkbox">
           <input type="checkbox" name="actionBarSherlock" value="true">ActionBarSherlock <span>4.1.0</span>
-          </input>
+        </input>
+      </label>
+      <div class="pull-right"><a data-toggle="collapse" data-target="#abs" class="label label-success">Effect</a> <a href="http://actionbarsherlock.com/usage.html" target="_blank" class="label label-info">Usage</a> <a href="http://actionbarsherlock.com/" target="_blank" class="label label-info">Doc</a></div>
+      <span class="help-block">An extension of the compatibility library designed to facilitate the use of the action bar design pattern across all versions of Android.</span>
+      <div id="abs" class="collapse out">
+        <p><strong>Effect</strong>: Add ActionBarSherlock dependency. Add <a class="tips" rel="tooltip" data-title="ActionBarSherlock">ABS</a> theme style. Use ABS classes instead. Get the code for a list or tab navigation (optional). Support v4 is included.</p>
+      </div>
+      <div class="details"> 
+        <label>
+          Navigation type:
         </label>
-        <div class="pull-right"><a data-toggle="collapse" data-target="#abs" class="label label-success">Effect</a> <a href="http://actionbarsherlock.com/usage.html" target="_blank" class="label label-info">Usage</a> <a href="http://actionbarsherlock.com/" target="_blank" class="label label-info">Doc</a></div>
-        <span class="help-block">An extension of the compatibility library designed to facilitate the use of the action bar design pattern across all versions of Android.</span>
-        <div id="abs" class="collapse out">
-          <p><strong>Effect</strong>: Add ActionBarSherlock dependency. Add <a class="tips" rel="tooltip" data-title="ActionBarSherlock">ABS</a> theme style. Use ABS classes instead. Get the code for a list or tab navigation (optional). Support v4 is included.</p>
-        </div>
-        <div class="details"> 
-          <label>
-            Navigation type:
-          </label>
-          <label class="radio">
-            <input type="radio" name="navigationType" value="none" checked disabled>None
-          </label>
-          <label class="radio">
-            <input type="radio" name="navigationType" value="tabNavigation" disabled> Tab navigation
-          </label>
-          <label class="radio">
-            <input type="radio" name="navigationType" value="listNavigation" disabled>List navigation
-          </div>
-        </div>
-      </div>
-      <div class="row library">
-        <div class="span5 ">
-          <label class="checkbox">
-            <input type="checkbox" name="nineOldAndroids" value="true">NineOldAndroids <span>2.4.0</span>
-            </input>
-          </label>
-          <div class="pull-right"><a data-toggle="collapse" data-target="#noa" class="label label-success">Effect</a> <a href="http://nineoldandroids.com/#usage" target="_blank" class="label label-info">Usage</a> <a href="http://nineoldandroids.com/" target="_blank" class="label label-info">Doc</a></div>
-          <span class="help-block">Using the Honeycomb (Android 3.0) animation API on all versions of the platform.</span>
-          <div id="noa" class="collapse out">
-            <p><strong>Effect</strong>: Add NineOldAndroids dependency only. Support v4 is included.</p>
-          </div>
-        </div>
-        <div class="span5 pull-right">
-          <label class="checkbox">
-            <input type="checkbox" name="supportV4" value="true">Android support v4 <span>r7</span>
-            </input>
-          </label>
-          <div class="pull-right"><a data-toggle="collapse" data-target="#v4" class="label label-success">Effect</a> <a href="http://developer.android.com/tools/extras/support-library.html" target="_blank" class="label label-info">Doc</a></div>
-          <span class="help-block">The support library v4 provides access to several classes introduced with Android 3.0 and beyond.</span>
-          <div id="v4" class="collapse out">
-            <p><strong>Effect</strong>: Add Support v4 dependency only.</p>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="span5 library">
-          <label class="checkbox">
-            <input type="checkbox" name="acra" value="true">ACRA <span>4.3.0</span>
-            </input>
-          </label>
-          <div class="pull-right"><a data-toggle="collapse" data-target="#acra" class="label label-success">Effect</a> <a href="https://code.google.com/p/acra/wiki/BasicSetup?tm=6#Introduction" target="_blank" class="label label-info">Usage</a> <a href="https://code.google.com/p/acra/" target="_blank" class="label label-info">Doc</a></div>
-          <span class="help-block">The support library v4 provides access to several classes introduced with Android 3.0 and beyond.</span>
-          <div id="acra" class="collapse out">
-            <p><strong>Effect</strong>: Add ACRA dependency, create a class extending Application with the basic ACRA configuration.</p>            
-          </div>
-        </div>
-        <div class="span5 pull-right library-soon">
-          <label class="checkbox">
-            <input type="checkbox" disabled>ViewPagerIndicator 2.4.1 (Soon)
-            </input>
-          </label>
-        </div>
-      </div>
-      <div class="row library-soon">
-        <div class="span5">
-          <label class="checkbox">
-            <input type="checkbox" disabled>Roboguice 2.0 (Soon)
-            </input>
-          </label>
-        </div>
-        <div class="span5 pull-right">
-          <label class="checkbox">
-            <input type="checkbox" disabled>ViewPager sample (Soon)
-            </input>
-          </label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="span12">
-          <div class="span5 offset3 kicker">
-            <button class="btn btn-large btn-danger" type="submit" onclick="_gaq.push(['_trackEvent', 'Downloads', 'Download it']);">
-              Download it!
-            </button>
-            <p><img width="16px" height="16px" src="https://github.com/favicon.ico"/> <a href="https://github.com/a-thomas/androidkickstartr/issues">Report an issue</a></p>
-          </div>
+        <label class="radio">
+          <input type="radio" name="navigationType" value="none" checked disabled>None
+        </label>
+        <label class="radio">
+          <input type="radio" name="navigationType" value="tabNavigation" disabled> Tab navigation
+        </label>
+        <label class="radio">
+          <input type="radio" name="navigationType" value="listNavigation" disabled>List navigation
         </div>
       </div>
     </div>
-  </form>
+    <div class="row library">
+      <div class="span5 ">
+        <label class="checkbox">
+          <input type="checkbox" name="nineOldAndroids" value="true">NineOldAndroids <span>2.4.0</span>
+        </input>
+      </label>
+      <div class="pull-right"><a data-toggle="collapse" data-target="#noa" class="label label-success">Effect</a> <a href="http://nineoldandroids.com/#usage" target="_blank" class="label label-info">Usage</a> <a href="http://nineoldandroids.com/" target="_blank" class="label label-info">Doc</a></div>
+      <span class="help-block">Using the Honeycomb (Android 3.0) animation API on all versions of the platform.</span>
+      <div id="noa" class="collapse out">
+        <p><strong>Effect</strong>: Add NineOldAndroids dependency only. Support v4 is included.</p>
+      </div>
+    </div>
+    <div class="span5 pull-right">
+      <label class="checkbox">
+        <input type="checkbox" name="supportV4" value="true">Android support v4 <span>r7</span>
+      </input>
+    </label>
+    <div class="pull-right"><a data-toggle="collapse" data-target="#v4" class="label label-success">Effect</a> <a href="http://developer.android.com/tools/extras/support-library.html" target="_blank" class="label label-info">Doc</a></div>
+    <span class="help-block">The support library v4 provides access to several classes introduced with Android 3.0 and beyond.</span>
+    <div id="v4" class="collapse out">
+      <p><strong>Effect</strong>: Add Support v4 dependency only.</p>
+    </div>
+  </div>
 </div>
+<div class="row">
+  <div class="span5 library">
+    <label class="checkbox">
+      <input type="checkbox" name="acra" value="true">ACRA <span>4.3.0</span>
+    </input>
+  </label>
+  <div class="pull-right"><a data-toggle="collapse" data-target="#acra" class="label label-success">Effect</a> <a href="https://code.google.com/p/acra/wiki/BasicSetup?tm=6#Introduction" target="_blank" class="label label-info">Usage</a> <a href="https://code.google.com/p/acra/" target="_blank" class="label label-info">Doc</a></div>
+  <span class="help-block">The support library v4 provides access to several classes introduced with Android 3.0 and beyond.</span>
+  <div id="acra" class="collapse out">
+    <p><strong>Effect</strong>: Add ACRA dependency, create a class extending Application with the basic ACRA configuration.</p>            
   </div>
-      <div class="doc">
-        <div class="container">
-          <div class="span12">
-            <h1>Documentation</h1>
-            <hr/>
-          </div>  
-          <div class="span5">
-            <h2>Maven</h2>
-            <p>1) <strong>Unzip</strong> the downloaded file.</p>
-            <p>2) <strong>Build and deploy</strong> your project by typing <code>mvn clean install android:deploy</code> in a command line from your project dir.</p>
-            <p>3) <strong>Import</strong> the project into Eclipse as an <img src="img/maven_project.png" /> in your workspace.</p>
-            <div class="well">
-              <p><span class="label label-important">Important</span> <strong>With ActionBarSherlock</strong></p><p>Kickstarting a project including the <a class="tips" data-title="ActionBarSherlock">ABS</a> library results to a zipped dir containing two folders: the generated project and the ABS library. </p>
-              <p>Just import the unzipped folder as an  <img src="img/maven_project.png" />. The two projects will be imported automatically.</p>
-            </div>
-          </div>
-          <div class="span5 pull-right">
-            <h2>Non-Maven</h2>
-            <p>1) <strong>Unzip</strong> the downloaded file.</p>
-            <p>2) <strong>Import</strong> your project into Eclipse as an <img src="img/eclipse_project.png" />.</p>
-            <div class="well">
-              <p><span class="label label-important">Important</span> <strong>With ActionBarSherlock</strong></p><p>Kickstarting a project including the <a class="tips" data-title="ActionBarSherlock">ABS</a> library results to a zipped dir containing two folders: the generated project and the ABS library. </p><p>Create another project as an <img src="img/android_project.png" /> and set the path to the <code>library</code> dir before import your project.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="footer">
-        <div class="container">
-            <p>Created and developed by <a href="http://twitter.com/AleksThomas">Alexandre THOMAS</a></a>. <br/>Logo designed by <a>AkStudio</a>. </p>
-            <p class="copyright">&copy; 2012 AndroidKickstartR</p>
-        </div>
-      </div>
+</div>
+<div class="span5 pull-right library-soon">
+  <label class="checkbox">
+    <input type="checkbox" disabled>ViewPagerIndicator 2.4.1 (Soon)
+  </input>
+</label>
+</div>
+</div>
+<div class="row library-soon">
+  <div class="span5">
+    <label class="checkbox">
+      <input type="checkbox" disabled>Roboguice 2.0 (Soon)
+    </input>
+  </label>
+</div>
+<div class="span5 pull-right">
+  <label class="checkbox">
+    <input type="checkbox" disabled>ViewPager sample (Soon)
+  </input>
+</label>
+</div>
+</div>
+<div class="row">
+  <div class="span12">
+    <div class="span5 offset3 kicker">
+      <button class="btn btn-large btn-danger" type="submit" onclick="_gaq.push(['_trackEvent', 'Downloads', 'Download it']);">
+        Download it!
+      </button>
+      <p><img width="16px" height="16px" src="https://github.com/favicon.ico"/> <a href="https://github.com/a-thomas/androidkickstartr/issues">Report an issue</a></p>
+    </div>
   </div>
-  <!-- /container -->
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js">
-  </script>
-  <script>
-    window.jQuery || document.write('<script src="js/vendor/jquery-1.8.1.min.js"><\/script>')
-  </script>
-  <script src="js/vendor/bootstrap.min.js">
-  </script>
-  <script src="js/main.js">
-  </script>
-  </body>
-  </html>
+</div>
+</div>
+</form>
+</div>
+</div>
+<div class="doc">
+  <div class="container">
+    <div class="span12">
+      <h1>Documentation</h1>
+      <hr/>
+    </div>  
+    <div class="span5">
+      <h2>Maven</h2>
+      <p>1) <strong>Unzip</strong> the downloaded file.</p>
+      <p>2) <strong>Build and deploy</strong> your project by typing <code>mvn clean install android:deploy</code> in a command line from your project dir.</p>
+      <p>3) <strong>Import</strong> the project into Eclipse as an <img src="img/maven_project.png" /> in your workspace.</p>
+      <div class="well">
+        <p><span class="label label-important">Important</span> <strong>With ActionBarSherlock</strong></p><p>Kickstarting a project including the <a class="tips" data-title="ActionBarSherlock">ABS</a> library results to a zipped dir containing two folders: the generated project and the ABS library. </p>
+        <p>Just import the unzipped folder as an  <img src="img/maven_project.png" />. The two projects will be imported automatically.</p>
+      </div>
+    </div>
+    <div class="span5 pull-right">
+      <h2>Non-Maven</h2>
+      <p>1) <strong>Unzip</strong> the downloaded file.</p>
+      <p>2) <strong>Import</strong> your project into Eclipse as an <img src="img/eclipse_project.png" />.</p>
+      <div class="well">
+        <p><span class="label label-important">Important</span> <strong>With ActionBarSherlock</strong></p><p>Kickstarting a project including the <a class="tips" data-title="ActionBarSherlock">ABS</a> library results to a zipped dir containing two folders: the generated project and the ABS library. </p><p>Create another project as an <img src="img/android_project.png" /> and set the path to the <code>library</code> dir before import your project.</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="footer">
+  <div class="container">
+    <p>Created and developed by <a href="http://twitter.com/AleksThomas">Alexandre THOMAS</a></a>. <br/>Logo designed by <a>AkStudio</a>. </p>
+    <p class="copyright">&copy; 2012 AndroidKickstartR</p>
+  </div>
+</div>
+</div>
+<!-- /container -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js">
+</script>
+<script>
+window.jQuery || document.write('<script src="js/vendor/jquery-1.8.1.min.js"><\/script>')
+</script>
+<script src="js/vendor/bootstrap.min.js">
+</script>
+<script src="js/main.js">
+</script>
+</body>
+</html>
