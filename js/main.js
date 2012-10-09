@@ -1,4 +1,8 @@
 $("#full").click(function(){
+  fullPreset();
+});
+
+function fullPreset() {
   checkBox("androidAnnotations", true);
   checkBox("restTemplate", true);
   checkBox("actionBarSherlock", true);
@@ -8,9 +12,13 @@ $("#full").click(function(){
   checkRadio("tabNavigation", true);
   $("input:radio[name=navigationType]").attr("disabled", false);
   disableCheckbox("supportV4", true);
-});
+}
 
 $("#basic").click(function(){
+  basicPreset();
+});
+
+function basicPreset() { 
   checkBox("androidAnnotations", true);
   checkBox("restTemplate", false);
   checkBox("actionBarSherlock", true);
@@ -20,9 +28,13 @@ $("#basic").click(function(){
   checkRadio("tabNavigation", true);
   $("input:radio[name=navigationType]").attr("disabled", false);
   disableCheckbox("supportV4", true);
-});
+};
 
 $("#rest").click(function(){
+  restPreset();
+});
+
+function restPreset() {
   checkBox("androidAnnotations", true);
   checkBox("restTemplate", true);
   checkBox("actionBarSherlock", true);
@@ -32,7 +44,7 @@ $("#rest").click(function(){
   checkRadio("tabNavigation", true);
   $("input:radio[name=navigationType]").attr("disabled", false);
   disableCheckbox("supportV4", true);
-});
+}
 
 function checkBox(name, checked) {
   $("input:checkbox[name="+ name +"]").attr("checked", checked);
@@ -92,3 +104,6 @@ $("#kickstartr-form").submit(function() {
 
 $('.tips').tooltip();
 
+// Select the basic Preset by default 
+$("#basic").button("toggle");
+basicPreset();
