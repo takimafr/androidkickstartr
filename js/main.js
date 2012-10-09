@@ -10,6 +10,9 @@ function fullPreset() {
   checkBox("supportV4", true);
   checkBox("acra", true);
   checkRadio("tabNavigation", true);
+  $("#tab").show();
+  $("#list").hide();
+  $("#none").hide();
   $("input:radio[name=navigationType]").attr("disabled", false);
   disableCheckbox("supportV4", true);
 }
@@ -26,6 +29,9 @@ function basicPreset() {
   checkBox("supportV4", true);
   checkBox("acra", false);
   checkRadio("tabNavigation", true);
+  $("#tab").show();
+  $("#list").hide();
+  $("#none").hide();
   $("input:radio[name=navigationType]").attr("disabled", false);
   disableCheckbox("supportV4", true);
 };
@@ -42,6 +48,9 @@ function restPreset() {
   checkBox("supportV4", true);
   checkBox("acra", false);
   checkRadio("tabNavigation", true);
+  $("#tab").show();
+  $("#list").hide();
+  $("#none").hide();
   $("input:radio[name=navigationType]").attr("disabled", false);
   disableCheckbox("supportV4", true);
 }
@@ -100,10 +109,32 @@ $("#kickstartr-form").submit(function() {
 
   return true;
 
-})
+});
+
+$("input:radio[value=none]").click(function() {
+  $("#tab").hide();
+  $("#list").hide();
+  $("#none").show();
+});
+
+$("input:radio[value=listNavigation]").click(function() {
+  $("#tab").hide();
+  $("#list").show();
+  $("#none").hide();
+});
+
+$("input:radio[value=tabNavigation]").click(function() {
+  $("#tab").show();
+  $("#list").hide();
+  $("#none").hide();
+});
 
 $('.tips').tooltip();
 
 // Select the basic Preset by default 
 $("#basic").button("toggle");
 basicPreset();
+
+$("#tab").show();
+$("#list").hide();
+

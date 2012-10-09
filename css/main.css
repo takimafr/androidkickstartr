@@ -141,6 +141,16 @@
     -webkit-border-radius:0.5em;
 }
 
+.details div {
+    width:140px;
+    float:left;
+}
+
+.details .preview {
+    width:300px;
+    float:right;
+}
+
 .details label {
     padding: 0;
     font-weight: 200;
@@ -440,19 +450,3 @@ body {
 .catchword {
     font-size: 15px;
 }
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -60,7 +60,7 @@
 </div>
 <div class="container libraries">
   <div class="row">
-    <form id="kickstartr-form" class="form-horizontal" method="POST" action="http://ws.androidkickstartr.com/">
+    <form id="kickstartr-form" class="form-horizontal" method="POST" action="http://localhost:8080">
       <div class="span12">
         <h1>1. Parameters</h1>
         <div class="span5 parameters fix">
@@ -163,19 +163,27 @@
         <p><strong>Effect</strong>: Add ActionBarSherlock dependency. Add <a class="tips" rel="tooltip" data-title="ActionBarSherlock">ABS</a> theme style. Use ABS classes instead. Get the code for a list or tab navigation (optional). Support v4 is included.</p>
       </div>
       <div class="details"> 
-        <label>
-          Navigation type:
-        </label>
-        <label class="radio">
-          <input type="radio" name="navigationType" value="none" checked disabled>None
-        </label>
-        <label class="radio">
-          <input type="radio" name="navigationType" value="tabNavigation" disabled> Tab navigation
-        </label>
-        <label class="radio">
-          <input type="radio" name="navigationType" value="listNavigation" disabled>List navigation
+        <div>
+          <label>
+            Navigation type:
+          </label>
+          <label class="radio">
+            <input type="radio" name="navigationType" value="none" checked disabled>None
+          </label>
+          <label class="radio">
+            <input type="radio" name="navigationType" value="tabNavigation" disabled>Tab navigation
+          </label>
+          <label class="radio">
+            <input type="radio" name="navigationType" value="listNavigation" disabled>List navigation
+          </label>
+        </div>
+        <div class="preview">
+          <img id="list" src="img/list_navigation.png" />
+          <img id="tab" src="img/tab_navigation.png" />
+          <img id="none" src="img/none_navigation.png" />
         </div>
       </div>
+    </div>
     </div>
     <div class="row library">
       <div class="span5 ">
