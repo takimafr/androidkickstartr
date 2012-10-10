@@ -90,6 +90,10 @@
     line-height: 1.25;
 }
 
+.libraries .controls .help-inline {
+    color: red;
+}
+
 .libraries .help-block {
     font-weight: 200;
 }

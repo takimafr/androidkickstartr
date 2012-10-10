@@ -94,19 +94,28 @@ $("#kickstartr-form").submit(function() {
   var $name = $("input:text[name=name]").val();
   var $nameValidation = /^[a-zA-Z0-9]*$/;
 
+  var $activity = $("input:text[name=activity]").val();
+  var $activityValidation = /^[a-zA-Z0-9]*$/;
+
   var $packageName = $("input:text[name=packageName]").val();
   var $packageValidation = /^([A-Za-z_]{1}[a-zA-Z0-9_]*(\.[a-zA-Z_]{1}[a-zA-Z0-9_]*)*)$/;
 
   if ($packageName != "" && !$packageValidation.test($packageName)) {
-    alert('wrong package name');
+    $("span[class=help-inline]").show();
     return false;
   }
 
   if ($name != "" && !$nameValidation.test($name)) {
-    alert('wrong application name');
+    $("span[class=help-inline]").show();
     return false;
   }
 
+  if ($activity != "" && !$activityValidation.test($activity)) {
+    $("span[class=help-inline]").show();
+    return false;
+  }
+
+  $("span[class=help-inline]").hide();
   return true;
 
 });
@@ -138,3 +147,4 @@ basicPreset();
 $("#tab").show();
 $("#list").hide();
 
+$("span[class=help-inline]").hide();
