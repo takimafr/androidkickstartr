@@ -1,2 +1,1 @@
-androidkickstartr
-=================
+[http://androidkickstartr.com](http://androidkickstartr.com)
