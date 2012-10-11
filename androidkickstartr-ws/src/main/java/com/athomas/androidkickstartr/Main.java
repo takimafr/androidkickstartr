@@ -25,7 +25,7 @@ public class Main {
 	@POST
 	@Produces("application/zip")
 	public Response go(//
-			
+
 			// State
 			@FormParam("actionBarSherlock") boolean actionBarSherlock,//
 			@FormParam("navigationType") String navigationType,//
@@ -46,7 +46,7 @@ public class Main {
 
 		boolean listNavigation = false;
 		boolean tabNavigation = false;
-		
+
 		if (navigationType != null) {
 			tabNavigation = navigationType.equals("tabNavigation");
 			listNavigation = navigationType.equals("listNavigation");
@@ -108,7 +108,11 @@ public class Main {
 			}
 		};
 
-		return Response.ok(output).header("Content-Disposition", "attachment; filename=" + file.getName()).build();
+		return Response //
+				.ok(output) //
+				.header("Content-Length", file.length()) //
+				.header("Content-Disposition", "attachment; filename=" + file.getName()) //
+				.build();
 	}
 
 }
