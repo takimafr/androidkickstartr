@@ -4,7 +4,11 @@ AndroidKickstartR helps you to quickly create a well configured Android applicat
 
 **Let's try it ! See [http://androidkickstartr.com](http://androidkickstartr.com).**
 
+* Twitter: [@AndKickstartR](https://twitter.com/AndKickstartr)
+* Mail : [androidkickstartr@gmail.com](mailto:androidkickstartr@gmail.com)
 
+## Developed by
+* Alexandre THOMAS - [@AleksThomas](https://twitter.com/AleksThomas)
 
 
 ## Licence
