@@ -367,6 +367,18 @@ body {
     padding:0;
 }
 
+.brand {
+    font-size: 12px;
+}
+
+.navbar {
+    font-size: 12px;
+}
+
+.navbar {
+    font-size: 12px;
+}
+
 .navbar-fixed-top {
     margin-bottom: 0;
 }
@@ -440,6 +452,14 @@ body {
 
 .navbar .container {
     width: 340px;
+}
+
+.description p {
+    font-size: 12px;
+}
+
+.description {
+    width:70%;
 }
 
 .container {
