@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+>
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.athomas.androidkickstartr</groupId>
+		<artifactId>androidkickstartr-parent</artifactId>
+		<version>1.0-BETA</version>
+	</parent>
+	<artifactId>androidkickstartr-ws</artifactId>
+	<packaging>war</packaging>
+	<name>AndroidKickstartR Web Services</name>
+  	<url>http://androidkickstartr.com</url>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.athomas.androidkickstartr</groupId>
+			<artifactId>androidkickstartr-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-server</artifactId>
+		</dependency>
+	</dependencies>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>cloudbees-public-release</id>
+			<url>http://repository-cloudbees.forge.cloudbees.com/public-release</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<build>
+		<finalName>android-kickstartr-ws</finalName>
+		<plugins>
+			<plugin>
+				<groupId>com.cloudbees</groupId>
+				<artifactId>bees-maven-plugin</artifactId>
+				<version>1.3.2</version>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
