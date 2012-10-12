@@ -106,6 +106,11 @@ public class Kickstartr {
 				File eclipseJdtAptCorePrefs = fileHelper.getEclipseJdtAptCorePrefs();
 				FileUtils.copyFile(eclipseJdtAptCorePrefs, targetEclipseJdtAptCorePrefsFile);
 				LOGGER.debug("org.eclipse.jdt.apt.core.prefs copied");
+				
+				File targetEclipseJdtCorePrefsFile = fileHelper.getTargetEclipseJdtCorePrefsFile();
+				File eclipseJdtCorePrefs = fileHelper.getEclipseJdtCorePrefs();
+				FileUtils.copyFile(eclipseJdtCorePrefs, targetEclipseJdtCorePrefsFile);
+				LOGGER.debug("org.eclipse.jdt.core.prefs copied");
 			}
 		} catch (IOException e) {
 			LOGGER.error("a problem occured during the org.eclipse.jdt.apt.core.prefs copying", e);

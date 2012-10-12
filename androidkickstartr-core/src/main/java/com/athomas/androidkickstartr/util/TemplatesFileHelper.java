@@ -19,7 +19,7 @@ import freemarker.template.TemplateException;
 public class TemplatesFileHelper {
 
 	private final static Logger LOGGER = LoggerFactory.getLogger(TemplatesFileHelper.class);
-	
+
 	private final FileHelper fileHelper;
 	private final Application application;
 	private final State state;
@@ -66,8 +66,10 @@ public class TemplatesFileHelper {
 			processTemplate(cfg, params, "ProjectProperties.ftl", fileHelper.getTargetProjectPropertiesFile());
 			LOGGER.debug("project.properties created");
 
-			processTemplate(cfg, params, "Classpath.ftl", fileHelper.getTargetClasspathFile());
-			LOGGER.debug(".classpath created");
+			if (!state.isMaven()) {
+				processTemplate(cfg, params, "Classpath.ftl", fileHelper.getTargetClasspathFile());
+				LOGGER.debug(".classpath created");
+			}
 		}
 
 		if (state.isAndroidAnnotations()) {

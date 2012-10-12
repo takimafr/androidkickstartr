@@ -131,8 +131,16 @@ public class FileHelper {
 		return createFile(getProject() + "/.settings/org.eclipse.jdt.apt.core.prefs");
 	}
 
+	public File getTargetEclipseJdtCorePrefsFile() throws IOException {
+		return createFile(getProject() + "/.settings/org.eclipse.jdt.core.prefs");
+	}
+
 	public File getEclipseJdtAptCorePrefs() throws IOException {
 		return getResource("org.eclipse.jdt.apt.core.prefs");
+	}
+	
+	public File getEclipseJdtCorePrefs() throws IOException {
+		return getResource("org.eclipse.jdt.core.prefs");
 	}
 
 	public File getProjectPropertiesFile() throws IOException {
