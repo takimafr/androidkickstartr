@@ -14,6 +14,7 @@
 
 	<application
 		android:icon="@drawable/ic_launcher"
+        android:theme="@style/AppTheme" 
 		<#if State.acra>
 		android:name="${ApplicationClassName}"
 		</#if>
