@@ -101,12 +101,13 @@ public class Kickstartr {
 		}
 
 		try {
-			if (state.isAndroidAnnotations() && state.isEclipse()) {
-				File targetEclipseJdtAptCorePrefsFile = fileHelper.getTargetEclipseJdtAptCorePrefsFile();
-				File eclipseJdtAptCorePrefs = fileHelper.getEclipseJdtAptCorePrefs();
-				FileUtils.copyFile(eclipseJdtAptCorePrefs, targetEclipseJdtAptCorePrefsFile);
-				LOGGER.debug("org.eclipse.jdt.apt.core.prefs copied");
-				
+			if (state.isEclipse()) {
+				if (state.isAndroidAnnotations()) {
+					File targetEclipseJdtAptCorePrefsFile = fileHelper.getTargetEclipseJdtAptCorePrefsFile();
+					File eclipseJdtAptCorePrefs = fileHelper.getEclipseJdtAptCorePrefs();
+					FileUtils.copyFile(eclipseJdtAptCorePrefs, targetEclipseJdtAptCorePrefsFile);
+					LOGGER.debug("org.eclipse.jdt.apt.core.prefs copied");
+				}
 				File targetEclipseJdtCorePrefsFile = fileHelper.getTargetEclipseJdtCorePrefsFile();
 				File eclipseJdtCorePrefs = fileHelper.getEclipseJdtCorePrefs();
 				FileUtils.copyFile(eclipseJdtCorePrefs, targetEclipseJdtCorePrefsFile);
