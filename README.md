@@ -6,7 +6,7 @@ AndroidKickstartR helps you to quickly create a well configured Android applicat
 
 * Twitter: [@AndKickstartR](https://twitter.com/AndKickstartr)
 * Mail : [androidkickstartr@gmail.com](mailto:androidkickstartr@gmail.com)
-* Mailing list : [https://groups.google.com/d/forum/androidkickstartr](Google groups)
+* Mailing list : [Google groups](https://groups.google.com/d/forum/androidkickstartr)
 
 ## Developed by
 * Alexandre THOMAS - [@AleksThomas](https://twitter.com/AleksThomas)
