@@ -8,7 +8,7 @@
     <groupId>com.athomas.androidkickstartr</groupId>
     <artifactId>androidkickstartr-parent</artifactId>
     <packaging>pom</packaging>
-    <version>1.0-BETA</version>
+    <version>0.9</version>
     
     <name>Android-Initializr</name>
     <url>http://androidkickstartr.com</url>

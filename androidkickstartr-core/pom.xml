@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>com.athomas.androidkickstartr</groupId>
 		<artifactId>androidkickstartr-parent</artifactId>
-		<version>1.0-BETA</version>
+		<version>0.9</version>
 	</parent>
 	<artifactId>androidkickstartr-core</artifactId>
 	<name>AndroidKickstartR Core</name>
