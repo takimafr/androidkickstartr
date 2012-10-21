@@ -44,7 +44,11 @@ public class Kickstartr {
 
 	private void extractResources(State state, Application application) {
 		try {
-			ResourcesUtils.copyResourcesTo(RESOURCES_DIR_PATH, "org.eclipse.jdt.apt.core.prefs");
+
+			File resourcesDir = new File(RESOURCES_DIR_PATH);
+			if (!resourcesDir.exists() || resourcesDir.list().length <= 0) {
+				ResourcesUtils.copyResourcesTo(RESOURCES_DIR_PATH, "org.eclipse.jdt.apt.core.prefs");
+			}
 			fileHelper = new FileHelper(application.getName(), RESOURCES_DIR_PATH, state.isMaven());
 		} catch (IOException e) {
 			LOGGER.error("an error occured during the resources extraction", e);
