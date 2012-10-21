@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class FileHelper {
 
-	private static final String TARGET = "target";
+	private static final String TARGET = "generated";
 	private String applicationName;
 	private boolean maven;
 	private String resourcePath;
