@@ -24,7 +24,9 @@ public class ResourcesUtils {
 		String protocol = url.getProtocol();
 
 		if (protocol.equals("file")) {
-			// TODO for development env
+			File src = new File("src/main/resources");
+			File targetDir = new File(target);
+			FileUtils.copyDirectory(src, targetDir);
 		} else if (protocol.equals("jar")) {
 			copyResourcesToFromJar(target, url);
 		}
