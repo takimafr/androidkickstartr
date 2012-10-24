@@ -51,7 +51,7 @@ public class MainActivityGenerator implements Generator {
 			// TODO Enhance that
 			ref.r(application.getR()); // must do it at least once
 
-			createActivity(application.getActivityLayout());
+			createActivity();
 
 			JFieldVar textViewField = createTextViewField("hello");
 
@@ -72,7 +72,7 @@ public class MainActivityGenerator implements Generator {
 		return jCodeModel;
 	}
 
-	private void createActivity(String layout) {
+	private void createActivity() {
 		JClass parentActivity;
 
 		if (state.isViewPager()) {
@@ -86,7 +86,7 @@ public class MainActivityGenerator implements Generator {
 		// @EActivity
 		if (state.isAndroidAnnotations()) {
 			JAnnotationUse eactivityAnnotation = jClass.annotate(ref.eactivity());
-			JFieldRef field = ref.r().staticRef("layout").ref(layout);
+			JFieldRef field = ref.r().staticRef("layout").ref(application.getActivityLayout());
 			eactivityAnnotation.param("value", field);
 		}
 	}
@@ -112,9 +112,12 @@ public class MainActivityGenerator implements Generator {
 			onCreate.annotate(ref.override());
 			JVar params = onCreate.param(ref.bundle(), "savedInstanceState");
 			afterViewsBody = onCreate.body();
-			JExpression _super = JExpr._super();
-			JInvocation onCreateInvocation = _super.invoke("onCreate").arg(params);
+			// super.onCreate()
+			JInvocation onCreateInvocation = JExpr._super().invoke("onCreate").arg(params);
 			afterViewsBody.add(onCreateInvocation);
+
+			// setContentView(R.layout.xxx)
+			afterViewsBody.invoke("setContentView").arg(ref.r().staticRef("layout").ref(application.getActivityLayout()));
 		} else {
 			JMethod afterViews = jClass.method(JMod.NONE, jCodeModel.VOID, "afterViews");
 			afterViews.annotate(ref.afterViews());
