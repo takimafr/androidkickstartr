@@ -53,6 +53,10 @@ public class TemplatesFileHelper {
 
 		processTemplate(cfg, params, "Styles.ftl", fileHelper.getTargetStylesFile());
 		LOGGER.debug("styles.xml created");
+		
+		processTemplate(cfg, params, "ActivityMain.ftl", fileHelper.getTargetActivityMainFile());
+		LOGGER.debug("activity_main.xml created");
+		
 
 		if (state.isMaven()) {
 			processTemplate(cfg, params, "Pom.ftl", fileHelper.getTargetPomFile());

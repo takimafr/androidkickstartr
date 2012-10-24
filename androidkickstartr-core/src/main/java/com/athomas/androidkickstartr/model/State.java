@@ -163,6 +163,10 @@ public class State {
 				throw new IllegalArgumentException("support V4 is already included.");
 			}
 
+			if (state.viewPager && !state.supportV4 && !state.actionBarSherlock && !state.viewPagerIndicator) {
+				throw new IllegalArgumentException("ViewPager needs support v4.");
+			}
+
 			return state;
 		}
 	}

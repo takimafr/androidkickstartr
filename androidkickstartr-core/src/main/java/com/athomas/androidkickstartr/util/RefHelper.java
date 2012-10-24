@@ -8,14 +8,18 @@ import static com.athomas.androidkickstartr.CanonicalNameConsts.ARRAY_ADAPTER;
 import static com.athomas.androidkickstartr.CanonicalNameConsts.BACKGROUND;
 import static com.athomas.androidkickstartr.CanonicalNameConsts.BUNDLE;
 import static com.athomas.androidkickstartr.CanonicalNameConsts.CHARSEQUENCE;
+import static com.athomas.androidkickstartr.CanonicalNameConsts.COLOR;
 import static com.athomas.androidkickstartr.CanonicalNameConsts.CONTEXT;
 import static com.athomas.androidkickstartr.CanonicalNameConsts.EACTIVITY;
 import static com.athomas.androidkickstartr.CanonicalNameConsts.FRAGMENT_ACTIVITY;
 import static com.athomas.androidkickstartr.CanonicalNameConsts.FRAGMENT_PAGER_ADAPTER;
 import static com.athomas.androidkickstartr.CanonicalNameConsts.FRAGMENT_TRANSACTION;
 import static com.athomas.androidkickstartr.CanonicalNameConsts.GET;
+import static com.athomas.androidkickstartr.CanonicalNameConsts.GRAVITY;
 import static com.athomas.androidkickstartr.CanonicalNameConsts.MENU;
+import static com.athomas.androidkickstartr.CanonicalNameConsts.ON_PAGE_CHANGE_LISTENER;
 import static com.athomas.androidkickstartr.CanonicalNameConsts.OVERRIDE;
+import static com.athomas.androidkickstartr.CanonicalNameConsts.PAGER_ADAPTER;
 import static com.athomas.androidkickstartr.CanonicalNameConsts.REPORTS_CRASHES;
 import static com.athomas.androidkickstartr.CanonicalNameConsts.REST;
 import static com.athomas.androidkickstartr.CanonicalNameConsts.REST_SERVICE;
@@ -29,7 +33,9 @@ import static com.athomas.androidkickstartr.CanonicalNameConsts.SHERLOCK_TAB_LIS
 import static com.athomas.androidkickstartr.CanonicalNameConsts.STRING;
 import static com.athomas.androidkickstartr.CanonicalNameConsts.TEXT_VIEW;
 import static com.athomas.androidkickstartr.CanonicalNameConsts.UITHREAD;
+import static com.athomas.androidkickstartr.CanonicalNameConsts.VIEW;
 import static com.athomas.androidkickstartr.CanonicalNameConsts.VIEW_BY_ID;
+import static com.athomas.androidkickstartr.CanonicalNameConsts.VIEW_GROUP;
 import static com.athomas.androidkickstartr.CanonicalNameConsts.VIEW_PAGER;
 
 import com.sun.codemodel.JClass;
@@ -42,6 +48,8 @@ public class RefHelper {
 	private JClass viewById;
 	private JClass viewPager;
 	private JClass r;
+	private JClass sTab;
+	private JClass fragmentTransaction;
 
 	public RefHelper(JCodeModel codeModel) {
 		this.codeModel = codeModel;
@@ -75,6 +83,22 @@ public class RefHelper {
 		return ref(FRAGMENT_PAGER_ADAPTER);
 	}
 
+	public JClass pagerAdapter() {
+		return ref(PAGER_ADAPTER);
+	}
+
+	public JClass viewGroup() {
+		return ref(VIEW_GROUP);
+	}
+
+	public JClass view() {
+		return ref(VIEW);
+	}
+
+	public JClass color() {
+		return ref(COLOR);
+	}
+
 	public JClass textView() {
 		if (textView == null) {
 			textView = ref(TEXT_VIEW);
@@ -101,7 +125,11 @@ public class RefHelper {
 	public JClass application() {
 		return ref(APPLICATION);
 	}
-
+	
+	public JClass gravity() {
+		return ref(GRAVITY);
+	}
+	
 	public JClass r(String name) {
 		if (r == null) {
 			r = ref(name);
@@ -125,8 +153,15 @@ public class RefHelper {
 		return viewPager;
 	}
 
+	public JClass onPageChangeListener() {
+		return ref(ON_PAGE_CHANGE_LISTENER);
+	}
+
 	public JClass fragmentTransaction() {
-		return ref(FRAGMENT_TRANSACTION);
+		if (fragmentTransaction == null) {
+			fragmentTransaction = ref(FRAGMENT_TRANSACTION);
+		}
+		return fragmentTransaction;
 	}
 
 	// AndroidAnnotations
@@ -193,7 +228,10 @@ public class RefHelper {
 	}
 
 	public JClass sTab() {
-		return ref(SHERLOCK_TAB);
+		if (sTab == null) {
+			sTab = ref(SHERLOCK_TAB);
+		}
+		return sTab;
 	}
 
 	// Acra

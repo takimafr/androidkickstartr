@@ -35,6 +35,9 @@ public class MainActivityGenerator implements Generator {
 	private Logger LOGGER = LoggerFactory.getLogger(getClass());
 	private Application application;
 
+	private JFieldVar pagerField;
+	private JFieldVar locationsField;
+
 	public MainActivityGenerator(State state, Application application) {
 		this.state = state;
 		this.application = application;
@@ -53,16 +56,27 @@ public class MainActivityGenerator implements Generator {
 
 			createActivity();
 
-			JFieldVar textViewField = createTextViewField("hello");
-
 			JBlock afterViewsBody = createAfterViewsMethod();
-			doTextViewViewById(afterViewsBody, "hello", textViewField);
 
-			addRestClient(textViewField);
+			JFieldVar textViewField = null;
+			if (!state.isViewPager()) {
+				textViewField = createTextViewField("hello");
+				doViewById(afterViewsBody, "hello", textViewField, ref.textView());
+			}
+
+			if (state.isRestTemplate() && state.isAndroidAnnotations()) {
+				addRestClient(textViewField);
+			}
 
 			createOnCreateOptionsMenu();
 
-			createConfigureViewPager(afterViewsBody, application.getViewPagerAdapterPackage());
+			if (state.isTabNavigation() || state.isListNavigation()) {
+				createAndInitLocationsField(afterViewsBody);
+			}
+
+			if (state.isViewPager()) {
+				addViewPager(jCodeModel, afterViewsBody);
+			}
 
 			createConfigureActionBar(afterViewsBody);
 
@@ -72,14 +86,21 @@ public class MainActivityGenerator implements Generator {
 		return jCodeModel;
 	}
 
+	
+	private void createAndInitLocationsField(JBlock afterViewsBody) {
+		// private String[] locations;
+		locationsField = jClass.field(JMod.PRIVATE, ref.string().array(), "locations");
+		// locations = getResources().getStringArray(R.array.locations);
+		JFieldRef rArrayLocations = ref.r().staticRef("array").ref("locations");
+		JInvocation getResources = JExpr.invoke("getResources");
+		JInvocation getStringArray = getResources.invoke("getStringArray").arg(rArrayLocations);
+		afterViewsBody.assign(locationsField, getStringArray);
+	}
+
 	private void createActivity() {
 		JClass parentActivity;
 
-		if (state.isViewPager()) {
-			parentActivity = state.isViewPager() ? ref.sFragmentActivity() : ref.fragmentActivity();
-		} else {
-			parentActivity = state.isActionBarSherlock() ? ref.sActivity() : ref.activity();
-		}
+		parentActivity = state.isActionBarSherlock() ? ref.sActivity() : ref.activity();
 
 		jClass._extends(parentActivity);
 
@@ -101,10 +122,6 @@ public class MainActivityGenerator implements Generator {
 		return createViewField(ref.textView(), name);
 	}
 
-	private JFieldVar createViewPagerField(String name) {
-		return createViewField(ref.viewPager(), name);
-	}
-
 	private JBlock createAfterViewsMethod() {
 		JBlock afterViewsBody;
 		if (!state.isAndroidAnnotations()) {
@@ -124,14 +141,6 @@ public class MainActivityGenerator implements Generator {
 			afterViewsBody = afterViews.body();
 		}
 		return afterViewsBody;
-	}
-
-	private void doTextViewViewById(JBlock afterViewsBody, String id, JFieldVar field) {
-		doViewById(afterViewsBody, id, field, ref.textView());
-	}
-
-	private void doViewPagerViewById(JBlock afterViewsBody, String id, JFieldVar field) {
-		doViewById(afterViewsBody, id, field, ref.viewPager());
 	}
 
 	private void doViewById(JBlock afterViewsBody, String id, JFieldVar field, JClass type) {
@@ -197,24 +206,34 @@ public class MainActivityGenerator implements Generator {
 		// implements TabListener
 		jClass._implements(ref.sTabListener());
 
-		JClass sherlockTab = ref.sTab();
-		JClass fragmentTransaction = ref.fragmentTransaction();
+		// @Override
+		// public void onTabSelected(Tab tab, FragmentTransaction ft) {
+		JMethod onTabSelectedMethod = jClass.method(JMod.PUBLIC, jCodeModel.VOID, "onTabSelected");
+		JVar tabParam = onTabSelectedMethod.param(ref.sTab(), "tab");
+		onTabSelectedMethod.param(ref.fragmentTransaction(), "ft");
+		onTabSelectedMethod.annotate(ref.override());
+		JBlock onTabSelectedBody = onTabSelectedMethod.body();
 
-		// override TabListener methods
-		JMethod onTabSelected = jClass.method(JMod.PUBLIC, jCodeModel.VOID, "onTabSelected");
-		onTabSelected.param(sherlockTab, "tab");
-		onTabSelected.param(fragmentTransaction, "ft");
-		onTabSelected.annotate(ref.override());
+		if (state.isViewPager()) {
+			// int position = tab.getPosition();
+			JVar positionVar = onTabSelectedBody.decl(jCodeModel.INT, "position", tabParam.invoke("getPosition"));
+			// pager.setCurrentItem(position);
+			onTabSelectedBody.invoke(pagerField, "setCurrentItem").arg(positionVar);
+		}
 
-		JMethod onTabUnselected = jClass.method(JMod.PUBLIC, jCodeModel.VOID, "onTabUnselected");
-		onTabUnselected.param(sherlockTab, "tab");
-		onTabUnselected.param(fragmentTransaction, "ft");
-		onTabUnselected.annotate(ref.override());
+		// @Override
+		// public void onTabUnselected(Tab tab, FragmentTransaction ft) {}
+		JMethod onTabUnselectedMethod = jClass.method(JMod.PUBLIC, jCodeModel.VOID, "onTabUnselected");
+		onTabUnselectedMethod.param(ref.sTab(), "tab");
+		onTabUnselectedMethod.param(ref.fragmentTransaction(), "ft");
+		onTabUnselectedMethod.annotate(ref.override());
 
-		JMethod onTabReselected = jClass.method(JMod.PUBLIC, jCodeModel.VOID, "onTabReselected");
-		onTabReselected.param(sherlockTab, "tab");
-		onTabReselected.param(fragmentTransaction, "ft");
-		onTabReselected.annotate(ref.override());
+		// @Override
+		// public void onTabReselected(Tab tab, FragmentTransaction ft) {}
+		JMethod onTabReselectedMethod = jClass.method(JMod.PUBLIC, jCodeModel.VOID, "onTabReselected");
+		onTabReselectedMethod.param(ref.sTab(), "tab");
+		onTabReselectedMethod.param(ref.fragmentTransaction(), "ft");
+		onTabReselectedMethod.annotate(ref.override());
 
 		JInvocation getSupportActionBar = JExpr.invoke("getSupportActionBar");
 
@@ -222,21 +241,13 @@ public class MainActivityGenerator implements Generator {
 		JInvocation setNavigationMode = getSupportActionBar.invoke("setNavigationMode").arg(navigationModeList);
 		configureActionBarBody.add(setNavigationMode);
 
-		JFieldRef rArrayLocations = ref.r().staticRef("array").ref("locations");
-		JInvocation getResources = JExpr.invoke("getResources");
-		JInvocation getStringArray = getResources.invoke("getStringArray").arg(rArrayLocations);
-
-		JClass string = ref.string();
-		JClass stringArray = string.array();
-		JVar locations = configureActionBarBody.decl(stringArray, "locations", getStringArray);
-
-		JForEach forEachLocation = configureActionBarBody.forEach(string, "location", locations);
+		JForEach forEachLocation = configureActionBarBody.forEach(ref.string(), "location", locationsField);
 		JVar location = forEachLocation.var();
 
 		JBlock forEachLocationBody = forEachLocation.body();
 		JInvocation newTab = getSupportActionBar.invoke("newTab");
 
-		JVar tab = forEachLocationBody.decl(sherlockTab, "tab", newTab);
+		JVar tab = forEachLocationBody.decl(ref.sTab(), "tab", newTab);
 		JInvocation setText = tab.invoke("setText").arg(location);
 		JInvocation setTabListener = tab.invoke("setTabListener").arg(JExpr._this());
 		JInvocation addTab = getSupportActionBar.invoke("addTab").arg(tab);
@@ -249,13 +260,21 @@ public class MainActivityGenerator implements Generator {
 	private void addListNavigationConfiguration(JBlock configureActionBarBody) {
 		jClass._implements(ref.sNavigationListener());
 
-		JMethod onNavigationItemSelected = jClass.method(JMod.PUBLIC, jCodeModel.BOOLEAN, "onNavigationItemSelected");
-		onNavigationItemSelected.param(jCodeModel.INT, "itemPosition");
-		onNavigationItemSelected.param(jCodeModel.LONG, "itemId");
-		onNavigationItemSelected.annotate(ref.override());
+		// @Override
+		// public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+		JMethod onNavigationItemSelectedMethod = jClass.method(JMod.PUBLIC, jCodeModel.BOOLEAN, "onNavigationItemSelected");
+		JVar itemPositionParam = onNavigationItemSelectedMethod.param(jCodeModel.INT, "itemPosition");
+		onNavigationItemSelectedMethod.param(jCodeModel.LONG, "itemId");
+		onNavigationItemSelectedMethod.annotate(ref.override());
 
-		JBlock body = onNavigationItemSelected.body();
-		body._return(TRUE);
+		if (state.isViewPager()) {
+			// pager.setCurrentItem(itemPosition);
+			JBlock onNavigationItemSelectedBody = onNavigationItemSelectedMethod.body();
+			onNavigationItemSelectedBody.invoke(pagerField, "setCurrentItem").arg(itemPositionParam);
+
+			// return true;
+			onNavigationItemSelectedBody._return(JExpr.TRUE);
+		}
 
 		// configure Tab navigation
 		JInvocation getSupportActionbar = JExpr.invoke("getSupportActionBar");
@@ -288,50 +307,96 @@ public class MainActivityGenerator implements Generator {
 		configureActionBarBody.add(setListNavigationCallbacks);
 	}
 
-	private void createConfigureViewPager(JBlock afterViewsBody, String viewPagerAdapterName) {
-		if (state.isViewPager()) {
-			JFieldVar pagerField = createViewPagerField("pager");
-			doViewPagerViewById(afterViewsBody, "pager", pagerField);
-
-			afterViewsBody.invoke("configureViewPager");
-
-			JMethod configureViewPager = jClass.method(JMod.PRIVATE, jCodeModel.VOID, "configureViewPager");
-			JBlock configureViewPagerBody = configureViewPager.body();
-
-			JClass viewPagerAdapter = ref.ref(viewPagerAdapterName);
-
-			JInvocation getSupportFragmentManager = JExpr.invoke("getSupportFragmentManager");
-			JInvocation newViewPagerAdapter = JExpr._new(viewPagerAdapter).arg(getSupportFragmentManager);
-
-			JVar pagerAdapter = configureViewPagerBody.decl(viewPagerAdapter, "pagerAdapter", newViewPagerAdapter);
-			pagerField.invoke("setAdapter").arg(pagerAdapter);
-		}
-	}
-
 	private void addRestClient(JFieldVar textViewField) {
-		if (state.isRestTemplate() && state.isAndroidAnnotations()) {
+		// add annotated restClient field
+		JFieldVar restClient = jClass.field(JMod.NONE, ref.ref(application.getRestClientPackage()), "restClient");
+		restClient.annotate(ref.restService());
 
-			// add annotated restClient field
-			JFieldVar restClient = jClass.field(JMod.NONE, ref.ref(application.getRestClientPackage()), "restClient");
-			restClient.annotate(ref.restService());
+		// add doSomethingElseOnUiThread method
+		JMethod doSomethingElseOnUiThread = jClass.method(JMod.NONE, jCodeModel.VOID, "doSomethingElseOnUiThread");
+		doSomethingElseOnUiThread.annotate(ref.uithread());
 
-			// add doSomethingElseOnUiThread method
-			JMethod doSomethingElseOnUiThread = jClass.method(JMod.NONE, jCodeModel.VOID, "doSomethingElseOnUiThread");
-			doSomethingElseOnUiThread.annotate(ref.uithread());
+		JBlock body = doSomethingElseOnUiThread.body();
 
-			JBlock body = doSomethingElseOnUiThread.body();
+		if (textViewField != null) {
 			body.invoke(textViewField, "setText").arg("Hi!");
+		} else {
+			body.directStatement("// do something on UIThread");
+		}
 
-			// add doSomethingInBackground method
-			JMethod doSomethingInBackground = jClass.method(JMod.NONE, jCodeModel.VOID, "doSomethingInBackground");
-			doSomethingInBackground.annotate(ref.background());
-			JBlock doSomethingInBackgroundBody = doSomethingInBackground.body();
+		// add doSomethingInBackground method
+		JMethod doSomethingInBackground = jClass.method(JMod.NONE, jCodeModel.VOID, "doSomethingInBackground");
+		doSomethingInBackground.annotate(ref.background());
+		JBlock doSomethingInBackgroundBody = doSomethingInBackground.body();
 
-			JInvocation restClientMain = restClient.invoke("main");
-			doSomethingInBackgroundBody.add(restClientMain);
-			doSomethingInBackgroundBody.invoke(doSomethingElseOnUiThread);
+		JInvocation restClientMain = restClient.invoke("main");
+		doSomethingInBackgroundBody.add(restClientMain);
+		doSomethingInBackgroundBody.invoke(doSomethingElseOnUiThread);
+	}
+	private void addViewPager(JCodeModel jCodeModel, JBlock afterViewsBody) {
+		pagerField = createViewField(ref.viewPager(), "pager");
+		doViewById(afterViewsBody, "pager", pagerField, ref.viewPager());
 
+		// configureViewPager();
+		afterViewsBody.invoke("configureViewPager");
+
+		// private void configureViewPager() {
+		JMethod configureViewPager = jClass.method(JMod.PRIVATE, jCodeModel.VOID, "configureViewPager");
+		JBlock configureViewPagerBody = configureViewPager.body();
+
+		JClass viewPagerAdapterClass = ref.ref(application.getViewPagerAdapterPackage());
+
+		// ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this, locations);
+		JInvocation newViewPagerAdapter = JExpr._new(viewPagerAdapterClass).arg(JExpr._this());
+		if (state.isListNavigation() || state.isTabNavigation()) {
+			newViewPagerAdapter.arg(locationsField);
+		}
+		
+		JVar viewPagerAdapterVar = configureViewPagerBody.decl(viewPagerAdapterClass, "viewPagerAdapter", newViewPagerAdapter);
+		// pager.setAdapter(viewPagerAdapter);
+		configureViewPagerBody.invoke(pagerField, "setAdapter").arg(viewPagerAdapterVar);
+
+		if (state.isListNavigation() || state.isTabNavigation()) {
+			// pager.setOnPageChangeListener(this);
+			configureViewPagerBody.invoke(pagerField, "setOnPageChangeListener").arg(JExpr._this());
+
+			// implements OnPageChangeListener
+			jClass._implements(ref.onPageChangeListener());
+
+			// @Override
+			// public void onPageScrollStateChanged(int position) {}
+			JMethod onPageScrollStateChangedMethod = jClass.method(JMod.PUBLIC, jCodeModel.VOID, "onPageScrollStateChanged");
+			onPageScrollStateChangedMethod.param(jCodeModel.INT, "position");
+			onPageScrollStateChangedMethod.annotate(ref.override());
+
+			// @Override
+			// public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+			JMethod onPageScrolledMethod = jClass.method(JMod.PUBLIC, jCodeModel.VOID, "onPageScrolled");
+			onPageScrolledMethod.param(jCodeModel.INT, "position");
+			onPageScrolledMethod.param(jCodeModel.FLOAT, "positionOffset");
+			onPageScrolledMethod.param(jCodeModel.INT, "positionOffsetPixels");
+			onPageScrolledMethod.annotate(ref.override());
+
+			// @Override
+			// public void onPageSelected(int position) {
+			JMethod onPageSelectedMethod = jClass.method(JMod.PUBLIC, jCodeModel.VOID, "onPageSelected");
+			JVar positionVar = onPageSelectedMethod.param(jCodeModel.INT, "position");
+			JBlock onPageSelectedBody = onPageSelectedMethod.body();
+			if (state.isTabNavigation()) {
+				// Tab tab = getSupportActionBar().getTabAt(position);
+				// getSupportActionBar().selectTab(tab);
+				JInvocation getTabAtMethod = JExpr.invoke("getSupportActionBar").invoke("getTabAt").arg(positionVar);
+				JVar tabVar = onPageSelectedBody.decl(ref.sTab(), "tab", getTabAtMethod);
+				JInvocation getSupportActionBarInvoke = JExpr.invoke("getSupportActionBar");
+				onPageSelectedBody.invoke(getSupportActionBarInvoke, "selectTab").arg(tabVar);
+
+			} else if (state.isListNavigation()) {
+				// getSupportActionBar().setSelectedNavigationItem(position);
+				JInvocation getSupportActionBarInvoke = JExpr.invoke("getSupportActionBar");
+				onPageSelectedBody.invoke(getSupportActionBarInvoke, "setSelectedNavigationItem").arg(positionVar);
+			}
 		}
 	}
+
 
 }

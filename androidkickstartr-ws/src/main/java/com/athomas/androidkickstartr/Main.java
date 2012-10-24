@@ -36,6 +36,8 @@ public class Main {
 			@FormParam("supportV4") boolean supportV4,//
 			@FormParam("acra") boolean acra,//
 			@FormParam("eclipse") boolean eclipse,//
+			@FormParam("viewpPager") boolean viewPager,//
+			@FormParam("viewPagerIndicator") boolean viewPagerIndicator,//
 
 			// Application
 			@FormParam("packageName") String packageName,//
@@ -69,8 +71,8 @@ public class Main {
 				actionBarSherlock(actionBarSherlock).//
 				listNavigation(listNavigation).//
 				tabNavigation(tabNavigation).//
-				viewPager(false).//
-				viewPagerIndicator(false).//
+				viewPager(viewPager).//
+				viewPagerIndicator(viewPagerIndicator).//
 				androidAnnotations(androidAnnotations).//
 				restTemplate(restTemplate). //
 				maven(maven). //

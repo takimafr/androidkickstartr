@@ -115,6 +115,10 @@ public class FileHelper {
 		return createFile(getProject() + "/res/values/styles.xml");
 	}
 
+	public File getTargetActivityMainFile() throws IOException {
+		return createFile(getProject() + "/res/layout/activity_main.xml");
+	}
+
 	public File getTargetProjectFile() throws IOException {
 		return createFile(getProject() + "/.project");
 	}

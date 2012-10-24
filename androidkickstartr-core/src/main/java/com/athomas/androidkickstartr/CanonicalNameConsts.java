@@ -23,11 +23,17 @@ public final class CanonicalNameConsts {
 	public static String MENU = "android.view.Menu";
 	public static String CONTEXT = "android.content.Context";
 	public static String ARRAY_ADAPTER = "android.widget.ArrayAdapter";
+	public static String VIEW_GROUP = "android.view.ViewGroup";
+	public static String VIEW = "android.view.View";
+	public static String COLOR = "android.graphics.Color";
+	public static String GRAVITY = "android.view.Gravity";
 
 	public static String FRAGMENT_TRANSACTION = "android.support.v4.app.FragmentTransaction";
 	public static String FRAGMENT_ACTIVITY = "android.support.v4.app.FragmentActivity";
 	public static String VIEW_PAGER = "android.support.v4.view.ViewPager";
 	public static String FRAGMENT_PAGER_ADAPTER = "android.support.v4.app.FragmentPagerAdapter";
+	public static String PAGER_ADAPTER = "android.support.v4.view.PagerAdapter";
+	public static String ON_PAGE_CHANGE_LISTENER = "android.support.v4.view.ViewPager.OnPageChangeListener";
 
 	/**
 	 * ActionBarSherlock classes

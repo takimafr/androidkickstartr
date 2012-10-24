@@ -146,7 +146,7 @@ public class Kickstartr {
 		generators.add(new MainActivityGenerator(state, application));
 
 		if (state.isViewPager()) {
-			generators.add(new ViewPagerGenerator(application));
+			generators.add(new ViewPagerGenerator(state, application));
 		}
 
 		if (state.isRestTemplate() && state.isAndroidAnnotations()) {
