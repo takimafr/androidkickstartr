@@ -5,6 +5,11 @@ import java.util.ArrayList;
 
 import junit.framework.Assert;
 
+import org.apache.maven.shared.invoker.DefaultInvocationRequest;
+import org.apache.maven.shared.invoker.DefaultInvoker;
+import org.apache.maven.shared.invoker.InvocationRequest;
+import org.apache.maven.shared.invoker.InvocationResult;
+import org.apache.maven.shared.invoker.MavenInvocationException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,7 +17,7 @@ import org.junit.Test;
 import com.athomas.androidkickstartr.model.Application;
 import com.athomas.androidkickstartr.model.State;
 
-public class KickstartrTest {
+public class KickstartrMavenTest {
 
 	private static Application application;
 
@@ -25,7 +30,7 @@ public class KickstartrTest {
 				packageName("com.androidkickstartr.app").//
 				name("MyApp").//
 				activity("MainActivity").//
-				activityLayout("main_activity").//
+				activityLayout("activity_main").//
 				minSdk(8).//
 				targetSdk(16).//
 				permissions(new ArrayList<String>()).//
@@ -34,18 +39,85 @@ public class KickstartrTest {
 
 	@After
 	public void cleanProject() {
+		buildWithMaven();
 		kickstartr.clean();
 	}
 
-	/*
-	 * MAVEN
-	 */
+	private void buildWithMaven() {
+		InvocationRequest request = new DefaultInvocationRequest();
 
+		File pom = new File("generated/MyApp-AndroidKickstartr/MyApp/pom.xml");
+		Assert.assertNotNull(pom);
+		Assert.assertTrue(pom.exists());
+		request.setPomFile(pom);
+
+		File baseDir = new File("generated/MyApp-AndroidKickstartr/MyApp");
+		Assert.assertNotNull(baseDir);
+		Assert.assertTrue(baseDir.exists());
+		request.setBaseDirectory(baseDir);
+
+		ArrayList<String> goals = new ArrayList<String>();
+		goals.add("clean");
+		goals.add("install");
+		goals.add("android:deploy");
+		request.setGoals(goals);
+		request.setShowErrors(true);
+		request.setDebug(false);
+
+		DefaultInvoker invoker = new DefaultInvoker();
+		String mavenHome = System.getenv("MAVEN_HOME");
+
+		invoker.setMavenHome(new File(mavenHome));
+		InvocationResult result;
+		try {
+			result = invoker.execute(request);
+
+			Assert.assertTrue(result.getExitCode() == 0);
+			Assert.assertTrue(result.getExecutionException() == null);
+		} catch (MavenInvocationException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void generateProject_maven() {
+		state = new State.Builder().//
+				maven(true). //
+				build();
+
+		File file = launchKickstartr();
+		Assert.assertNotNull(file);
+	}
+
+	@Test
+	public void generateProject_maven_viewpager() {
+		state = new State.Builder().//
+				maven(true). //
+				viewPager(true). //
+				supportV4(true). //
+				build();
+
+		File file = launchKickstartr();
+		Assert.assertNotNull(file);
+	}
+	
 	@Test
 	public void generateProject_maven_abs() {
 		state = new State.Builder().//
 				maven(true). //
 				actionBarSherlock(true).//
+				build();
+
+		File file = launchKickstartr();
+		Assert.assertNotNull(file);
+	}
+	
+	@Test
+	public void generateProject_maven_abs_viewpager() {
+		state = new State.Builder().//
+				maven(true). //
+				actionBarSherlock(true).//
+				viewPager(true). //
 				build();
 
 		File file = launchKickstartr();
@@ -65,7 +137,7 @@ public class KickstartrTest {
 	}
 
 	@Test
-	public void generateProject_maven_abs_tab_view_pager() {
+	public void generateProject_maven_abs_tab_viewpager() {
 		state = new State.Builder().//
 				maven(true). //
 				actionBarSherlock(true).//
@@ -90,7 +162,7 @@ public class KickstartrTest {
 	}
 
 	@Test
-	public void generateProject_maven_abs_list_view_pager() {
+	public void generateProject_maven_abs_list_viewpager() {
 		state = new State.Builder().//
 				maven(true). //
 				actionBarSherlock(true).//
@@ -183,152 +255,6 @@ public class KickstartrTest {
 	public void generateProject_maven_abs_aa_rest_acra_nine_viewpager() {
 		state = new State.Builder().//
 				maven(true). //
-				actionBarSherlock(true). //
-				androidAnnotations(true). //
-				restTemplate(true).//
-				acra(true). //
-				nineOldAndroids(true). //
-				viewPager(true). //
-				build();
-
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
-	}
-
-	/*
-	 * NON-MAVEN
-	 */
-
-	@Test
-	public void generateProject_abs() {
-		state = new State.Builder().//
-				actionBarSherlock(true).//
-				build();
-
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
-	}
-
-	@Test
-	public void generateProject_abs_tab() {
-		state = new State.Builder().//
-				actionBarSherlock(true).//
-				tabNavigation(true). //
-				build();
-
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
-	}
-
-	@Test
-	public void generateProject_abs_tab_view_pager() {
-		state = new State.Builder().//
-				actionBarSherlock(true).//
-				tabNavigation(true). //
-				viewPager(true). //
-				build();
-
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
-	}
-
-	@Test
-	public void generateProject_abs_list() {
-		state = new State.Builder().//
-				actionBarSherlock(true).//
-				listNavigation(true). //
-				build();
-
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
-	}
-
-	@Test
-	public void generateProject_abs_list_viewpager() {
-		state = new State.Builder().//
-				actionBarSherlock(true).//
-				listNavigation(true). //
-				viewPager(true). //
-				build();
-
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
-	}
-
-	@Test
-	public void generateProject_aa() {
-		state = new State.Builder().//
-				androidAnnotations(true).//
-				build();
-
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
-	}
-
-	@Test
-	public void generateProject_abs_aa() {
-		state = new State.Builder().//
-				androidAnnotations(true).//
-				actionBarSherlock(true).//
-				build();
-
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
-	}
-
-	@Test
-	public void generateProject_aa_rest() {
-		state = new State.Builder().//
-				androidAnnotations(true).//
-				restTemplate(true).//
-				build();
-
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
-	}
-
-	@Test
-	public void generateProject_aa_rest_acra() {
-		state = new State.Builder().//
-				androidAnnotations(true).//
-				restTemplate(true).//
-				acra(true). //
-				build();
-
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
-	}
-
-	@Test
-	public void generateProject_abs_aa_rest_acra() {
-		state = new State.Builder().//
-				actionBarSherlock(true). //
-				androidAnnotations(true). //
-				restTemplate(true).//
-				acra(true). //
-				build();
-
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
-	}
-
-	@Test
-	public void generateProject_abs_aa_rest_acra_nine() {
-		state = new State.Builder().//
-				actionBarSherlock(true). //
-				androidAnnotations(true). //
-				restTemplate(true).//
-				acra(true). //
-				nineOldAndroids(true). //
-				build();
-
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
-	}
-
-	@Test
-	public void generateProject_abs_aa_rest_acra_nine_viewpager() {
-		state = new State.Builder().//
 				actionBarSherlock(true). //
 				androidAnnotations(true). //
 				restTemplate(true).//
