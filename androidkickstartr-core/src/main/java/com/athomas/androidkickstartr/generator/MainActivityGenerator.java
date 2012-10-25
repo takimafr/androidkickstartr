@@ -267,14 +267,13 @@ public class MainActivityGenerator implements Generator {
 		onNavigationItemSelectedMethod.param(jCodeModel.LONG, "itemId");
 		onNavigationItemSelectedMethod.annotate(ref.override());
 
+		JBlock onNavigationItemSelectedBody = onNavigationItemSelectedMethod.body();
 		if (state.isViewPager()) {
 			// pager.setCurrentItem(itemPosition);
-			JBlock onNavigationItemSelectedBody = onNavigationItemSelectedMethod.body();
 			onNavigationItemSelectedBody.invoke(pagerField, "setCurrentItem").arg(itemPositionParam);
-
-			// return true;
-			onNavigationItemSelectedBody._return(JExpr.TRUE);
 		}
+		// return true;
+		onNavigationItemSelectedBody._return(JExpr.TRUE);
 
 		// configure Tab navigation
 		JInvocation getSupportActionbar = JExpr.invoke("getSupportActionBar");
@@ -333,6 +332,7 @@ public class MainActivityGenerator implements Generator {
 		doSomethingInBackgroundBody.add(restClientMain);
 		doSomethingInBackgroundBody.invoke(doSomethingElseOnUiThread);
 	}
+	
 	private void addViewPager(JCodeModel jCodeModel, JBlock afterViewsBody) {
 		pagerField = createViewField(ref.viewPager(), "pager");
 		doViewById(afterViewsBody, "pager", pagerField, ref.viewPager());
