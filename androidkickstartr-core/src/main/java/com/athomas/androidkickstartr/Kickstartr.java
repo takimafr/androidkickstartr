@@ -12,8 +12,9 @@ import org.slf4j.LoggerFactory;
 import com.athomas.androidkickstartr.generator.AcraApplicationGenerator;
 import com.athomas.androidkickstartr.generator.Generator;
 import com.athomas.androidkickstartr.generator.MainActivityGenerator;
+import com.athomas.androidkickstartr.generator.ViewPagerAdapterGenerator;
 import com.athomas.androidkickstartr.generator.RestClientGenerator;
-import com.athomas.androidkickstartr.generator.ViewPagerGenerator;
+import com.athomas.androidkickstartr.generator.SampleFragmentGenerator;
 import com.athomas.androidkickstartr.model.Application;
 import com.athomas.androidkickstartr.model.State;
 import com.athomas.androidkickstartr.util.FileHelper;
@@ -29,7 +30,7 @@ public class Kickstartr {
 
 	private final static Logger LOGGER = LoggerFactory.getLogger(Kickstartr.class);
 	private final static String RESOURCES_DIR_PATH = "tmp/";
-	
+
 	private State state;
 	private Application application;
 	private JCodeModel jCodeModel;
@@ -121,7 +122,7 @@ public class Kickstartr {
 			LOGGER.error("a problem occured during the org.eclipse.jdt.apt.core.prefs copying", e);
 			return null;
 		}
-		
+
 		LibraryHelper libraryManager = new LibraryHelper(state, fileHelper);
 		libraryManager.go();
 		LOGGER.debug("libraries copied");
@@ -146,7 +147,8 @@ public class Kickstartr {
 		generators.add(new MainActivityGenerator(state, application));
 
 		if (state.isViewPager()) {
-			generators.add(new ViewPagerGenerator(state, application));
+			generators.add(new ViewPagerAdapterGenerator(state, application));
+			generators.add(new SampleFragmentGenerator(state, application));
 		}
 
 		if (state.isRestTemplate() && state.isAndroidAnnotations()) {

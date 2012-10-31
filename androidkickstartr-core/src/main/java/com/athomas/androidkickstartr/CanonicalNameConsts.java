@@ -27,11 +27,14 @@ public final class CanonicalNameConsts {
 	public static String VIEW = "android.view.View";
 	public static String COLOR = "android.graphics.Color";
 	public static String GRAVITY = "android.view.Gravity";
+	public static String LAYOUT_INFLATER= "android.view.LayoutInflater";
 
 	public static String FRAGMENT_TRANSACTION = "android.support.v4.app.FragmentTransaction";
 	public static String FRAGMENT_ACTIVITY = "android.support.v4.app.FragmentActivity";
-	public static String VIEW_PAGER = "android.support.v4.view.ViewPager";
 	public static String FRAGMENT_PAGER_ADAPTER = "android.support.v4.app.FragmentPagerAdapter";
+	public static String FRAGMENT_MANAGER = "android.support.v4.app.FragmentManager";
+	public static String FRAGMENT = "android.support.v4.app.Fragment";
+	public static String VIEW_PAGER = "android.support.v4.view.ViewPager";
 	public static String PAGER_ADAPTER = "android.support.v4.view.PagerAdapter";
 	public static String ON_PAGE_CHANGE_LISTENER = "android.support.v4.view.ViewPager.OnPageChangeListener";
 
@@ -54,6 +57,7 @@ public final class CanonicalNameConsts {
 	public static String AFTER_VIEWS = "com.googlecode.androidannotations.annotations.AfterViews";
 	public static String BACKGROUND = "com.googlecode.androidannotations.annotations.Background";
 	public static String UITHREAD = "com.googlecode.androidannotations.annotations.UiThread";
+	public static String EFRAGMENT = "com.googlecode.androidannotations.annotations.EFragment";
 
 	public static String REST = "com.googlecode.androidannotations.annotations.rest.Rest";
 	public static String GET = "com.googlecode.androidannotations.annotations.rest.Get";

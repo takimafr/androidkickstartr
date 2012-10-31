@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import com.athomas.androidkickstartr.model.Application;
 import com.athomas.androidkickstartr.model.State;
+import com.athomas.androidkickstartr.util.CodeModelHelper;
 import com.athomas.androidkickstartr.util.RefHelper;
 import com.sun.codemodel.JAnnotationUse;
 import com.sun.codemodel.JBlock;
@@ -37,6 +38,7 @@ public class MainActivityGenerator implements Generator {
 
 	private JFieldVar pagerField;
 	private JFieldVar locationsField;
+	private CodeModelHelper codeModelHelper;
 
 	public MainActivityGenerator(State state, Application application) {
 		this.state = state;
@@ -47,6 +49,8 @@ public class MainActivityGenerator implements Generator {
 		this.jCodeModel = jCodeModel;
 
 		ref = new RefHelper(jCodeModel);
+
+		codeModelHelper = new CodeModelHelper(ref, state);
 
 		try {
 			jClass = jCodeModel._class(application.getActivityPackage());
@@ -61,7 +65,7 @@ public class MainActivityGenerator implements Generator {
 			JFieldVar textViewField = null;
 			if (!state.isViewPager()) {
 				textViewField = createTextViewField("hello");
-				doViewById(afterViewsBody, "hello", textViewField, ref.textView());
+				codeModelHelper.doViewById(afterViewsBody, "hello", textViewField);
 			}
 
 			if (state.isRestTemplate() && state.isAndroidAnnotations()) {
@@ -86,7 +90,6 @@ public class MainActivityGenerator implements Generator {
 		return jCodeModel;
 	}
 
-	
 	private void createAndInitLocationsField(JBlock afterViewsBody) {
 		// private String[] locations;
 		locationsField = jClass.field(JMod.PRIVATE, ref.string().array(), "locations");
@@ -100,7 +103,11 @@ public class MainActivityGenerator implements Generator {
 	private void createActivity() {
 		JClass parentActivity;
 
-		parentActivity = state.isActionBarSherlock() ? ref.sActivity() : ref.activity();
+		if (state.isActionBarSherlock()) {
+			parentActivity = state.isViewPager() ? ref.sFragmentActivity() : ref.sActivity();
+		} else {
+			parentActivity = state.isViewPager() ? ref.fragmentActivity() : ref.activity();
+		}
 
 		jClass._extends(parentActivity);
 
@@ -142,23 +149,6 @@ public class MainActivityGenerator implements Generator {
 		}
 		return afterViewsBody;
 	}
-
-	private void doViewById(JBlock afterViewsBody, String id, JFieldVar field, JClass type) {
-		if (!state.isAndroidAnnotations()) {
-			doFindViewById(afterViewsBody, id, field, type);
-		} else {
-			field.annotate(ref.viewById());
-		}
-	}
-
-	private void doFindViewById(JBlock afterViewsBody, String id, JFieldVar field, JClass type) {
-		JFieldRef rIdHello = ref.r().staticRef("id").ref(id);
-		JInvocation findViewById = JExpr.invoke("findViewById").arg(rIdHello);
-		JExpression findViewByIdCasted = JExpr.cast(type, findViewById);
-		afterViewsBody.assign(field, findViewByIdCasted);
-	}
-
-	// ACTION BAR SHERLOCK
 
 	private JBlock createOnCreateOptionsMenu() {
 		JMethod onCreateOptionsMenu = null;
@@ -332,10 +322,10 @@ public class MainActivityGenerator implements Generator {
 		doSomethingInBackgroundBody.add(restClientMain);
 		doSomethingInBackgroundBody.invoke(doSomethingElseOnUiThread);
 	}
-	
+
 	private void addViewPager(JCodeModel jCodeModel, JBlock afterViewsBody) {
 		pagerField = createViewField(ref.viewPager(), "pager");
-		doViewById(afterViewsBody, "pager", pagerField, ref.viewPager());
+		codeModelHelper.doViewById(afterViewsBody, "pager", pagerField);
 
 		// configureViewPager();
 		afterViewsBody.invoke("configureViewPager");
@@ -346,13 +336,14 @@ public class MainActivityGenerator implements Generator {
 
 		JClass viewPagerAdapterClass = ref.ref(application.getViewPagerAdapterPackage());
 
-		// ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this, locations);
-		JInvocation newViewPagerAdapter = JExpr._new(viewPagerAdapterClass).arg(JExpr._this());
+		// ViewFragmentPagerAdapter viewPagerAdapter = new ViewFragmentPagerAdapter(getSupportFragmentManager(), locations);
+		JInvocation getFragmentManagerInvoke = JExpr.invoke("getSupportFragmentManager");
+		JInvocation newViewPagerAdapter = JExpr._new(viewPagerAdapterClass).arg(getFragmentManagerInvoke);
 		if (state.isListNavigation() || state.isTabNavigation()) {
 			newViewPagerAdapter.arg(locationsField);
 		}
-		
 		JVar viewPagerAdapterVar = configureViewPagerBody.decl(viewPagerAdapterClass, "viewPagerAdapter", newViewPagerAdapter);
+
 		// pager.setAdapter(viewPagerAdapter);
 		configureViewPagerBody.invoke(pagerField, "setAdapter").arg(viewPagerAdapterVar);
 
@@ -397,6 +388,5 @@ public class MainActivityGenerator implements Generator {
 			}
 		}
 	}
-
 
 }

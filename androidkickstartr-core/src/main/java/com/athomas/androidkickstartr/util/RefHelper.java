@@ -11,11 +11,15 @@ import static com.athomas.androidkickstartr.CanonicalNameConsts.CHARSEQUENCE;
 import static com.athomas.androidkickstartr.CanonicalNameConsts.COLOR;
 import static com.athomas.androidkickstartr.CanonicalNameConsts.CONTEXT;
 import static com.athomas.androidkickstartr.CanonicalNameConsts.EACTIVITY;
+import static com.athomas.androidkickstartr.CanonicalNameConsts.EFRAGMENT;
+import static com.athomas.androidkickstartr.CanonicalNameConsts.FRAGMENT;
 import static com.athomas.androidkickstartr.CanonicalNameConsts.FRAGMENT_ACTIVITY;
+import static com.athomas.androidkickstartr.CanonicalNameConsts.FRAGMENT_MANAGER;
 import static com.athomas.androidkickstartr.CanonicalNameConsts.FRAGMENT_PAGER_ADAPTER;
 import static com.athomas.androidkickstartr.CanonicalNameConsts.FRAGMENT_TRANSACTION;
 import static com.athomas.androidkickstartr.CanonicalNameConsts.GET;
 import static com.athomas.androidkickstartr.CanonicalNameConsts.GRAVITY;
+import static com.athomas.androidkickstartr.CanonicalNameConsts.LAYOUT_INFLATER;
 import static com.athomas.androidkickstartr.CanonicalNameConsts.MENU;
 import static com.athomas.androidkickstartr.CanonicalNameConsts.ON_PAGE_CHANGE_LISTENER;
 import static com.athomas.androidkickstartr.CanonicalNameConsts.OVERRIDE;
@@ -50,6 +54,9 @@ public class RefHelper {
 	private JClass r;
 	private JClass sTab;
 	private JClass fragmentTransaction;
+	private JClass bundle;
+	private JClass fragment;
+	private JClass view;
 
 	public RefHelper(JCodeModel codeModel) {
 		this.codeModel = codeModel;
@@ -83,6 +90,10 @@ public class RefHelper {
 		return ref(FRAGMENT_PAGER_ADAPTER);
 	}
 
+	public JClass fragmentManager() {
+		return ref(FRAGMENT_MANAGER);
+	}
+
 	public JClass pagerAdapter() {
 		return ref(PAGER_ADAPTER);
 	}
@@ -92,7 +103,10 @@ public class RefHelper {
 	}
 
 	public JClass view() {
-		return ref(VIEW);
+		if (view == null) {
+			view = ref(VIEW);
+		}
+		return view;
 	}
 
 	public JClass color() {
@@ -107,7 +121,10 @@ public class RefHelper {
 	}
 
 	public JClass bundle() {
-		return ref(BUNDLE);
+		if (bundle == null) {
+			bundle = ref(BUNDLE);
+		}
+		return bundle;
 	}
 
 	public JClass menu() {
@@ -125,11 +142,15 @@ public class RefHelper {
 	public JClass application() {
 		return ref(APPLICATION);
 	}
-	
+
 	public JClass gravity() {
 		return ref(GRAVITY);
 	}
-	
+
+	public JClass layoutInflater() {
+		return ref(LAYOUT_INFLATER);
+	}
+
 	public JClass r(String name) {
 		if (r == null) {
 			r = ref(name);
@@ -157,6 +178,13 @@ public class RefHelper {
 		return ref(ON_PAGE_CHANGE_LISTENER);
 	}
 
+	public JClass fragment() {
+		if (fragment == null) {
+			fragment = ref(FRAGMENT);
+		}
+		return fragment;
+	}
+
 	public JClass fragmentTransaction() {
 		if (fragmentTransaction == null) {
 			fragmentTransaction = ref(FRAGMENT_TRANSACTION);
@@ -168,6 +196,10 @@ public class RefHelper {
 
 	public JClass eactivity() {
 		return ref(EACTIVITY);
+	}
+
+	public JClass efragment() {
+		return ref(EFRAGMENT);
 	}
 
 	public JClass viewById() {

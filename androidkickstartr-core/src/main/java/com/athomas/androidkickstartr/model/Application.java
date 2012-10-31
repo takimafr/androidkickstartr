@@ -64,6 +64,10 @@ public class Application {
 		return packageName + ".adapter.ViewPagerAdapter";
 	}
 
+	public String getSampleFragmentPackage() {
+		return packageName + ".SampleFragment";
+	}
+
 	public String getRestTemplateUrl() {
 		return "http://10.0.0.2";
 	}
