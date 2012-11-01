@@ -28,7 +28,7 @@ public class Zipper {
 			FileInputStream in = new FileInputStream(file.getPath());
 
 			String zipPath = file.getPath();
-			zipPath = zipPath.replace("target/", "");
+			zipPath = zipPath.replace("generated/", "");
 			out.putNextEntry(new ZipEntry(zipPath));
 			int len;
 			while ((len = in.read(tmpBuf)) > 0) {
