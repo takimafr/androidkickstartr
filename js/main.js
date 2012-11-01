@@ -9,6 +9,7 @@ function fullPreset() {
   checkBox("nineOldAndroids", true);
   checkBox("supportV4", true);
   checkBox("acra", true);
+  checkBox("viewPager", true);
   checkRadio("tabNavigation", true);
   $("#tab").show();
   $("#list").hide();
@@ -27,6 +28,7 @@ function basicPreset() {
   checkBox("actionBarSherlock", true);
   checkBox("nineOldAndroids", false);
   checkBox("supportV4", true);
+  checkBox("viewPager", false);
   checkBox("acra", false);
   checkRadio("tabNavigation", true);
   $("#tab").show();
@@ -46,6 +48,7 @@ function restPreset() {
   checkBox("actionBarSherlock", true);
   checkBox("nineOldAndroids", false);
   checkBox("supportV4", true);
+  checkBox("viewPager", false);
   checkBox("acra", false);
   checkRadio("tabNavigation", true);
   $("#tab").show();
@@ -77,11 +80,16 @@ $("input:checkbox[name=nineOldAndroids]").click(function(event) {
   disableAndCheckSupportV4();
 });
 
+$("input:checkbox[name=viewPager]").click(function(event) {
+  disableAndCheckSupportV4();
+});
+
 function disableAndCheckSupportV4() {
   $checked1 = $("input:checkbox[name=nineOldAndroids]").prop("checked");
   $checked2 = $("input:checkbox[name=actionBarSherlock]").prop("checked");
-  disableCheckbox("supportV4", $checked1 || $checked2);
-  checkBox("supportV4", $checked1 || $checked2);
+  $checked3 = $("input:checkbox[name=viewPager]").prop("checked");
+  disableCheckbox("supportV4", $checked1 || $checked2 || $checked3);
+  checkBox("supportV4", $checked1 || $checked2 || $checked3);
 }
 
 function disableCheckbox(name, disabled) {
