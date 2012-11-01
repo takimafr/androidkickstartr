@@ -1,4 +1,4 @@
-#AndroidKickstartR
+![AndroidKickstartR logo](https://raw.github.com/a-thomas/androidkickstartr/master/header.png)
 
 AndroidKickstartR helps you to quickly create a well configured Android application using the most popular libraries. It creates and configures your project for you. Just focus on code!
 
