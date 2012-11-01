@@ -9,7 +9,7 @@ import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.athomas.androidkickstartr.generator.AcraApplicationGenerator;
+import com.athomas.androidkickstartr.generator.ApplicationGenerator;
 import com.athomas.androidkickstartr.generator.Generator;
 import com.athomas.androidkickstartr.generator.MainActivityGenerator;
 import com.athomas.androidkickstartr.generator.ViewPagerAdapterGenerator;
@@ -156,7 +156,7 @@ public class Kickstartr {
 		}
 
 		if (state.isAcra()) {
-			generators.add(new AcraApplicationGenerator(application));
+			generators.add(new ApplicationGenerator(application));
 		}
 
 		for (Generator generator : generators) {

@@ -15,14 +15,14 @@ import com.sun.codemodel.JExpr;
 import com.sun.codemodel.JMethod;
 import com.sun.codemodel.JMod;
 
-public class AcraApplicationGenerator implements Generator {
+public class ApplicationGenerator implements Generator {
 
 	private Logger logger;
 	private RefHelper ref;
 	private JDefinedClass jClass;
 	private Application application;
 
-	public AcraApplicationGenerator(Application application) {
+	public ApplicationGenerator(Application application) {
 		this.application = application;
 	}
 
