@@ -18,7 +18,7 @@ import org.apache.commons.io.FileUtils;
 import com.athomas.androidkickstartr.model.Application;
 import com.athomas.androidkickstartr.model.State;
 import com.athomas.androidkickstartr.util.StringUtils;
-
+	
 @Path("/")
 public class Main {
 
@@ -36,7 +36,7 @@ public class Main {
 			@FormParam("supportV4") boolean supportV4,//
 			@FormParam("acra") boolean acra,//
 			@FormParam("eclipse") boolean eclipse,//
-			@FormParam("viewpPager") boolean viewPager,//
+			@FormParam("viewPager") boolean viewPager,//
 			@FormParam("viewPagerIndicator") boolean viewPagerIndicator,//
 
 			// Application
