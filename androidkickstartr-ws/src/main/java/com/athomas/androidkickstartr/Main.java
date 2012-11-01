@@ -66,6 +66,10 @@ public class Main {
 		if (StringUtils.isEmpty(activityLayout)) {
 			activityLayout = "activity_main";
 		}
+		
+		if (viewPager && !actionBarSherlock && !viewPagerIndicator && !supportV4) {
+			supportV4 = true;
+		}
 
 		State state = new State.Builder().//
 				actionBarSherlock(actionBarSherlock).//
