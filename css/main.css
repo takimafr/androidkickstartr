@@ -44,6 +44,13 @@
     text-decoration: none;
 }
 
+.social {
+    background-color: #fcfcfc;
+    border-bottom: solid #dddddd 1px;
+    padding: 15px 0 15px 0;
+    text-align:center;
+}
+
 .parameters {
     color: #222222;
     font-weight: 300;
