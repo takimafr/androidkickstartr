@@ -29,16 +29,22 @@ import com.sun.codemodel.JVar;
 
 public class MainActivityGenerator implements Generator {
 
+	private Logger LOGGER = LoggerFactory.getLogger(getClass());
+
 	private JDefinedClass jClass;
 	private RefHelper ref;
 	private JCodeModel jCodeModel;
 	private State state;
-	private Logger LOGGER = LoggerFactory.getLogger(getClass());
 	private Application application;
 
+	private CodeModelHelper codeModelHelper;
+
+	/**
+	 * Code elements
+	 */
 	private JFieldVar pagerField;
 	private JFieldVar locationsField;
-	private CodeModelHelper codeModelHelper;
+	private JBlock afterViewsBody;
 
 	public MainActivityGenerator(State state, Application application) {
 		this.state = state;
@@ -52,6 +58,11 @@ public class MainActivityGenerator implements Generator {
 
 		codeModelHelper = new CodeModelHelper(ref, state);
 
+		startGeneration(jCodeModel);
+		return jCodeModel;
+	}
+
+	private void startGeneration(JCodeModel jCodeModel) {
 		try {
 			jClass = jCodeModel._class(application.getActivityPackage());
 
@@ -60,7 +71,7 @@ public class MainActivityGenerator implements Generator {
 
 			createActivity();
 
-			JBlock afterViewsBody = createAfterViewsMethod();
+			afterViewsBody = createAfterViewsMethod();
 
 			JFieldVar textViewField = null;
 			if (!state.isViewPager()) {
@@ -75,22 +86,21 @@ public class MainActivityGenerator implements Generator {
 			createOnCreateOptionsMenu();
 
 			if (state.isTabNavigation() || state.isListNavigation()) {
-				createAndInitLocationsField(afterViewsBody);
+				createAndInitLocationsField();
 			}
 
 			if (state.isViewPager()) {
-				addViewPager(jCodeModel, afterViewsBody);
+				addViewPager(jCodeModel);
 			}
 
-			createConfigureActionBar(afterViewsBody);
+			createConfigureActionBar();
 
 		} catch (JClassAlreadyExistsException e1) {
 			LOGGER.error("Classname already exists", e1);
 		}
-		return jCodeModel;
 	}
 
-	private void createAndInitLocationsField(JBlock afterViewsBody) {
+	private void createAndInitLocationsField() {
 		// private String[] locations;
 		locationsField = jClass.field(JMod.PRIVATE, ref.string().array(), "locations");
 		// locations = getResources().getStringArray(R.array.locations);
@@ -136,9 +146,9 @@ public class MainActivityGenerator implements Generator {
 			onCreate.annotate(ref.override());
 			JVar params = onCreate.param(ref.bundle(), "savedInstanceState");
 			afterViewsBody = onCreate.body();
+
 			// super.onCreate()
-			JInvocation onCreateInvocation = JExpr._super().invoke("onCreate").arg(params);
-			afterViewsBody.add(onCreateInvocation);
+			afterViewsBody.invoke(JExpr._super(), "onCreate").arg(params);
 
 			// setContentView(R.layout.xxx)
 			afterViewsBody.invoke("setContentView").arg(ref.r().staticRef("layout").ref(application.getActivityLayout()));
@@ -150,7 +160,7 @@ public class MainActivityGenerator implements Generator {
 		return afterViewsBody;
 	}
 
-	private JBlock createOnCreateOptionsMenu() {
+	private void createOnCreateOptionsMenu() {
 		JMethod onCreateOptionsMenu = null;
 		JClass menu = !state.isActionBarSherlock() ? ref.menu() : ref.sMenu();
 
@@ -162,18 +172,15 @@ public class MainActivityGenerator implements Generator {
 		String getMenuInflater = state.isActionBarSherlock() ? "getSupportMenuInflater" : "getMenuInflater";
 
 		JFieldRef rMenuMain = ref.r().staticRef("menu").ref("activity_main");
-		JInvocation inflate = JExpr.invoke(getMenuInflater).//
+		onCreateOptionsMenuBody.invoke(getMenuInflater).//
 				invoke("inflate"). //
 				arg(rMenuMain). //
 				arg(menuVar);
 
-		onCreateOptionsMenuBody.add(inflate);
 		onCreateOptionsMenuBody._return(TRUE);
-
-		return onCreateOptionsMenuBody;
 	}
 
-	private void createConfigureActionBar(JBlock afterViewsBody) {
+	private void createConfigureActionBar() {
 		if (state.isActionBarSherlock() && (state.isListNavigation() || state.isTabNavigation())) {
 
 			JMethod configureActionBar = jClass.method(JMod.PRIVATE, jCodeModel.VOID, "configureActionBar");
@@ -202,49 +209,35 @@ public class MainActivityGenerator implements Generator {
 		JVar tabParam = onTabSelectedMethod.param(ref.sTab(), "tab");
 		onTabSelectedMethod.param(ref.fragmentTransaction(), "ft");
 		onTabSelectedMethod.annotate(ref.override());
-		JBlock onTabSelectedBody = onTabSelectedMethod.body();
 
 		if (state.isViewPager()) {
+			JBlock onTabSelectedBody = onTabSelectedMethod.body();
 			// int position = tab.getPosition();
 			JVar positionVar = onTabSelectedBody.decl(jCodeModel.INT, "position", tabParam.invoke("getPosition"));
 			// pager.setCurrentItem(position);
 			onTabSelectedBody.invoke(pagerField, "setCurrentItem").arg(positionVar);
 		}
 
-		// @Override
-		// public void onTabUnselected(Tab tab, FragmentTransaction ft) {}
-		JMethod onTabUnselectedMethod = jClass.method(JMod.PUBLIC, jCodeModel.VOID, "onTabUnselected");
-		onTabUnselectedMethod.param(ref.sTab(), "tab");
-		onTabUnselectedMethod.param(ref.fragmentTransaction(), "ft");
-		onTabUnselectedMethod.annotate(ref.override());
+		jClass.direct("@Override\n " + //
+				"public void onTabUnselected(Tab tab, FragmentTransaction ft) {}");
 
-		// @Override
-		// public void onTabReselected(Tab tab, FragmentTransaction ft) {}
-		JMethod onTabReselectedMethod = jClass.method(JMod.PUBLIC, jCodeModel.VOID, "onTabReselected");
-		onTabReselectedMethod.param(ref.sTab(), "tab");
-		onTabReselectedMethod.param(ref.fragmentTransaction(), "ft");
-		onTabReselectedMethod.annotate(ref.override());
+		jClass.direct("@Override\n" + //
+				"public void onTabReselected(Tab tab, FragmentTransaction ft) {}");
 
 		JInvocation getSupportActionBar = JExpr.invoke("getSupportActionBar");
 
 		JFieldRef navigationModeList = ref.sActionBar().staticRef("NAVIGATION_MODE_TABS");
-		JInvocation setNavigationMode = getSupportActionBar.invoke("setNavigationMode").arg(navigationModeList);
-		configureActionBarBody.add(setNavigationMode);
+		configureActionBarBody.invoke(getSupportActionBar, "setNavigationMode").arg(navigationModeList);
 
 		JForEach forEachLocation = configureActionBarBody.forEach(ref.string(), "location", locationsField);
 		JVar location = forEachLocation.var();
 
 		JBlock forEachLocationBody = forEachLocation.body();
-		JInvocation newTab = getSupportActionBar.invoke("newTab");
+		JVar tab = forEachLocationBody.decl(ref.sTab(), "tab", getSupportActionBar.invoke("newTab"));
+		forEachLocationBody.invoke(tab, "setText").arg(location);
+		forEachLocationBody.invoke(tab, "setTabListener").arg(JExpr._this());
+		forEachLocationBody.invoke(getSupportActionBar, "addTab").arg(tab);
 
-		JVar tab = forEachLocationBody.decl(ref.sTab(), "tab", newTab);
-		JInvocation setText = tab.invoke("setText").arg(location);
-		JInvocation setTabListener = tab.invoke("setTabListener").arg(JExpr._this());
-		JInvocation addTab = getSupportActionBar.invoke("addTab").arg(tab);
-
-		forEachLocationBody.add(setText);
-		forEachLocationBody.add(setTabListener);
-		forEachLocationBody.add(addTab);
 	}
 
 	private void addListNavigationConfiguration(JBlock configureActionBarBody) {
@@ -268,8 +261,7 @@ public class MainActivityGenerator implements Generator {
 		// configure Tab navigation
 		JInvocation getSupportActionbar = JExpr.invoke("getSupportActionBar");
 		JInvocation getContext = getSupportActionbar.invoke("getThemedContext");
-		JVar contextVar = configureActionBarBody.decl(ref.context(), "context");
-		contextVar.init(getContext);
+		JVar contextVar = configureActionBarBody.decl(ref.context(), "context", getContext);
 
 		JFieldRef rArrayLocations = ref.r().staticRef("array").ref("locations");
 		// NEEDED! CodeModel doesn't manage the case where two
@@ -283,17 +275,13 @@ public class MainActivityGenerator implements Generator {
 				arg(rLayoutSherlockSpinner);
 
 		JClass listType = arrayAdapter.narrow(ref.charSequence());
-		JVar listVar = configureActionBarBody.decl(listType, "list");
-		listVar.init(createFromResource);
+		JVar listVar = configureActionBarBody.decl(listType, "list", createFromResource);
 
 		JFieldRef navigationModeList = ref.sActionBar().staticRef("NAVIGATION_MODE_LIST");
-		JInvocation setNavigationMode = getSupportActionbar.invoke("setNavigationMode").arg(navigationModeList);
-		JInvocation setListNavigationCallbacks = getSupportActionbar.invoke("setListNavigationCallbacks").//
+		configureActionBarBody.invoke(getSupportActionbar, "setNavigationMode").arg(navigationModeList);
+		configureActionBarBody.invoke(getSupportActionbar, "setListNavigationCallbacks").//
 				arg(listVar).//
 				arg(JExpr._this());
-
-		configureActionBarBody.add(setNavigationMode);
-		configureActionBarBody.add(setListNavigationCallbacks);
 	}
 
 	private void addRestClient(JFieldVar textViewField) {
@@ -318,12 +306,11 @@ public class MainActivityGenerator implements Generator {
 		doSomethingInBackground.annotate(ref.background());
 		JBlock doSomethingInBackgroundBody = doSomethingInBackground.body();
 
-		JInvocation restClientMain = restClient.invoke("main");
-		doSomethingInBackgroundBody.add(restClientMain);
+		doSomethingInBackgroundBody.invoke(restClient, "main");
 		doSomethingInBackgroundBody.invoke(doSomethingElseOnUiThread);
 	}
 
-	private void addViewPager(JCodeModel jCodeModel, JBlock afterViewsBody) {
+	private void addViewPager(JCodeModel jCodeModel) {
 		pagerField = createViewField(ref.viewPager(), "pager");
 		codeModelHelper.doViewById(afterViewsBody, "pager", pagerField);
 
@@ -354,19 +341,11 @@ public class MainActivityGenerator implements Generator {
 			// implements OnPageChangeListener
 			jClass._implements(ref.onPageChangeListener());
 
-			// @Override
-			// public void onPageScrollStateChanged(int position) {}
-			JMethod onPageScrollStateChangedMethod = jClass.method(JMod.PUBLIC, jCodeModel.VOID, "onPageScrollStateChanged");
-			onPageScrollStateChangedMethod.param(jCodeModel.INT, "position");
-			onPageScrollStateChangedMethod.annotate(ref.override());
+			jClass.direct("@Override\n" + //
+					"public void onPageScrollStateChanged(int position) {}");
 
-			// @Override
-			// public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
-			JMethod onPageScrolledMethod = jClass.method(JMod.PUBLIC, jCodeModel.VOID, "onPageScrolled");
-			onPageScrolledMethod.param(jCodeModel.INT, "position");
-			onPageScrolledMethod.param(jCodeModel.FLOAT, "positionOffset");
-			onPageScrolledMethod.param(jCodeModel.INT, "positionOffsetPixels");
-			onPageScrolledMethod.annotate(ref.override());
+			jClass.direct("@Override\n" + //
+					" public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}");
 
 			// @Override
 			// public void onPageSelected(int position) {
