@@ -42,28 +42,30 @@ import static com.athomas.androidkickstartr.CanonicalNameConsts.VIEW_BY_ID;
 import static com.athomas.androidkickstartr.CanonicalNameConsts.VIEW_GROUP;
 import static com.athomas.androidkickstartr.CanonicalNameConsts.VIEW_PAGER;
 
+import java.util.HashMap;
+
 import com.sun.codemodel.JClass;
 import com.sun.codemodel.JCodeModel;
 
 public class RefHelper {
 
 	private final JCodeModel codeModel;
-	private JClass textView;
-	private JClass viewById;
-	private JClass viewPager;
+
+	private HashMap<String, JClass> refs = new HashMap<String, JClass>();
+
 	private JClass r;
-	private JClass sTab;
-	private JClass fragmentTransaction;
-	private JClass bundle;
-	private JClass fragment;
-	private JClass view;
 
 	public RefHelper(JCodeModel codeModel) {
 		this.codeModel = codeModel;
 	}
 
 	public JClass ref(String fullName) {
-		return codeModel.ref(fullName);
+		JClass jClass = refs.get(fullName);
+		if (jClass == null) {
+			jClass = codeModel.ref(fullName);
+			refs.put(fullName, jClass);
+		}
+		return jClass;
 	}
 
 	public JClass override() {
@@ -103,10 +105,7 @@ public class RefHelper {
 	}
 
 	public JClass view() {
-		if (view == null) {
-			view = ref(VIEW);
-		}
-		return view;
+		return ref(VIEW);
 	}
 
 	public JClass color() {
@@ -114,17 +113,11 @@ public class RefHelper {
 	}
 
 	public JClass textView() {
-		if (textView == null) {
-			textView = ref(TEXT_VIEW);
-		}
-		return textView;
+		return ref(TEXT_VIEW);
 	}
 
 	public JClass bundle() {
-		if (bundle == null) {
-			bundle = ref(BUNDLE);
-		}
-		return bundle;
+		return ref(BUNDLE);
 	}
 
 	public JClass menu() {
@@ -152,9 +145,7 @@ public class RefHelper {
 	}
 
 	public JClass r(String name) {
-		if (r == null) {
-			r = ref(name);
-		}
+		r = ref(name);
 		return r;
 	}
 
@@ -168,10 +159,7 @@ public class RefHelper {
 	// Android Support v4
 
 	public JClass viewPager() {
-		if (viewPager == null) {
-			viewPager = ref(VIEW_PAGER);
-		}
-		return viewPager;
+		return ref(VIEW_PAGER);
 	}
 
 	public JClass onPageChangeListener() {
@@ -179,17 +167,11 @@ public class RefHelper {
 	}
 
 	public JClass fragment() {
-		if (fragment == null) {
-			fragment = ref(FRAGMENT);
-		}
-		return fragment;
+		return ref(FRAGMENT);
 	}
 
 	public JClass fragmentTransaction() {
-		if (fragmentTransaction == null) {
-			fragmentTransaction = ref(FRAGMENT_TRANSACTION);
-		}
-		return fragmentTransaction;
+		return ref(FRAGMENT_TRANSACTION);
 	}
 
 	// AndroidAnnotations
@@ -203,10 +185,7 @@ public class RefHelper {
 	}
 
 	public JClass viewById() {
-		if (viewById == null) {
-			viewById = ref(VIEW_BY_ID);
-		}
-		return viewById;
+		return ref(VIEW_BY_ID);
 	}
 
 	public JClass afterViews() {
@@ -260,10 +239,7 @@ public class RefHelper {
 	}
 
 	public JClass sTab() {
-		if (sTab == null) {
-			sTab = ref(SHERLOCK_TAB);
-		}
-		return sTab;
+		return ref(SHERLOCK_TAB);
 	}
 
 	// Acra
