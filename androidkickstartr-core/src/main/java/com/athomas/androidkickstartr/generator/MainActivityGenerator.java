@@ -51,11 +51,9 @@ public class MainActivityGenerator implements Generator {
 		this.application = application;
 	}
 
-	public JCodeModel generate(JCodeModel jCodeModel) throws IOException {
+	public JCodeModel generate(JCodeModel jCodeModel, RefHelper ref) throws IOException {
 		this.jCodeModel = jCodeModel;
-
-		ref = new RefHelper(jCodeModel);
-
+		this.ref = ref;
 		codeModelHelper = new CodeModelHelper(ref, state);
 
 		startGeneration(jCodeModel);
@@ -65,10 +63,7 @@ public class MainActivityGenerator implements Generator {
 	private void startGeneration(JCodeModel jCodeModel) {
 		try {
 			jClass = jCodeModel._class(application.getActivityPackage());
-
-			// TODO Enhance that
-			ref.r(application.getR()); // must do it at least once
-
+			
 			createActivity();
 
 			afterViewsBody = createAfterViewsMethod();

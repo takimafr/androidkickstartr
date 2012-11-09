@@ -18,7 +18,6 @@ import com.sun.codemodel.JMod;
 public class ApplicationGenerator implements Generator {
 
 	private Logger logger;
-	private RefHelper ref;
 	private JDefinedClass jClass;
 	private Application application;
 
@@ -26,17 +25,10 @@ public class ApplicationGenerator implements Generator {
 		this.application = application;
 	}
 
-	public JCodeModel generate(JCodeModel jCodeModel) throws IOException {
-
+	public JCodeModel generate(JCodeModel jCodeModel, RefHelper ref) throws IOException {
 		logger = LoggerFactory.getLogger(getClass());
-
-		ref = new RefHelper(jCodeModel);
-
 		try {
 			jClass = jCodeModel._class(application.getApplicationPackage());
-
-			// TODO Enhance that
-			ref.r(application.getR()); // must do it at least once
 
 			jClass._extends(ref.application());
 

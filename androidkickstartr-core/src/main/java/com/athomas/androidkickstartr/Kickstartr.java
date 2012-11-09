@@ -19,6 +19,7 @@ import com.athomas.androidkickstartr.model.Application;
 import com.athomas.androidkickstartr.model.State;
 import com.athomas.androidkickstartr.util.FileHelper;
 import com.athomas.androidkickstartr.util.LibraryHelper;
+import com.athomas.androidkickstartr.util.RefHelper;
 import com.athomas.androidkickstartr.util.ResourcesUtils;
 import com.athomas.androidkickstartr.util.TemplatesFileHelper;
 import com.athomas.androidkickstartr.util.Zipper;
@@ -144,6 +145,7 @@ public class Kickstartr {
 
 	private void generateSourceCode() throws IOException {
 		List<Generator> generators = new ArrayList<Generator>();
+
 		generators.add(new MainActivityGenerator(state, application));
 
 		if (state.isViewPager()) {
@@ -159,8 +161,11 @@ public class Kickstartr {
 			generators.add(new ApplicationGenerator(application));
 		}
 
+		RefHelper refHelper = new RefHelper(jCodeModel);
+		refHelper.r(application.getR());
+
 		for (Generator generator : generators) {
-			generator.generate(jCodeModel);
+			generator.generate(jCodeModel, refHelper);
 		}
 		jCodeModel.build(fileHelper.getTargetSourceDir());
 	}

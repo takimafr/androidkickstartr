@@ -34,16 +34,12 @@ public class SampleFragmentGenerator implements Generator {
 		this.application = application;
 	}
 
-	public JCodeModel generate(JCodeModel jCodeModel) throws IOException {
-		ref = new RefHelper(jCodeModel);
-
+	public JCodeModel generate(JCodeModel jCodeModel, RefHelper ref) throws IOException {
+		ref = this.ref;
 		codeModelHelper = new CodeModelHelper(ref, state);
 
 		try {
 			jClass = jCodeModel._class(application.getSampleFragmentPackage());
-
-			// TODO Enhance that
-			ref.r(application.getR()); // must do it at least once
 
 			// public class SampleFragment extends Fragment {
 			jClass._extends(ref.fragment());

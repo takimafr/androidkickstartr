@@ -21,7 +21,6 @@ import com.sun.codemodel.JVar;
 public class ViewPagerAdapterGenerator implements Generator {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
-	private RefHelper ref;
 	private JDefinedClass jClass;
 	private Application application;
 	private final State state;
@@ -31,14 +30,9 @@ public class ViewPagerAdapterGenerator implements Generator {
 		this.application = application;
 	}
 
-	public JCodeModel generate(JCodeModel jCodeModel) throws IOException {
-		ref = new RefHelper(jCodeModel);
-
+	public JCodeModel generate(JCodeModel jCodeModel, RefHelper ref) throws IOException {
 		try {
 			jClass = jCodeModel._class(application.getViewPagerAdapterPackage());
-
-			// TODO Enhance that
-			ref.r(application.getR()); // must do it at least once
 
 			// public class ViewFragmentPagerAdapter extends FragmentPagerAdapter {
 			jClass._extends(ref.fragmentPagerAdapter());
