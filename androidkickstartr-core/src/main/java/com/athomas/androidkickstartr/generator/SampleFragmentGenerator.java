@@ -35,7 +35,7 @@ public class SampleFragmentGenerator implements Generator {
 	}
 
 	public JCodeModel generate(JCodeModel jCodeModel, RefHelper ref) throws IOException {
-		ref = this.ref;
+		this.ref = ref;
 		codeModelHelper = new CodeModelHelper(ref, state);
 
 		try {
