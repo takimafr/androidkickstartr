@@ -20,6 +20,7 @@
 	</modules>
 
 	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<freemarker.version>2.3.19</freemarker.version>
 		<codemodel.version>2.6</codemodel.version>
 		<slf4j.version>1.7.0</slf4j.version>
