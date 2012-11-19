@@ -18,21 +18,25 @@ import org.apache.commons.io.FileUtils;
  */
 public class ResourcesUtils {
 
-	public static void copyResourcesTo(String target, String filepathMarker) throws IOException {
+	public static void copyResourcesTo(File resourcesDir, String filepathMarker) throws IOException {
+
+		if (resourcesDir == null) {
+			throw new IllegalArgumentException("The resources dir must not be null");
+		}
+
 		ClassLoader classLoader = ResourcesUtils.class.getClassLoader();
 		URL url = classLoader.getResource(filepathMarker);
 		String protocol = url.getProtocol();
 
 		if (protocol.equals("file")) {
 			File src = new File("src/main/resources");
-			File targetDir = new File(target);
-			FileUtils.copyDirectory(src, targetDir);
+			FileUtils.copyDirectory(src, resourcesDir);
 		} else if (protocol.equals("jar")) {
-			copyResourcesToFromJar(target, url);
+			copyResourcesToFromJar(resourcesDir, url);
 		}
 	}
 
-	private static void copyResourcesToFromJar(String target, URL url) throws IOException {
+	private static void copyResourcesToFromJar(File target, URL url) throws IOException {
 		JarURLConnection connection = (JarURLConnection) url.openConnection();
 		JarFile jarFile = connection.getJarFile();
 
@@ -50,7 +54,7 @@ public class ResourcesUtils {
 				dirs = (String) entryPath.subSequence(0, lastIndexOf + 1);
 			}
 
-			File parent = new File(target + dirs);
+			File parent = new File(target, dirs);
 			parent.mkdirs();
 
 			if (!jarEntry.isDirectory()) {

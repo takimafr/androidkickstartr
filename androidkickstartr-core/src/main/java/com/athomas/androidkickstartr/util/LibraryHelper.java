@@ -10,9 +10,10 @@ import org.slf4j.LoggerFactory;
 import com.athomas.androidkickstartr.model.State;
 
 public class LibraryHelper {
+	
+	private final static Logger LOGGER = LoggerFactory.getLogger(LibraryHelper.class);
 
 	private State state;
-	private final static Logger LOGGER = LoggerFactory.getLogger(LibraryHelper.class);
 	private FileHelper fileHelper;
 
 	public LibraryHelper(State state, FileHelper fileHelper) {

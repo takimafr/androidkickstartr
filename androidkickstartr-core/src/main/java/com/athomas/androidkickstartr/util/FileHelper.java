@@ -9,17 +9,24 @@ public class FileHelper {
 	private static final String TARGET = "generated";
 	private String applicationName;
 	private boolean maven;
-	private String resourcePath;
+	private File resourcesTempDir;
 
-	public FileHelper(String applicationName, String resourcesPath, boolean maven) {
+	public FileHelper(String applicationName, boolean maven) {
 		this.applicationName = applicationName;
-		this.resourcePath = resourcesPath;
 		this.maven = maven;
+	}
+
+	public File getKickstartrResourcesDir() throws IOException {
+		if (resourcesTempDir == null || !resourcesTempDir.exists()) {
+			resourcesTempDir = File.createTempFile("AndroidKickstartR-Resources", null);
+			resourcesTempDir.delete();
+			resourcesTempDir.mkdir();
+		}
+		return resourcesTempDir;
 	}
 
 	public File getTargetSourceDir() {
 		String srcPath = maven ? "/src/main/java" : "/src";
-
 		File dir = new File(getProject() + srcPath);
 		dir.mkdirs();
 		return dir;
@@ -85,20 +92,12 @@ public class FileHelper {
 		File file = new File(path);
 
 		File parent = file.getParentFile();
-		if(!parent.exists() && !parent.mkdirs()){
-		    throw new IllegalStateException("Couldn't create dir: " + parent);
+		if (!parent.exists() && !parent.mkdirs()) {
+			throw new IllegalStateException("Couldn't create dir: " + parent);
 		}
-		
+
 		if (!file.exists()) {
 			file.createNewFile();
-		}
-		return file;
-	}
-
-	private File getFile(String path) throws IOException {
-		File file = new File(path);
-		if (!file.exists()) {
-			throw new FileNotFoundException(path + " doesn't exist");
 		}
 		return file;
 	}
@@ -139,10 +138,26 @@ public class FileHelper {
 		return createFile(getProject() + "/.settings/org.eclipse.jdt.core.prefs");
 	}
 
+	public File getTargetProjectPropertiesFile() throws IOException {
+		return createFile(getProject() + "/project.properties");
+	}
+
 	public File getEclipseJdtAptCorePrefs() throws IOException {
 		return getResource("org.eclipse.jdt.apt.core.prefs");
 	}
-	
+
+	public File getResource(String filename) throws IOException {
+		return getFile(getKickstartrResourcesDir(), filename);
+	}
+
+	private File getFile(File parent, String path) throws IOException {
+		File file = new File(parent, path);
+		if (!file.exists()) {
+			throw new FileNotFoundException(path + " doesn't exist");
+		}
+		return file;
+	}
+
 	public File getEclipseJdtCorePrefs() throws IOException {
 		return getResource("org.eclipse.jdt.core.prefs");
 	}
@@ -151,16 +166,8 @@ public class FileHelper {
 		return getResource("project.properties");
 	}
 
-	public File getTargetProjectPropertiesFile() throws IOException {
-		return createFile(getProject() + "/project.properties");
-	}
-
 	public File getLibraryFile(String filename) throws IOException {
 		return getResource("libs/" + filename);
-	}
-
-	public File getResource(String filename) throws IOException {
-		return getFile(resourcePath + filename);
 	}
 
 }

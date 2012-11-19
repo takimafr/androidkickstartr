@@ -12,9 +12,9 @@ import org.slf4j.LoggerFactory;
 import com.athomas.androidkickstartr.generator.ApplicationGenerator;
 import com.athomas.androidkickstartr.generator.Generator;
 import com.athomas.androidkickstartr.generator.MainActivityGenerator;
-import com.athomas.androidkickstartr.generator.ViewPagerAdapterGenerator;
 import com.athomas.androidkickstartr.generator.RestClientGenerator;
 import com.athomas.androidkickstartr.generator.SampleFragmentGenerator;
+import com.athomas.androidkickstartr.generator.ViewPagerAdapterGenerator;
 import com.athomas.androidkickstartr.model.Application;
 import com.athomas.androidkickstartr.model.State;
 import com.athomas.androidkickstartr.util.FileHelper;
@@ -30,7 +30,6 @@ import freemarker.template.TemplateException;
 public class Kickstartr {
 
 	private final static Logger LOGGER = LoggerFactory.getLogger(Kickstartr.class);
-	private final static String RESOURCES_DIR_PATH = "tmp/";
 
 	private State state;
 	private Application application;
@@ -40,18 +39,19 @@ public class Kickstartr {
 	public Kickstartr(State state, Application application) {
 		this.state = state;
 		this.application = application;
+
 		jCodeModel = new JCodeModel();
+		fileHelper = new FileHelper(application.getName(), state.isMaven());
+
 		extractResources(state, application);
 	}
 
 	private void extractResources(State state, Application application) {
 		try {
-
-			File resourcesDir = new File(RESOURCES_DIR_PATH);
-			if (!resourcesDir.exists() || resourcesDir.list().length <= 0) {
-				ResourcesUtils.copyResourcesTo(RESOURCES_DIR_PATH, "org.eclipse.jdt.apt.core.prefs");
+			File resourcesDir = fileHelper.getKickstartrResourcesDir();
+			if (resourcesDir.exists() || resourcesDir.list() == null || resourcesDir.list().length == 0) {
+				ResourcesUtils.copyResourcesTo(resourcesDir, "org.eclipse.jdt.apt.core.prefs");
 			}
-			fileHelper = new FileHelper(application.getName(), RESOURCES_DIR_PATH, state.isMaven());
 		} catch (IOException e) {
 			LOGGER.error("an error occured during the resources extraction", e);
 		}
