@@ -38,6 +38,7 @@ public class Main {
 			@FormParam("eclipse") boolean eclipse,//
 			@FormParam("viewPager") boolean viewPager,//
 			@FormParam("viewPagerIndicator") boolean viewPagerIndicator,//
+			@FormParam("roboguice") boolean roboguice,//
 
 			// Application
 			@FormParam("packageName") String packageName,//
@@ -77,6 +78,7 @@ public class Main {
 				tabNavigation(tabNavigation).//
 				viewPager(viewPager).//
 				viewPagerIndicator(viewPagerIndicator).//
+				roboguice(roboguice).//
 				androidAnnotations(androidAnnotations).//
 				restTemplate(restTemplate). //
 				maven(maven). //

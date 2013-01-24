@@ -67,6 +67,18 @@ public class Application {
 	public String getSampleFragmentPackage() {
 		return packageName + ".SampleFragment";
 	}
+	
+	public String getRoboSherlockActivityPackage() {
+		return packageName + ".robosherlock.RoboSherlockActivity";
+	}
+	
+	public String getRoboSherlockFragmentPackage() {
+		return packageName + ".robosherlock.RoboSherlockFragment";
+	}
+	
+	public String getRoboSherlockFragmentActivityPackage() {
+		return packageName + ".robosherlock.RoboSherlockFragmentActivity";
+	}
 
 	public String getRestTemplateUrl() {
 		return "http://10.0.0.2";
