@@ -42,6 +42,9 @@
 		<#if State.acra>
 		<acra.version>4.3.0</acra.version>
 		</#if>
+		<#if State.roboguice>
+		<roboguice.version>2.0</roboguice.version>
+		</#if>
 	</properties>
 
 	<dependencies>
@@ -133,6 +136,15 @@
 			<artifactId>acra</artifactId>
 			<#noparse>
 			<version>${acra.version}</version>
+			</#noparse>
+		</dependency>
+		</#if>
+		<#if State.roboguice>
+		<dependency>
+            <groupId>org.roboguice</groupId>
+            <artifactId>roboguice</artifactId>
+			<#noparse>
+			<version>${roboguice.version}</version>
 			</#noparse>
 		</dependency>
 		</#if>

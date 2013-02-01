@@ -220,5 +220,28 @@ public class RefHelper {
 	public JClass acra() {
 		return ref("org.acra.ACRA");
 	}
+	
+	/**
+	 * Roboguice
+	 */
+	public JClass roboguice() {
+		return ref("com.googlecode.androidannotations.annotations.RoboGuice");
+	}
+	
+	public JClass injectView() {
+		return ref("roboguice.inject.InjectView");
+	}
+	
+	public JClass roboActivity() {
+		return ref("roboguice.activity.RoboActivity");
+	}
+	
+	public JClass roboFragment() {
+		return ref("roboguice.fragment.RoboFragment");
+	}
+	
+	public JClass roboFragmentActivity() {
+		return ref("roboguice.activity.RoboFragmentActivity");
+	}
 
 }

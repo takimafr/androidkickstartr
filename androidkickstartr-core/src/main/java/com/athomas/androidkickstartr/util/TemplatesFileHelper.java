@@ -19,7 +19,7 @@ import freemarker.template.TemplateException;
 public class TemplatesFileHelper {
 
 	private final static Logger LOGGER = LoggerFactory.getLogger(TemplatesFileHelper.class);
-
+	
 	private final FileHelper fileHelper;
 	private final Application application;
 	private final State state;
@@ -79,6 +79,18 @@ public class TemplatesFileHelper {
 		if (state.isAndroidAnnotations()) {
 			processTemplate(cfg, params, "FactoryPath.ftl", fileHelper.getTargetFactoryPathFile());
 			LOGGER.debug("factorypath.xml created");
+		}
+		
+		if (state.isRoboguice() && state.isActionBarSherlock()) {
+			processTemplate(cfg, params, "robosherlock/RoboSherlockActivity.ftl", fileHelper.getTargetRoboSherlockActivityFile());
+			LOGGER.debug("RoboSherlockActivity.java created");
+			if (state.isViewPager()) {
+				processTemplate(cfg, params, "robosherlock/RoboSherlockFragment.ftl", fileHelper.getTargetRoboSherlockFragmentFile());
+				LOGGER.debug("RoboSherlockFragment.java created");
+				
+				processTemplate(cfg, params, "robosherlock/RoboSherlockFragmentActivity.ftl", fileHelper.getTargetRoboSherlockFragmentActivityFile());
+				LOGGER.debug("RoboSherlockFragmentActivity.java created");
+			}
 		}
 	}
 

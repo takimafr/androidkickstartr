@@ -8,11 +8,13 @@ public class FileHelper {
 
 	private static final String TARGET = "generated";
 	private String applicationName;
+	private String packageName;
 	private boolean maven;
 	private File resourcesTempDir;
 
-	public FileHelper(String applicationName, boolean maven) {
+	public FileHelper(String applicationName, String packageName, boolean maven) {
 		this.applicationName = applicationName;
+		this.packageName = packageName;
 		this.maven = maven;
 	}
 
@@ -24,16 +26,20 @@ public class FileHelper {
 		}
 		return resourcesTempDir;
 	}
+	
+	public String getTargetSourcePath() {
+		String srcPath = maven ? "/src/main/java" : "/src";
+		return getProjectPath() + srcPath;
+	}
 
 	public File getTargetSourceDir() {
-		String srcPath = maven ? "/src/main/java" : "/src";
-		File dir = new File(getProject() + srcPath);
+		File dir = new File(getTargetSourcePath());
 		dir.mkdirs();
 		return dir;
 	}
 
 	public File getTargetTestDir() {
-		File dir = new File(getProject() + "/src/test/java");
+		File dir = new File(getProjectPath() + "/src/test/java");
 		dir.mkdirs();
 		return dir;
 	}
@@ -42,7 +48,7 @@ public class FileHelper {
 		return TARGET + "/" + applicationName + "-AndroidKickstartr";
 	}
 
-	private String getProject() {
+	private String getProjectPath() {
 		return getFinalPath() + "/" + applicationName;
 	}
 
@@ -61,11 +67,11 @@ public class FileHelper {
 	}
 
 	public File getTargetAndroidResDir() throws IOException {
-		return getDir(getProject() + "/res");
+		return getDir(getProjectPath() + "/res");
 	}
 
 	public File getTargetProjectDir() {
-		return getDir(getProject());
+		return getDir(getProjectPath());
 	}
 
 	public File getFinalDir() {
@@ -77,15 +83,15 @@ public class FileHelper {
 	}
 
 	public File getTargetLibsDir() throws IOException {
-		return getDir(getProject() + "/libs");
+		return getDir(getProjectPath() + "/libs");
 	}
 
 	public File getTargetExtLibsDir() throws IOException {
-		return getDir(getProject() + "/ext-libs");
+		return getDir(getProjectPath() + "/ext-libs");
 	}
 
 	public File getTargetAndroidManifestFile() throws IOException {
-		return createFile(getProject() + "/AndroidManifest.xml");
+		return createFile(getProjectPath() + "/AndroidManifest.xml");
 	}
 
 	private File createFile(String path) throws IOException {
@@ -103,43 +109,55 @@ public class FileHelper {
 	}
 
 	public File getTargetPomFile() throws IOException {
-		return createFile(getProject() + "/pom.xml");
+		return createFile(getProjectPath() + "/pom.xml");
 	}
 
 	public File getTargetFactoryPathFile() throws IOException {
-		return createFile(getProject() + "/.factorypath");
+		return createFile(getProjectPath() + "/.factorypath");
 	}
 
 	public File getTargetStylesFile() throws IOException {
-		return createFile(getProject() + "/res/values/styles.xml");
+		return createFile(getProjectPath() + "/res/values/styles.xml");
 	}
 
 	public File getTargetActivityMainFile() throws IOException {
-		return createFile(getProject() + "/res/layout/activity_main.xml");
+		return createFile(getProjectPath() + "/res/layout/activity_main.xml");
 	}
 
 	public File getTargetProjectFile() throws IOException {
-		return createFile(getProject() + "/.project");
+		return createFile(getProjectPath() + "/.project");
 	}
 
 	public File getTargetClasspathFile() throws IOException {
-		return createFile(getProject() + "/.classpath");
+		return createFile(getProjectPath() + "/.classpath");
 	}
 
 	public File getTargetStringsFile() throws IOException {
-		return createFile(getProject() + "/res/values/strings.xml");
+		return createFile(getProjectPath() + "/res/values/strings.xml");
 	}
 
 	public File getTargetEclipseJdtAptCorePrefsFile() throws IOException {
-		return createFile(getProject() + "/.settings/org.eclipse.jdt.apt.core.prefs");
+		return createFile(getProjectPath() + "/.settings/org.eclipse.jdt.apt.core.prefs");
 	}
 
 	public File getTargetEclipseJdtCorePrefsFile() throws IOException {
-		return createFile(getProject() + "/.settings/org.eclipse.jdt.core.prefs");
+		return createFile(getProjectPath() + "/.settings/org.eclipse.jdt.core.prefs");
 	}
 
 	public File getTargetProjectPropertiesFile() throws IOException {
-		return createFile(getProject() + "/project.properties");
+		return createFile(getProjectPath() + "/project.properties");
+	}
+	
+	public File getTargetRoboSherlockActivityFile() throws IOException {
+		return createFile(getTargetSourcePath() + "/" + packageName.replace(".", "/") + "/robosherlock/RoboSherlockActivity.java");
+	}
+	
+	public File getTargetRoboSherlockFragmentFile() throws IOException {
+		return createFile(getTargetSourcePath() + "/" + packageName.replace(".", "/") + "/robosherlock/RoboSherlockFragment.java");
+	}
+	
+	public File getTargetRoboSherlockFragmentActivityFile() throws IOException {
+		return createFile(getTargetSourcePath() + "/" + packageName.replace(".", "/") + "/robosherlock/RoboSherlockFragmentActivity.java");
 	}
 
 	public File getEclipseJdtAptCorePrefs() throws IOException {

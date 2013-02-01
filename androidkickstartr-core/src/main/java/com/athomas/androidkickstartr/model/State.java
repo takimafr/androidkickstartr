@@ -7,6 +7,7 @@ public class State {
 	private boolean tabNavigation;
 	private boolean viewPager;
 	private boolean viewPagerIndicator;
+	private boolean roboguice;
 	private boolean androidAnnotations;
 	private boolean restTemplate;
 	private boolean maven;
@@ -33,6 +34,10 @@ public class State {
 
 	public boolean isViewPagerIndicator() {
 		return viewPagerIndicator;
+	}
+
+	public boolean isRoboguice() {
+		return roboguice;
 	}
 
 	public boolean isAndroidAnnotations() {
@@ -70,6 +75,7 @@ public class State {
 				", tabNavigation=" + tabNavigation + //
 				", viewPager=" + viewPager + //
 				", viewPagerIndicator=" + viewPagerIndicator + //
+				", roboguice=" + roboguice + //
 				", androidAnnotations=" + androidAnnotations + //
 				", restTemplate=" + restTemplate + //
 				", maven=" + maven + //
@@ -111,6 +117,11 @@ public class State {
 
 		public Builder viewPagerIndicator(boolean viewPagerIndicator) {
 			state.viewPagerIndicator = viewPagerIndicator;
+			return this;
+		}
+
+		public Builder roboguice(boolean roboguice) {
+			state.roboguice = roboguice;
 			return this;
 		}
 
