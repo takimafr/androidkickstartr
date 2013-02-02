@@ -24,7 +24,7 @@
 		<androidannotations.version>2.6</androidannotations.version>
 		</#if>
 		<#if State.actionBarSherlock>
-		<actionBarSherlock.version>4.1.0</actionBarSherlock.version>
+		<actionBarSherlock.version>4.2.0</actionBarSherlock.version>
 		</#if>
 		<android.version>4.1.1.4</android.version>
 		<#if State.viewPagerIndicator >
@@ -83,7 +83,7 @@
 		<#if State.actionBarSherlock>
 		<dependency>
 			<groupId>com.actionbarsherlock</groupId>
-			<artifactId>library</artifactId>
+			<artifactId>actionbarsherlock</artifactId>
 			<#noparse>
 			<version>${actionBarSherlock.version}</version>
 			</#noparse>
@@ -91,7 +91,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.actionbarsherlock</groupId>
-			<artifactId>library</artifactId>
+			<artifactId>actionbarsherlock</artifactId>
 			<#noparse>
 			<version>${actionBarSherlock.version}</version>
 			</#noparse>
