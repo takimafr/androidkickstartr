@@ -63,7 +63,7 @@ public class MainActivityGenerator implements Generator {
 	private void startGeneration(JCodeModel jCodeModel) {
 		try {
 			jClass = jCodeModel._class(application.getActivityPackage());
-			
+
 			createActivity();
 
 			afterViewsBody = createAfterViewsMethod();
@@ -108,8 +108,16 @@ public class MainActivityGenerator implements Generator {
 	private void createActivity() {
 		JClass parentActivity;
 
-		if (state.isActionBarSherlock()) {
+		if (state.isRoboguice() && state.isActionBarSherlock()) {
+			if (state.isViewPager()) {
+				parentActivity = ref.ref(application.getRoboSherlockFragmentActivityPackage());
+			} else {
+				parentActivity = ref.ref(application.getRoboSherlockActivityPackage());
+			}
+		} else if (state.isActionBarSherlock()) {
 			parentActivity = state.isViewPager() ? ref.sFragmentActivity() : ref.sActivity();
+		} else if (state.isRoboguice()) {
+			parentActivity = state.isViewPager() ? ref.roboFragmentActivity() : ref.roboActivity();
 		} else {
 			parentActivity = state.isViewPager() ? ref.fragmentActivity() : ref.activity();
 		}
@@ -125,7 +133,7 @@ public class MainActivityGenerator implements Generator {
 	}
 
 	private JFieldVar createViewField(JClass type, String name) {
-		int mod = state.isAndroidAnnotations() ? JMod.NONE : JMod.PRIVATE;
+		int mod = state.isAndroidAnnotations() || state.isRoboguice() ? JMod.NONE : JMod.PRIVATE;
 		JFieldVar field = jClass.field(mod, type, name);
 		return field;
 	}

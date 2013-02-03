@@ -41,7 +41,7 @@ public class Kickstartr {
 		this.application = application;
 
 		jCodeModel = new JCodeModel();
-		fileHelper = new FileHelper(application.getName(), state.isMaven());
+		fileHelper = new FileHelper(application.getName(), application.getPackageName(), state.isMaven());
 
 		extractResources(state, application);
 	}

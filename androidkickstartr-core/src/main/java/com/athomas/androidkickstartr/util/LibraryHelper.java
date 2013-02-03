@@ -52,6 +52,13 @@ public class LibraryHelper {
 			if (state.isAcra()) {
 				copyToLibs("acra-4.3.0.jar");
 			}
+			
+			if (state.isRoboguice()) {
+				copyToLibs("roboguice-2.0.jar");
+				copyToLibs("guice-3.0-no_aop.jar");
+				//Required since Guice 3.0
+				copyToLibs("javax.inject-1.jar");
+			}
 		}
 
 	}

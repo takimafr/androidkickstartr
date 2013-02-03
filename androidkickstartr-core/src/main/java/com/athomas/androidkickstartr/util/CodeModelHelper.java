@@ -1,6 +1,7 @@
 package com.athomas.androidkickstartr.util;
 
 import com.athomas.androidkickstartr.model.State;
+import com.sun.codemodel.JAnnotationUse;
 import com.sun.codemodel.JBlock;
 import com.sun.codemodel.JExpr;
 import com.sun.codemodel.JExpression;
@@ -20,10 +21,14 @@ public class CodeModelHelper {
 	}
 
 	public void doViewById(JBlock body, String id, JFieldVar field) {
-		if (!state.isAndroidAnnotations()) {
-			doFindViewById(body, id, field);
-		} else {
+		if (state.isAndroidAnnotations()) {
 			field.annotate(ref.viewById());
+		} else if (state.isRoboguice()) {
+			JAnnotationUse injectViewAnnotation = field.annotate(ref.injectView());
+			JFieldRef rId = ref.r().staticRef("id").ref(id);
+			injectViewAnnotation.param("value", rId);
+		} else {
+			doFindViewById(body, id, field);
 		}
 	}
 
