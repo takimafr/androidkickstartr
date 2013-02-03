@@ -23,7 +23,7 @@ public class LibraryHelper {
 
 	public void go() {
 		if (state.isActionBarSherlock()) {
-			copyLibraryToProject("ActionBarSherlock/library");
+			copyLibraryToProject("ActionBarSherlock/actionbarsherlock");
 		}
 
 		if (state.isViewPagerIndicator()) {
