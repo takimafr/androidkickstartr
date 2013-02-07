@@ -160,6 +160,7 @@
         <span class="help-block">Simplify and clarify your code, increase your productivity by using the power of annotations.</span>
         <div id="aa" class="collapse out">
           <p><strong>Effect</strong>: Add AndroidAnnotations dependency, replace all the boilerplate code by annotations (view injection, events handling, thread model), Eclipse auto-configuration.</p>
+          <p><strong>Compatibility</strong>: Not compatible with Roboguice.</p>
         </div>
         <label class="checkbox">
           <input type="checkbox" name="restTemplate" value="true">Spring RestTemplate <span>1.0.0.RELEASE</span></input>
@@ -253,14 +254,22 @@
   </div>
 </div>
 </div>
-<div class="row library-soon">
+<div class="row library">
   <div class="span5">
     <label class="checkbox">
-      <input type="checkbox" disabled>Roboguice 2.0 (Soon)
+      <input type="checkbox" name="roboguice" value="true">Roboguice (New) <span>2.0</span>
     </input>
   </label>
+  <div class="pull-right"><a data-toggle="collapse" data-target="#roboguice" class="label label-success">Effect</a> <a href="https://github.com/roboguice/roboguice/wiki" target="_blank" class="label label-info">Usage</a><a href="https://github.com/roboguice/roboguice" target="_blank" class="label label-info">Doc</a></div>
+  <span class="help-block">RoboGuice is a framework that brings the simplicity and ease of Dependency Injection to Android, using Google's own Guice library.</span>
+  <div id="roboguice" class="collapse out">
+    <p><strong>Effect</strong>: Add Roboguice dependency, use annotations to inject the views.</p>
+    <p><strong>Effect with ABS</strong>: Add the RoboSherlockActivity.</p>
+    <p><strong>Effect with ViewPager</strong>: Add the RoboSherlockFragment and the RoboSherlockFragmentActivity.</p>
+    <p><strong>Compatibility</strong>: Not compatible with AA.</p>
+  </div>
 </div>
-<div class="span5 pull-right">
+<div class="span5 pull-right library-soon">
   <label class="checkbox">
     <input type="checkbox" name="viewPagerIndicator" value="true" disabled>ViewPagerIndicator 2.4.1 (Soon)
   </input>

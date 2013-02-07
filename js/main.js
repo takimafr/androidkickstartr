@@ -16,6 +16,7 @@ function fullPreset() {
   $("#none").hide();
   $("input:radio[name=navigationType]").attr("disabled", false);
   disableCheckbox("supportV4", true);
+  disableCheckbox("roboguice", true);
 }
 
 $("#basic").click(function(){
@@ -36,6 +37,7 @@ function basicPreset() {
   $("#none").hide();
   $("input:radio[name=navigationType]").attr("disabled", false);
   disableCheckbox("supportV4", true);
+  disableCheckbox("roboguice", true);
 };
 
 $("#rest").click(function(){
@@ -56,6 +58,7 @@ function restPreset() {
   $("#none").hide();
   $("input:radio[name=navigationType]").attr("disabled", false);
   disableCheckbox("supportV4", true);
+  disableCheckbox("roboguice", true);
 }
 
 function checkBox(name, checked) {
@@ -96,6 +99,16 @@ function disableCheckbox(name, disabled) {
   $target = $("input:checkbox[name="+ name +"]");
   $target.attr("disabled", disabled);
 }
+
+$("input:checkbox[name=roboguice]").click(function(event) {
+  $checked = $(event.target).prop("checked");
+  disableCheckbox("androidAnnotations", $checked);
+});
+
+$("input:checkbox[name=androidAnnotations]").click(function(event) {
+  $checked = $(event.target).prop("checked");
+  disableCheckbox("roboguice", $checked);
+});
 
 $("#kickstartr-form").submit(function() {
 
