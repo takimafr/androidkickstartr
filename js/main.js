@@ -10,6 +10,7 @@ function fullPreset() {
   checkBox("supportV4", true);
   checkBox("acra", true);
   checkBox("viewPager", true);
+  checkBox("roboguice", false);
   checkRadio("tabNavigation", true);
   $("#tab").show();
   $("#list").hide();
@@ -17,6 +18,7 @@ function fullPreset() {
   $("input:radio[name=navigationType]").attr("disabled", false);
   disableCheckbox("supportV4", true);
   disableCheckbox("roboguice", true);
+  disableCheckbox("androidAnnotations", false);
 }
 
 $("#basic").click(function(){
@@ -30,6 +32,7 @@ function basicPreset() {
   checkBox("nineOldAndroids", false);
   checkBox("supportV4", true);
   checkBox("viewPager", false);
+  checkBox("roboguice", false);
   checkBox("acra", false);
   checkRadio("tabNavigation", true);
   $("#tab").show();
@@ -38,6 +41,7 @@ function basicPreset() {
   $("input:radio[name=navigationType]").attr("disabled", false);
   disableCheckbox("supportV4", true);
   disableCheckbox("roboguice", true);
+  disableCheckbox("androidAnnotations", false);
 };
 
 $("#rest").click(function(){
@@ -51,6 +55,7 @@ function restPreset() {
   checkBox("nineOldAndroids", false);
   checkBox("supportV4", true);
   checkBox("viewPager", false);
+  checkBox("roboguice", false);
   checkBox("acra", false);
   checkRadio("tabNavigation", true);
   $("#tab").show();
@@ -59,6 +64,7 @@ function restPreset() {
   $("input:radio[name=navigationType]").attr("disabled", false);
   disableCheckbox("supportV4", true);
   disableCheckbox("roboguice", true);
+  disableCheckbox("androidAnnotations", false);
 }
 
 function checkBox(name, checked) {
@@ -103,11 +109,13 @@ function disableCheckbox(name, disabled) {
 $("input:checkbox[name=roboguice]").click(function(event) {
   $checked = $(event.target).prop("checked");
   disableCheckbox("androidAnnotations", $checked);
+  checkBox("androidAnnotations", false);
 });
 
 $("input:checkbox[name=androidAnnotations]").click(function(event) {
   $checked = $(event.target).prop("checked");
   disableCheckbox("roboguice", $checked);
+  checkBox("roboguice", false);
 });
 
 $("#kickstartr-form").submit(function() {
