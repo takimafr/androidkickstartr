@@ -40,7 +40,7 @@
 		<spring-android-rest-template.version>1.0.0.RELEASE</spring-android-rest-template.version>
 		</#if>
 		<#if State.acra>
-		<acra.version>4.3.0</acra.version>
+		<acra.version>4.4.0</acra.version>
 		</#if>
 		<#if State.roboguice>
 		<roboguice.version>2.0</roboguice.version>
