@@ -60,7 +60,7 @@ public class Kickstartr {
 	public File start() {
 		LOGGER.info("generation of " + application + " : " + state);
 
-		if (state.isRestTemplate()) {
+		if (state.isRestTemplate() || state.isAcra()) {
 			List<String> permissions = application.getPermissions();
 			permissions.add("android.permission.INTERNET");
 		}
