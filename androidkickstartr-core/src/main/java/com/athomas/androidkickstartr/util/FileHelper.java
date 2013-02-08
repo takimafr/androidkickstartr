@@ -26,7 +26,7 @@ public class FileHelper {
 		}
 		return resourcesTempDir;
 	}
-	
+
 	public String getTargetSourcePath() {
 		String srcPath = maven ? "/src/main/java" : "/src";
 		return getProjectPath() + srcPath;
@@ -86,8 +86,8 @@ public class FileHelper {
 		return getDir(getProjectPath() + "/libs");
 	}
 
-	public File getTargetExtLibsDir() throws IOException {
-		return getDir(getProjectPath() + "/ext-libs");
+	public File getTargetExtCompileDir() throws IOException {
+		return getDir(getProjectPath() + "/compile-libs");
 	}
 
 	public File getTargetAndroidManifestFile() throws IOException {
@@ -147,15 +147,15 @@ public class FileHelper {
 	public File getTargetProjectPropertiesFile() throws IOException {
 		return createFile(getProjectPath() + "/project.properties");
 	}
-	
+
 	public File getTargetRoboSherlockActivityFile() throws IOException {
 		return createFile(getTargetSourcePath() + "/" + packageName.replace(".", "/") + "/robosherlock/RoboSherlockActivity.java");
 	}
-	
+
 	public File getTargetRoboSherlockFragmentFile() throws IOException {
 		return createFile(getTargetSourcePath() + "/" + packageName.replace(".", "/") + "/robosherlock/RoboSherlockFragment.java");
 	}
-	
+
 	public File getTargetRoboSherlockFragmentActivityFile() throws IOException {
 		return createFile(getTargetSourcePath() + "/" + packageName.replace(".", "/") + "/robosherlock/RoboSherlockFragmentActivity.java");
 	}

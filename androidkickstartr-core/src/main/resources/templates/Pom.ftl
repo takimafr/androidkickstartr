@@ -21,7 +21,7 @@
 
 		<!-- Dependencies -->
 		<#if State.androidAnnotations>
-		<androidannotations.version>2.6</androidannotations.version>
+		<androidannotations.version>2.7</androidannotations.version>
 		</#if>
 		<#if State.actionBarSherlock>
 		<actionBarSherlock.version>4.2.0</actionBarSherlock.version>
@@ -67,8 +67,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.googlecode.androidannotations</groupId>
-			<artifactId>androidannotations</artifactId>
-			<classifier>api</classifier>
+			<artifactId>androidannotations-api</artifactId>
 			<#noparse>
 			<version>${androidannotations.version}</version>
 			</#noparse>

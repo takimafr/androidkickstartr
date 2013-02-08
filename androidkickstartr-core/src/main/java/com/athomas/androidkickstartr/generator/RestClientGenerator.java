@@ -38,8 +38,13 @@ public class RestClientGenerator implements Generator {
 		try {
 			jClass = jCodeModel._class(application.getRestClientPackage(), INTERFACE);
 
+			/*
+			 * @Rest( rootUrl = "<ROOT_URL>", converters =
+			 * StringHttpMessageConverter.class)
+			 */
 			JAnnotationUse rest = jClass.annotate(ref.rest());
-			rest.param("value", application.getRestTemplateUrl());
+			rest.param("rootUrl", application.getRestTemplateUrl());
+			rest.param("converters", ref.stringHttpMessageConverter().dotclass());
 
 			// TODO search the JMod for interface method
 			JMethod mainMethod = jClass.method(JMod.ABSTRACT | JMod.PUBLIC, jCodeModel.VOID, "main");

@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import com.athomas.androidkickstartr.model.State;
 
 public class LibraryHelper {
-	
+
 	private final static Logger LOGGER = LoggerFactory.getLogger(LibraryHelper.class);
 
 	private State state;
@@ -32,8 +32,8 @@ public class LibraryHelper {
 
 		if (!state.isMaven()) {
 			if (state.isAndroidAnnotations()) {
-				copyToLibs("androidannotations-2.6-api.jar");
-				copyToExtLibs("androidannotations-2.6.jar");
+				copyToLibs("androidannotations-api-2.7.jar");
+				copyToCompileLibs("androidannotations-2.7.jar");
 			}
 
 			if (state.isNineOldAndroids()) {
@@ -52,7 +52,7 @@ public class LibraryHelper {
 			if (state.isAcra()) {
 				copyToLibs("acra-4.3.0.jar");
 			}
-			
+
 			if (state.isRoboguice()) {
 				copyToLibs("roboguice-2.0.jar");
 				copyToLibs("guice-3.0-no_aop.jar");
@@ -83,13 +83,13 @@ public class LibraryHelper {
 		}
 	}
 
-	private void copyToExtLibs(String jar) {
+	private void copyToCompileLibs(String jar) {
 		try {
 			File library = fileHelper.getLibraryFile(jar);
-			File extLibsDir = fileHelper.getTargetExtLibsDir();
-			FileUtils.copyFileToDirectory(library, extLibsDir);
+			File extCompileDir = fileHelper.getTargetExtCompileDir();
+			FileUtils.copyFileToDirectory(library, extCompileDir);
 		} catch (IOException e) {
-			LOGGER.error("a problem occured during the copy of " + jar + " to ext-libs", e);
+			LOGGER.error("a problem occured during the copy of " + jar + " to compile-libs", e);
 		}
 	}
 
