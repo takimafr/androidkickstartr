@@ -50,7 +50,7 @@ public class LibraryHelper {
 			}
 
 			if (state.isAcra()) {
-				copyToLibs("acra-4.3.0.jar");
+				copyToLibs("acra-4.4.0.jar");
 			}
 
 			if (state.isRoboguice()) {
