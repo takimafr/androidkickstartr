@@ -111,19 +111,6 @@
         <div class="span5 offset1 parameters ">
           <div class="control-group">
             <label class="control-label">
-              Maven:
-            </label>
-            <div class="controls">
-              <label class="radio">
-                <input type="radio" name="maven" value="true">Enabled</input>
-              </label>
-              <label class="radio">
-                <input type="radio" name="maven" value="false" checked>Disabled</input>
-              </label>
-            </div>
-          </div>
-          <div class="control-group">
-            <label class="control-label">
               Eclipse as IDE:
             </label>
             <div class="controls">
@@ -139,8 +126,23 @@
       </div>
     </div>
     <div class="row">
+      <div class="span12">
+        <h1>2. Maven ?</h1>
+        <div class="maven span5 library">
+          <label class="checkbox">
+            <input type="checkbox" name="maven" value="true">Android-Maven-Plugin <span>3.5.0</span></input>
+          </label>
+          <div class="pull-right"><a data-toggle="collapse" data-target="#amp" class="label label-success">Effect</a><a href="http://code.google.com/p/maven-android-plugin/" target="_blank" class="label label-info">Doc</a></div>
+          <span class="help-block">Easy to use Maven plugin for Android!</span>
+          <div id="amp" class="collapse out">
+            <p><strong>Effect</strong>: configure the project as a Maven project and use the android-maven-plugin.</p>
+          </div>
+        </div>
+      </div>
+    </div>  
+    <div class="row">
       <div class="span12" class="btn-group" data-toggle="buttons-radio">
-        <h1>2. Choose your libraries
+        <h1>3. Choose your libraries
           <button class="btn btn-small btn-danger" type="button" id="basic">
             Basic preset
           </button>

@@ -131,6 +131,10 @@
     margin-top: 10px;
 }
 
+.maven {
+    margin-left: 0px;
+}
+
 .library label {
     color: #222222;
     font-weight: 300;
