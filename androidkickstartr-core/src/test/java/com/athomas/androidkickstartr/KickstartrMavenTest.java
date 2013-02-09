@@ -2,6 +2,7 @@ package com.athomas.androidkickstartr;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 
 import junit.framework.Assert;
 
@@ -16,6 +17,11 @@ import org.junit.Test;
 
 import com.athomas.androidkickstartr.model.Application;
 import com.athomas.androidkickstartr.model.State;
+
+/**
+ * Requires a device or emulator connected
+ * 
+ */
 
 public class KickstartrMavenTest {
 
@@ -66,6 +72,9 @@ public class KickstartrMavenTest {
 
 		DefaultInvoker invoker = new DefaultInvoker();
 		String mavenHome = System.getenv("MAVEN_HOME");
+
+		if (mavenHome == null)
+			throw new NoSuchElementException("Compilation impossible because you do not have a $MAVEN_HOME variable declared in your environment.");
 
 		invoker.setMavenHome(new File(mavenHome));
 		InvocationResult result;
@@ -221,7 +230,7 @@ public class KickstartrMavenTest {
 		File file = launchKickstartr();
 		Assert.assertNotNull(file);
 	}
-	
+
 	@Test
 	public void generateProject_maven_roboguice() {
 		state = new State.Builder().//
@@ -232,7 +241,7 @@ public class KickstartrMavenTest {
 		File file = launchKickstartr();
 		Assert.assertNotNull(file);
 	}
-	
+
 	@Test
 	public void generateProject_maven_roboguice_abs() {
 		state = new State.Builder().//
@@ -244,7 +253,7 @@ public class KickstartrMavenTest {
 		File file = launchKickstartr();
 		Assert.assertNotNull(file);
 	}
-	
+
 	@Test
 	public void generateProject_maven_roboguice_viewpager() {
 		state = new State.Builder().//
@@ -257,7 +266,7 @@ public class KickstartrMavenTest {
 		File file = launchKickstartr();
 		Assert.assertNotNull(file);
 	}
-	
+
 	@Test
 	public void generateProject_maven_roboguice_abs_viewpager() {
 		state = new State.Builder().//
@@ -332,7 +341,7 @@ public class KickstartrMavenTest {
 		File file = launchKickstartr();
 		Assert.assertNotNull(file);
 	}
-	
+
 	@Test
 	public void generateProject_maven_abs_tab_rest_acra_nine_viewpager_roboguice() {
 		state = new State.Builder().//
@@ -367,7 +376,7 @@ public class KickstartrMavenTest {
 		File file = launchKickstartr();
 		Assert.assertNotNull(file);
 	}
-	
+
 	@Test
 	public void generateProject_maven_abs_list_rest_acra_nine_viewpager_roboguice() {
 		state = new State.Builder().//
@@ -384,7 +393,7 @@ public class KickstartrMavenTest {
 		File file = launchKickstartr();
 		Assert.assertNotNull(file);
 	}
-	
+
 	private File launchKickstartr() {
 		kickstartr = new Kickstartr(state, application);
 		return kickstartr.start();
