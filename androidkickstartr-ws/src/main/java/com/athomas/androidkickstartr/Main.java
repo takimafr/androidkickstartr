@@ -18,7 +18,7 @@ import org.apache.commons.io.FileUtils;
 import com.athomas.androidkickstartr.model.Application;
 import com.athomas.androidkickstartr.model.State;
 import com.athomas.androidkickstartr.util.StringUtils;
-	
+
 @Path("/")
 public class Main {
 
@@ -39,6 +39,7 @@ public class Main {
 			@FormParam("viewPager") boolean viewPager,//
 			@FormParam("viewPagerIndicator") boolean viewPagerIndicator,//
 			@FormParam("roboguice") boolean roboguice,//
+			@FormParam("proguard") boolean proguard,//
 
 			// Application
 			@FormParam("packageName") String packageName,//
@@ -67,7 +68,7 @@ public class Main {
 		if (StringUtils.isEmpty(activityLayout)) {
 			activityLayout = "activity_main";
 		}
-		
+
 		if (viewPager && !actionBarSherlock && !viewPagerIndicator && !supportV4) {
 			supportV4 = true;
 		}
@@ -86,6 +87,7 @@ public class Main {
 				supportV4(supportV4). //
 				acra(acra). //
 				eclipse(eclipse). //
+				proguard(proguard). //
 				build();
 
 		Application application = new Application.Builder().//
