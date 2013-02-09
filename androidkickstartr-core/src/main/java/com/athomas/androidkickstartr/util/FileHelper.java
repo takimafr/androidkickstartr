@@ -128,6 +128,10 @@ public class FileHelper {
 		return createFile(getProjectPath() + "/.project");
 	}
 
+	public File getTargetProguardFile() throws IOException {
+		return createFile(getProjectPath() + "/proguard.cfg");
+	}
+
 	public File getTargetClasspathFile() throws IOException {
 		return createFile(getProjectPath() + "/.classpath");
 	}

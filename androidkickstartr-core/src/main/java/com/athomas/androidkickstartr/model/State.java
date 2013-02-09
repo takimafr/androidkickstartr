@@ -15,6 +15,7 @@ public class State {
 	private boolean supportV4;
 	private boolean acra;
 	private boolean eclipse;
+	private boolean proguard;
 
 	public boolean isActionBarSherlock() {
 		return actionBarSherlock;
@@ -68,6 +69,10 @@ public class State {
 		return eclipse;
 	}
 
+	public boolean isProguard() {
+		return proguard;
+	}
+
 	@Override
 	public String toString() {
 		return "State [actionBarSherlock=" + actionBarSherlock + //
@@ -83,8 +88,9 @@ public class State {
 				", supportV4=" + supportV4 + //
 				", acra=" + acra + //
 				", eclipse=" + eclipse + //
+				", proguard=" + proguard + //
 				"]";
-				
+
 	}
 
 	public static class Builder {
@@ -157,6 +163,11 @@ public class State {
 
 		public Builder eclipse(boolean eclipse) {
 			state.eclipse = eclipse;
+			return this;
+		}
+
+		public Builder proguard(boolean proguard) {
+			state.proguard = proguard;
 			return this;
 		}
 
