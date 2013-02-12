@@ -61,6 +61,12 @@
     -webkit-border-radius:0.5em;
 }
 
+.parameters a {
+    text-decoration: none;
+    color: #444444;
+    border-bottom:1px dotted #444444;
+}
+
 .parameters .control-group {
     margin:5px 0 0 10px;
 }
