@@ -12,6 +12,11 @@ import org.junit.Test;
 import com.athomas.androidkickstartr.model.Application;
 import com.athomas.androidkickstartr.model.State;
 
+/**
+ * Requires a device or emulator connected
+ * 
+ */
+
 public class KickstartrNonMavenTest {
 
 	private static Application application;
