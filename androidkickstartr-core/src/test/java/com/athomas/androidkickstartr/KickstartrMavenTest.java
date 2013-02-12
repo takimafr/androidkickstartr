@@ -96,6 +96,17 @@ public class KickstartrMavenTest {
 	}
 
 	@Test
+	public void generateProject_maven_proguard() {
+		appDetails = builder.//
+				maven(true). //
+				proguard(true).//
+				build();
+
+		File file = launchKickstartr();
+		Assert.assertNotNull(file);
+	}
+
+	@Test
 	public void generateProject_maven_viewpager() {
 		appDetails = builder.//
 				maven(true). //
@@ -385,6 +396,42 @@ public class KickstartrMavenTest {
 				nineOldAndroids(true). //
 				viewPager(true). //
 				roboguice(true). //
+				build();
+
+		File file = launchKickstartr();
+		Assert.assertNotNull(file);
+	}
+
+	@Test
+	public void generateProject_maven_abs_list_aa_rest_acra_nine_viewpager_proguard() {
+		appDetails = builder.//
+				maven(true). //
+				actionBarSherlock(true). //
+				listNavigation(true). //
+				androidAnnotations(true). //
+				restTemplate(true).//
+				acra(true). //
+				nineOldAndroids(true). //
+				viewPager(true). //
+				proguard(true). //
+				build();
+
+		File file = launchKickstartr();
+		Assert.assertNotNull(file);
+	}
+
+	@Test
+	public void generateProject_maven_abs_list_rest_acra_nine_viewpager_roboguice_proguard() {
+		appDetails = builder.//
+				maven(true). //
+				actionBarSherlock(true). //
+				listNavigation(true). //
+				restTemplate(true).//
+				acra(true). //
+				nineOldAndroids(true). //
+				viewPager(true). //
+				roboguice(true). //
+				proguard(true). //
 				build();
 
 		File file = launchKickstartr();

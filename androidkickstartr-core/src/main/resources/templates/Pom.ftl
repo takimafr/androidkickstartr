@@ -164,6 +164,12 @@
 						<platform>${api.platform}</platform>
 						</#noparse>
 					</sdk>
+					<#if application.proguard>
+					<!-- Proguard is not skipped by default -->
+					<proguard>
+						<skip>false</skip>
+					</proguard>
+					</#if>
 				</configuration>
 			</plugin>
 			<plugin>

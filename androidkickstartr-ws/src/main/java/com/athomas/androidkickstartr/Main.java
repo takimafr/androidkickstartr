@@ -37,6 +37,7 @@ public class Main {
 			@FormParam("viewPager") boolean viewPager,//
 			@FormParam("viewPagerIndicator") boolean viewPagerIndicator,//
 			@FormParam("roboguice") boolean roboguice,//
+			@FormParam("proguard") boolean proguard,//
 
 			// Application
 			@FormParam("packageName") String packageName,//
@@ -95,6 +96,7 @@ public class Main {
 				supportV4(supportV4). //
 				acra(acra). //
 				eclipse(eclipse). //
+				proguard(proguard). //
 				build();
 
 		final Kickstartr kickstarter = new Kickstartr(appDetails);
