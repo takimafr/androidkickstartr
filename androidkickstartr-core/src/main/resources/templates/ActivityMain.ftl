@@ -3,7 +3,7 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent" >
 
-	<#if State.viewPager>
+	<#if application.viewPager>
 	<android.support.v4.view.ViewPager
 		android:id="@+id/pager"
 		android:layout_width="match_parent"

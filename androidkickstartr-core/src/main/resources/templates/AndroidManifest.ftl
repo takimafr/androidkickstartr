@@ -1,13 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="${Application.packageName}"
+	package="${application.packageName}"
 	android:versionCode="1"
 	android:versionName="1.0" >
 
 	<uses-sdk
-		android:minSdkVersion="${Application.minSdk}"
-		android:targetSdkVersion="${Application.targetSdk}" />
+		android:minSdkVersion="${application.minSdk}"
+		android:targetSdkVersion="${application.targetSdk}" />
 	
-	<#list Application.permissions as permission>
+	<#list application.permissions as permission>
 		<uses-permission android:name="${permission}" />
 	</#list>
 		
@@ -15,12 +15,12 @@
 	<application
 		android:icon="@drawable/ic_launcher"
         android:theme="@style/AppTheme" 
-		<#if State.acra>
-		android:name="${ApplicationClassName}"
+		<#if application.acra>
+		android:name="${applicationClassName}"
 		</#if>
 		android:label="@string/app_name" >
 		<activity
-			android:name="${Application.activity}"
+			android:name="${application.activity}"
 			android:label="@string/app_name" >
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />

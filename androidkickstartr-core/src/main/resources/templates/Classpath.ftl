@@ -4,7 +4,7 @@
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
-	<#if State.androidAnnotations>
+	<#if application.androidAnnotations>
 	<classpathentry exported="true" kind="lib" path="libs/androidannotations-api-2.7.jar"/>
 	<classpathentry kind="src" path=".apt_generated">
 		<attributes>

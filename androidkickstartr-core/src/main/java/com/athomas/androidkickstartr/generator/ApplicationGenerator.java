@@ -5,7 +5,7 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.athomas.androidkickstartr.model.Application;
+import com.athomas.androidkickstartr.AppDetails;
 import com.athomas.androidkickstartr.util.RefHelper;
 import com.sun.codemodel.JBlock;
 import com.sun.codemodel.JClassAlreadyExistsException;
@@ -19,16 +19,16 @@ public class ApplicationGenerator implements Generator {
 
 	private Logger logger;
 	private JDefinedClass jClass;
-	private Application application;
+	private AppDetails appDetails;
 
-	public ApplicationGenerator(Application application) {
-		this.application = application;
+	public ApplicationGenerator(AppDetails appDetails) {
+		this.appDetails = appDetails;
 	}
 
 	public JCodeModel generate(JCodeModel jCodeModel, RefHelper ref) throws IOException {
 		logger = LoggerFactory.getLogger(getClass());
 		try {
-			jClass = jCodeModel._class(application.getApplicationPackage());
+			jClass = jCodeModel._class(appDetails.getApplicationPackage());
 
 			jClass._extends(ref.application());
 

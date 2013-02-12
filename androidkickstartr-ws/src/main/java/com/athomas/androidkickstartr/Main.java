@@ -15,10 +15,8 @@ import javax.ws.rs.core.StreamingOutput;
 
 import org.apache.commons.io.FileUtils;
 
-import com.athomas.androidkickstartr.model.Application;
-import com.athomas.androidkickstartr.model.State;
 import com.athomas.androidkickstartr.util.StringUtils;
-	
+
 @Path("/")
 public class Main {
 
@@ -67,12 +65,23 @@ public class Main {
 		if (StringUtils.isEmpty(activityLayout)) {
 			activityLayout = "activity_main";
 		}
-		
+
 		if (viewPager && !actionBarSherlock && !viewPagerIndicator && !supportV4) {
 			supportV4 = true;
 		}
 
-		State state = new State.Builder().//
+		AppDetails appDetails = new AppDetails.Builder().//
+
+				// Parameters
+				packageName(packageName).//
+				name(name).//
+				activity(activity).//
+				activityLayout(activityLayout).//
+				minSdk(8).//
+				targetSdk(16).//
+				permissions(new ArrayList<String>()).//
+
+				// Libraries
 				actionBarSherlock(actionBarSherlock).//
 				listNavigation(listNavigation).//
 				tabNavigation(tabNavigation).//
@@ -88,17 +97,7 @@ public class Main {
 				eclipse(eclipse). //
 				build();
 
-		Application application = new Application.Builder().//
-				packageName(packageName).//
-				name(name).//
-				activity(activity).//
-				activityLayout(activityLayout).//
-				minSdk(8).//
-				targetSdk(16).//
-				permissions(new ArrayList<String>()).//
-				build();
-
-		final Kickstartr kickstarter = new Kickstartr(state, application);
+		final Kickstartr kickstarter = new Kickstartr(appDetails);
 		final File file = kickstarter.start();
 
 		if (file == null) {

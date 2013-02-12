@@ -5,11 +5,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
 >
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>${Application.packageName}</groupId>
-	<artifactId>${Application.name}</artifactId>
+	<groupId>${application.packageName}</groupId>
+	<artifactId>${application.name}</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>apk</packaging>
-	<name>${Application.name}</name>
+	<name>${application.name}</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -20,29 +20,29 @@
 		<api.platform>16</api.platform>
 
 		<!-- Dependencies -->
-		<#if State.androidAnnotations>
+		<#if application.androidAnnotations>
 		<androidannotations.version>2.7</androidannotations.version>
 		</#if>
-		<#if State.actionBarSherlock>
+		<#if application.actionBarSherlock>
 		<actionBarSherlock.version>4.2.0</actionBarSherlock.version>
 		</#if>
 		<android.version>4.1.1.4</android.version>
-		<#if State.viewPagerIndicator >
+		<#if application.viewPagerIndicator >
 		<viewpagerindicator.version>2.4.0</viewpagerindicator.version>
 		</#if>
-		<#if State.nineOldAndroids>
+		<#if application.nineOldAndroids>
 		<nineoldandroids.version>2.4.0</nineoldandroids.version>
 		</#if>
-		<#if State.supportV4>
+		<#if application.supportV4>
 		<support-v4.version>r7</support-v4.version>
 		</#if>
-		<#if State.restTemplate>
+		<#if application.restTemplate>
 		<spring-android-rest-template.version>1.0.0.RELEASE</spring-android-rest-template.version>
 		</#if>
-		<#if State.acra>
+		<#if application.acra>
 		<acra.version>4.4.0</acra.version>
 		</#if>
-		<#if State.roboguice>
+		<#if application.roboguice>
 		<roboguice.version>2.0</roboguice.version>
 		</#if>
 	</properties>
@@ -56,7 +56,7 @@
 			<version>${android.version}</version>
 			</#noparse>
 		</dependency>
-		<#if State.androidAnnotations>
+		<#if application.androidAnnotations>
 		<dependency>
 			<groupId>com.googlecode.androidannotations</groupId>
 			<artifactId>androidannotations</artifactId>
@@ -73,7 +73,7 @@
 			</#noparse>
 		</dependency>
 		</#if>
-		<#if State.supportV4>
+		<#if application.supportV4>
 		<dependency>
 			<groupId>com.google.android</groupId>
 			<artifactId>support-v4</artifactId>
@@ -82,7 +82,7 @@
 			</#noparse>
 		</dependency>
 		</#if>
-		<#if State.actionBarSherlock>
+		<#if application.actionBarSherlock>
 		<dependency>
 			<groupId>com.actionbarsherlock</groupId>
 			<artifactId>actionbarsherlock</artifactId>
@@ -101,7 +101,7 @@
 			<scope>provided</scope>
 		</dependency>
 		</#if>
-		<#if State.viewPagerIndicator>
+		<#if application.viewPagerIndicator>
 		<dependency>
 			<groupId>com.viewpagerindicator</groupId>
 			<artifactId>library</artifactId>
@@ -111,7 +111,7 @@
 			<type>apklib</type>
 		</dependency>
 		</#if>
-		<#if State.nineOldAndroids>
+		<#if application.nineOldAndroids>
 		<dependency>
 			<groupId>com.nineoldandroids</groupId>
 			<artifactId>library</artifactId>
@@ -120,7 +120,7 @@
 			</#noparse>
 		</dependency>
 		</#if>
-		<#if State.restTemplate>
+		<#if application.restTemplate>
 		<dependency>
 			<groupId>org.springframework.android</groupId>
 			<artifactId>spring-android-rest-template</artifactId>
@@ -129,7 +129,7 @@
 			</#noparse>
 		</dependency>
 		</#if>
-		<#if State.acra>
+		<#if application.acra>
 		<dependency>
 			<groupId>ch.acra</groupId>
 			<artifactId>acra</artifactId>
@@ -138,7 +138,7 @@
 			</#noparse>
 		</dependency>
 		</#if>
-		<#if State.roboguice>
+		<#if application.roboguice>
 		<dependency>
             <groupId>org.roboguice</groupId>
             <artifactId>roboguice</artifactId>

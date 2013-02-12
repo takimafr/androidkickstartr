@@ -7,16 +7,16 @@ import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.athomas.androidkickstartr.model.State;
+import com.athomas.androidkickstartr.AppDetails;
 
 public class LibraryHelper {
 
 	private final static Logger LOGGER = LoggerFactory.getLogger(LibraryHelper.class);
 
-	private State state;
+	private AppDetails state;
 	private FileHelper fileHelper;
 
-	public LibraryHelper(State state, FileHelper fileHelper) {
+	public LibraryHelper(AppDetails state, FileHelper fileHelper) {
 		this.state = state;
 		this.fileHelper = fileHelper;
 	}

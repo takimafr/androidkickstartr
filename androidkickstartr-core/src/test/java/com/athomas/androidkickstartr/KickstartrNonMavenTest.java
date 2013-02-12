@@ -9,8 +9,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.athomas.androidkickstartr.model.Application;
-import com.athomas.androidkickstartr.model.State;
+import com.athomas.androidkickstartr.AppDetails.Builder;
 
 /**
  * Requires a device or emulator connected
@@ -19,42 +18,39 @@ import com.athomas.androidkickstartr.model.State;
 
 public class KickstartrNonMavenTest {
 
-	private static Application application;
-
 	private Kickstartr kickstartr;
-	private State state;
+	private AppDetails appDetails;
+	private Builder builder;
 
 	@Before
 	public void tearUp() {
-		application = new Application.Builder().//
+		builder = new AppDetails.Builder().//
 				packageName("com.androidkickstartr.app").//
 				name("MyApp").//
 				activity("MainActivity").//
 				activityLayout("activity_main").//
 				minSdk(8).//
 				targetSdk(16).//
-				permissions(new ArrayList<String>()).//
-				build();
+				permissions(new ArrayList<String>());
 	}
 
 	@After
 	public void cleanProject() {
 		kickstartr.clean();
 	}
-	
+
 	@Test
 	public void generateProject() {
-		state = new State.Builder().//
-				build();
+		appDetails = builder.build();
 
 		File file = launchKickstartr();
 		Assert.assertNotNull(file);
 
 	}
-	
+
 	@Test
 	public void generateProject_viewpager() {
-		state = new State.Builder().//
+		appDetails = builder.//
 				viewPager(true). //
 				supportV4(true). //
 				build();
@@ -65,17 +61,17 @@ public class KickstartrNonMavenTest {
 
 	@Test
 	public void generateProject_abs() {
-		state = new State.Builder().//
+		appDetails = builder.//
 				actionBarSherlock(true).//
 				build();
 
 		File file = launchKickstartr();
 		Assert.assertNotNull(file);
 	}
-	
+
 	@Test
 	public void generateProject_abs_viewpager() {
-		state = new State.Builder().//
+		appDetails = builder.//
 				actionBarSherlock(true).//
 				viewPager(true). //
 				build();
@@ -86,7 +82,7 @@ public class KickstartrNonMavenTest {
 
 	@Test
 	public void generateProject_abs_tab() {
-		state = new State.Builder().//
+		appDetails = builder.//
 				actionBarSherlock(true).//
 				tabNavigation(true). //
 				build();
@@ -97,7 +93,7 @@ public class KickstartrNonMavenTest {
 
 	@Test
 	public void generateProject_abs_tab_viewpager() {
-		state = new State.Builder().//
+		appDetails = builder.//
 				actionBarSherlock(true).//
 				tabNavigation(true). //
 				viewPager(true). //
@@ -109,7 +105,7 @@ public class KickstartrNonMavenTest {
 
 	@Test
 	public void generateProject_abs_list() {
-		state = new State.Builder().//
+		appDetails = builder.//
 				actionBarSherlock(true).//
 				listNavigation(true). //
 				build();
@@ -120,7 +116,7 @@ public class KickstartrNonMavenTest {
 
 	@Test
 	public void generateProject_abs_list_viewpager() {
-		state = new State.Builder().//
+		appDetails = builder.//
 				actionBarSherlock(true).//
 				listNavigation(true). //
 				viewPager(true). //
@@ -132,7 +128,7 @@ public class KickstartrNonMavenTest {
 
 	@Test
 	public void generateProject_aa() {
-		state = new State.Builder().//
+		appDetails = builder.//
 				androidAnnotations(true).//
 				build();
 
@@ -142,7 +138,7 @@ public class KickstartrNonMavenTest {
 
 	@Test
 	public void generateProject_abs_aa() {
-		state = new State.Builder().//
+		appDetails = builder.//
 				androidAnnotations(true).//
 				actionBarSherlock(true).//
 				build();
@@ -153,7 +149,7 @@ public class KickstartrNonMavenTest {
 
 	@Test
 	public void generateProject_aa_rest() {
-		state = new State.Builder().//
+		appDetails = builder.//
 				androidAnnotations(true).//
 				restTemplate(true).//
 				build();
@@ -164,7 +160,7 @@ public class KickstartrNonMavenTest {
 
 	@Test
 	public void generateProject_aa_rest_acra() {
-		state = new State.Builder().//
+		appDetails = builder.//
 				androidAnnotations(true).//
 				restTemplate(true).//
 				acra(true). //
@@ -173,20 +169,20 @@ public class KickstartrNonMavenTest {
 		File file = launchKickstartr();
 		Assert.assertNotNull(file);
 	}
-	
+
 	@Test
 	public void generateProject_roboguice() {
-		state = new State.Builder().//
+		appDetails = builder.//
 				roboguice(true).//
 				build();
 
 		File file = launchKickstartr();
 		Assert.assertNotNull(file);
 	}
-	
+
 	@Test
 	public void generateProject_roboguice_abs() {
-		state = new State.Builder().//
+		appDetails = builder.//
 				roboguice(true).//
 				actionBarSherlock(true).//
 				build();
@@ -194,10 +190,10 @@ public class KickstartrNonMavenTest {
 		File file = launchKickstartr();
 		Assert.assertNotNull(file);
 	}
-	
+
 	@Test
 	public void generateProject_roboguice_viewpager() {
-		state = new State.Builder().//
+		appDetails = builder.//
 				roboguice(true).//
 				viewPager(true).//
 				supportV4(true).//
@@ -206,10 +202,10 @@ public class KickstartrNonMavenTest {
 		File file = launchKickstartr();
 		Assert.assertNotNull(file);
 	}
-	
+
 	@Test
 	public void generateProject_roboguice_abs_viewpager() {
-		state = new State.Builder().//
+		appDetails = builder.//
 				roboguice(true).//
 				actionBarSherlock(true).//
 				viewPager(true).//
@@ -218,10 +214,10 @@ public class KickstartrNonMavenTest {
 		File file = launchKickstartr();
 		Assert.assertNotNull(file);
 	}
-	
+
 	@Test
 	public void generateProject_abs_aa_rest_acra() {
-		state = new State.Builder().//
+		appDetails = builder.//
 				actionBarSherlock(true). //
 				androidAnnotations(true). //
 				restTemplate(true).//
@@ -234,7 +230,7 @@ public class KickstartrNonMavenTest {
 
 	@Test
 	public void generateProject_abs_aa_rest_acra_nine() {
-		state = new State.Builder().//
+		appDetails = builder.//
 				actionBarSherlock(true). //
 				androidAnnotations(true). //
 				restTemplate(true).//
@@ -248,7 +244,7 @@ public class KickstartrNonMavenTest {
 
 	@Test
 	public void generateProject_abs_aa_rest_acra_nine_viewpager() {
-		state = new State.Builder().//
+		appDetails = builder.//
 				actionBarSherlock(true). //
 				androidAnnotations(true). //
 				restTemplate(true).//
@@ -260,10 +256,10 @@ public class KickstartrNonMavenTest {
 		File file = launchKickstartr();
 		Assert.assertNotNull(file);
 	}
-	
+
 	@Test
 	public void generateProject_abs_tab_aa_rest_acra_nine_viewpager() {
-		state = new State.Builder().//
+		appDetails = builder.//
 				actionBarSherlock(true). //
 				tabNavigation(true). //
 				androidAnnotations(true). //
@@ -276,10 +272,10 @@ public class KickstartrNonMavenTest {
 		File file = launchKickstartr();
 		Assert.assertNotNull(file);
 	}
-	
+
 	@Test
 	public void generateProject_abs_tab_rest_acra_nine_viewpager_roboguice() {
-		state = new State.Builder().//
+		appDetails = builder.//
 				actionBarSherlock(true). //
 				tabNavigation(true). //
 				androidAnnotations(true). //
@@ -293,10 +289,10 @@ public class KickstartrNonMavenTest {
 		File file = launchKickstartr();
 		Assert.assertNotNull(file);
 	}
-	
+
 	@Test
 	public void generateProject_abs_list_aa_rest_acra_nine_viewpager() {
-		state = new State.Builder().//
+		appDetails = builder.//
 				actionBarSherlock(true). //
 				listNavigation(true). //
 				androidAnnotations(true). //
@@ -309,10 +305,10 @@ public class KickstartrNonMavenTest {
 		File file = launchKickstartr();
 		Assert.assertNotNull(file);
 	}
-	
+
 	@Test
 	public void generateProject_abs_list_rest_acra_nine_viewpager_roboguice() {
-		state = new State.Builder().//
+		appDetails = builder.//
 				actionBarSherlock(true). //
 				listNavigation(true). //
 				restTemplate(true).//
@@ -327,7 +323,7 @@ public class KickstartrNonMavenTest {
 	}
 
 	private File launchKickstartr() {
-		kickstartr = new Kickstartr(state, application);
+		kickstartr = new Kickstartr(appDetails);
 		return kickstartr.start();
 	}
 

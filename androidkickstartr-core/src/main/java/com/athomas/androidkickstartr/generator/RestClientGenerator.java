@@ -7,7 +7,7 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.athomas.androidkickstartr.model.Application;
+import com.athomas.androidkickstartr.AppDetails;
 import com.athomas.androidkickstartr.util.RefHelper;
 import com.sun.codemodel.JAnnotationUse;
 import com.sun.codemodel.JClassAlreadyExistsException;
@@ -26,24 +26,24 @@ public class RestClientGenerator implements Generator {
 
 	private Logger logger;
 	private JDefinedClass jClass;
-	private Application application;
+	private AppDetails appDetails;
 
-	public RestClientGenerator(Application application) {
-		this.application = application;
+	public RestClientGenerator(AppDetails appDetails) {
+		this.appDetails = appDetails;
 	}
 
 	public JCodeModel generate(JCodeModel jCodeModel, RefHelper ref) throws IOException {
 		logger = LoggerFactory.getLogger(getClass());
 
 		try {
-			jClass = jCodeModel._class(application.getRestClientPackage(), INTERFACE);
+			jClass = jCodeModel._class(appDetails.getRestClientPackage(), INTERFACE);
 
 			/*
 			 * @Rest( rootUrl = "<ROOT_URL>", converters =
 			 * StringHttpMessageConverter.class)
 			 */
 			JAnnotationUse rest = jClass.annotate(ref.rest());
-			rest.param("rootUrl", application.getRestTemplateUrl());
+			rest.param("rootUrl", appDetails.getRestTemplateUrl());
 			rest.param("converters", ref.stringHttpMessageConverter().dotclass());
 
 			// TODO search the JMod for interface method

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions
  * and limitations under the License.
  */
-package ${Application.packageName}.robosherlock;
+package ${application.packageName}.robosherlock;
 
 import android.content.Intent;
 import android.content.res.Configuration;

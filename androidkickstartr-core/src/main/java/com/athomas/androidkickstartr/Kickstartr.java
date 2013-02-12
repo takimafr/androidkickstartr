@@ -15,8 +15,6 @@ import com.athomas.androidkickstartr.generator.MainActivityGenerator;
 import com.athomas.androidkickstartr.generator.RestClientGenerator;
 import com.athomas.androidkickstartr.generator.SampleFragmentGenerator;
 import com.athomas.androidkickstartr.generator.ViewPagerAdapterGenerator;
-import com.athomas.androidkickstartr.model.Application;
-import com.athomas.androidkickstartr.model.State;
 import com.athomas.androidkickstartr.util.FileHelper;
 import com.athomas.androidkickstartr.util.LibraryHelper;
 import com.athomas.androidkickstartr.util.RefHelper;
@@ -31,22 +29,20 @@ public class Kickstartr {
 
 	private final static Logger LOGGER = LoggerFactory.getLogger(Kickstartr.class);
 
-	private State state;
-	private Application application;
+	private AppDetails appDetails;
 	private JCodeModel jCodeModel;
 	private FileHelper fileHelper;
 
-	public Kickstartr(State state, Application application) {
-		this.state = state;
-		this.application = application;
+	public Kickstartr(AppDetails appDetails) {
+		this.appDetails = appDetails;
 
 		jCodeModel = new JCodeModel();
-		fileHelper = new FileHelper(application.getName(), application.getPackageName(), state.isMaven());
+		fileHelper = new FileHelper(appDetails.getName(), appDetails.getPackageName(), appDetails.isMaven());
 
-		extractResources(state, application);
+		extractResources(appDetails);
 	}
 
-	private void extractResources(State state, Application application) {
+	private void extractResources(AppDetails appDetails) {
 		try {
 			File resourcesDir = fileHelper.getKickstartrResourcesDir();
 			if (resourcesDir.exists() || resourcesDir.list() == null || resourcesDir.list().length == 0) {
@@ -58,10 +54,10 @@ public class Kickstartr {
 	}
 
 	public File start() {
-		LOGGER.info("generation of " + application + " : " + state);
+		LOGGER.info("generation of " + appDetails + " : " + appDetails);
 
-		if (state.isRestTemplate() || state.isAcra()) {
-			List<String> permissions = application.getPermissions();
+		if (appDetails.isRestTemplate() || appDetails.isAcra()) {
+			List<String> permissions = appDetails.getPermissions();
 			permissions.add("android.permission.INTERNET");
 		}
 
@@ -83,7 +79,7 @@ public class Kickstartr {
 			return null;
 		}
 
-		if (state.isMaven()) {
+		if (appDetails.isMaven()) {
 			// create src/text/java - it avoids an error when import to Eclipse
 			File targetTestDir = fileHelper.getTargetTestDir();
 			File removeMe = new File(targetTestDir, "REMOVE.ME");
@@ -95,7 +91,7 @@ public class Kickstartr {
 		}
 
 		try {
-			TemplatesFileHelper templatesFileHelper = new TemplatesFileHelper(application, state, fileHelper);
+			TemplatesFileHelper templatesFileHelper = new TemplatesFileHelper(appDetails, fileHelper);
 			templatesFileHelper.generate();
 			LOGGER.debug("files generated from templates.");
 		} catch (IOException e) {
@@ -107,8 +103,8 @@ public class Kickstartr {
 		}
 
 		try {
-			if (state.isEclipse()) {
-				if (state.isAndroidAnnotations()) {
+			if (appDetails.isEclipse()) {
+				if (appDetails.isAndroidAnnotations()) {
 					File targetEclipseJdtAptCorePrefsFile = fileHelper.getTargetEclipseJdtAptCorePrefsFile();
 					File eclipseJdtAptCorePrefs = fileHelper.getEclipseJdtAptCorePrefs();
 					FileUtils.copyFile(eclipseJdtAptCorePrefs, targetEclipseJdtAptCorePrefsFile);
@@ -124,14 +120,14 @@ public class Kickstartr {
 			return null;
 		}
 
-		LibraryHelper libraryManager = new LibraryHelper(state, fileHelper);
+		LibraryHelper libraryManager = new LibraryHelper(appDetails, fileHelper);
 		libraryManager.go();
 		LOGGER.debug("libraries copied");
 
 		File zipFile = null;
 		try {
 			File targetDir = fileHelper.getTargetDir();
-			zipFile = new File(targetDir, application.getName() + "-AndroidKickstartr.zip");
+			zipFile = new File(targetDir, appDetails.getName() + "-AndroidKickstartr.zip");
 			Zipper.zip(fileHelper.getFinalDir(), zipFile);
 			LOGGER.debug("application sources zipped");
 		} catch (IOException e) {
@@ -146,23 +142,23 @@ public class Kickstartr {
 	private void generateSourceCode() throws IOException {
 		List<Generator> generators = new ArrayList<Generator>();
 
-		generators.add(new MainActivityGenerator(state, application));
+		generators.add(new MainActivityGenerator(appDetails));
 
-		if (state.isViewPager()) {
-			generators.add(new ViewPagerAdapterGenerator(state, application));
-			generators.add(new SampleFragmentGenerator(state, application));
+		if (appDetails.isViewPager()) {
+			generators.add(new ViewPagerAdapterGenerator(appDetails));
+			generators.add(new SampleFragmentGenerator(appDetails));
 		}
 
-		if (state.isRestTemplate() && state.isAndroidAnnotations()) {
-			generators.add(new RestClientGenerator(application));
+		if (appDetails.isRestTemplate() && appDetails.isAndroidAnnotations()) {
+			generators.add(new RestClientGenerator(appDetails));
 		}
 
-		if (state.isAcra()) {
-			generators.add(new ApplicationGenerator(application));
+		if (appDetails.isAcra()) {
+			generators.add(new ApplicationGenerator(appDetails));
 		}
 
 		RefHelper refHelper = new RefHelper(jCodeModel);
-		refHelper.r(application.getR());
+		refHelper.r(appDetails.getR());
 
 		for (Generator generator : generators) {
 			generator.generate(jCodeModel, refHelper);

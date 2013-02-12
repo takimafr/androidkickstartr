@@ -8,8 +8,7 @@ import java.util.HashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.athomas.androidkickstartr.model.Application;
-import com.athomas.androidkickstartr.model.State;
+import com.athomas.androidkickstartr.AppDetails;
 
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
@@ -19,14 +18,12 @@ import freemarker.template.TemplateException;
 public class TemplatesFileHelper {
 
 	private final static Logger LOGGER = LoggerFactory.getLogger(TemplatesFileHelper.class);
-	
-	private final FileHelper fileHelper;
-	private final Application application;
-	private final State state;
 
-	public TemplatesFileHelper(Application application, State state, FileHelper fileHelper) {
-		this.application = application;
-		this.state = state;
+	private final FileHelper fileHelper;
+	private final AppDetails appDetails;
+
+	public TemplatesFileHelper(AppDetails appDetails, FileHelper fileHelper) {
+		this.appDetails = appDetails;
 		this.fileHelper = fileHelper;
 	}
 
@@ -37,15 +34,14 @@ public class TemplatesFileHelper {
 		cfg.setObjectWrapper(new DefaultObjectWrapper());
 
 		HashMap<String, Object> params = new HashMap<String, Object>();
-		params.put("Application", application);
-		params.put("ApplicationClassName", application.getApplicationClassName());
-		params.put("State", state);
+		params.put("application", appDetails);
+		params.put("applicationClassName", appDetails.getApplicationClassName());
 
 		processTemplate(cfg, params, "Strings.ftl", fileHelper.getTargetStringsFile());
 		LOGGER.debug("strings.xml created");
 
-		if (state.isAndroidAnnotations()) {
-			application.setActivity(application.getActivity() + "_");
+		if (appDetails.isAndroidAnnotations()) {
+			appDetails.setActivity(appDetails.getActivity() + "_");
 		}
 
 		processTemplate(cfg, params, "AndroidManifest.ftl", fileHelper.getTargetAndroidManifestFile());
@@ -53,41 +49,40 @@ public class TemplatesFileHelper {
 
 		processTemplate(cfg, params, "Styles.ftl", fileHelper.getTargetStylesFile());
 		LOGGER.debug("styles.xml created");
-		
+
 		processTemplate(cfg, params, "ActivityMain.ftl", fileHelper.getTargetActivityMainFile());
 		LOGGER.debug("activity_main.xml created");
-		
 
-		if (state.isMaven()) {
+		if (appDetails.isMaven()) {
 			processTemplate(cfg, params, "Pom.ftl", fileHelper.getTargetPomFile());
 			LOGGER.debug("pom.xml created");
 		}
 
-		if (state.isEclipse()) {
+		if (appDetails.isEclipse()) {
 			processTemplate(cfg, params, "Project.ftl", fileHelper.getTargetProjectFile());
 			LOGGER.debug(".project created");
 
 			processTemplate(cfg, params, "ProjectProperties.ftl", fileHelper.getTargetProjectPropertiesFile());
 			LOGGER.debug("project.properties created");
 
-			if (!state.isMaven()) {
+			if (!appDetails.isMaven()) {
 				processTemplate(cfg, params, "Classpath.ftl", fileHelper.getTargetClasspathFile());
 				LOGGER.debug(".classpath created");
 			}
 		}
 
-		if (state.isAndroidAnnotations()) {
+		if (appDetails.isAndroidAnnotations()) {
 			processTemplate(cfg, params, "FactoryPath.ftl", fileHelper.getTargetFactoryPathFile());
 			LOGGER.debug("factorypath.xml created");
 		}
-		
-		if (state.isRoboguice() && state.isActionBarSherlock()) {
+
+		if (appDetails.isRoboguice() && appDetails.isActionBarSherlock()) {
 			processTemplate(cfg, params, "robosherlock/RoboSherlockActivity.ftl", fileHelper.getTargetRoboSherlockActivityFile());
 			LOGGER.debug("RoboSherlockActivity.java created");
-			if (state.isViewPager()) {
+			if (appDetails.isViewPager()) {
 				processTemplate(cfg, params, "robosherlock/RoboSherlockFragment.ftl", fileHelper.getTargetRoboSherlockFragmentFile());
 				LOGGER.debug("RoboSherlockFragment.java created");
-				
+
 				processTemplate(cfg, params, "robosherlock/RoboSherlockFragmentActivity.ftl", fileHelper.getTargetRoboSherlockFragmentActivityFile());
 				LOGGER.debug("RoboSherlockFragmentActivity.java created");
 			}

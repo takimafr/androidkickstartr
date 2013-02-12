@@ -5,8 +5,7 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.athomas.androidkickstartr.model.Application;
-import com.athomas.androidkickstartr.model.State;
+import com.athomas.androidkickstartr.AppDetails;
 import com.athomas.androidkickstartr.util.RefHelper;
 import com.sun.codemodel.JBlock;
 import com.sun.codemodel.JClassAlreadyExistsException;
@@ -22,22 +21,20 @@ public class ViewPagerAdapterGenerator implements Generator {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 	private JDefinedClass jClass;
-	private Application application;
-	private final State state;
+	private final AppDetails appDetails;
 
-	public ViewPagerAdapterGenerator(State state, Application application) {
-		this.state = state;
-		this.application = application;
+	public ViewPagerAdapterGenerator(AppDetails appDetails) {
+		this.appDetails = appDetails;
 	}
 
 	public JCodeModel generate(JCodeModel jCodeModel, RefHelper ref) throws IOException {
 		try {
-			jClass = jCodeModel._class(application.getViewPagerAdapterPackage());
+			jClass = jCodeModel._class(appDetails.getViewPagerAdapterPackage());
 
 			// public class ViewFragmentPagerAdapter extends FragmentPagerAdapter {
 			jClass._extends(ref.fragmentPagerAdapter());
 
-			boolean hasLocationsField = state.isTabNavigation() || state.isListNavigation();
+			boolean hasLocationsField = appDetails.isTabNavigation() || appDetails.isListNavigation();
 
 			JFieldVar locationsField = null;
 			if (hasLocationsField) {
@@ -81,8 +78,8 @@ public class ViewPagerAdapterGenerator implements Generator {
 			JBlock getItemMethodBody = getItemMethod.body();
 
 			// Fragment fragment = new SampleFragment();
-			String sampleFragmentPackage = application.getSampleFragmentPackage();
-			if (state.isAndroidAnnotations()) {
+			String sampleFragmentPackage = appDetails.getSampleFragmentPackage();
+			if (appDetails.isAndroidAnnotations()) {
 				sampleFragmentPackage += "_";
 			}
 

@@ -1,4 +1,4 @@
 target=android-16
-<#if State.actionBarSherlock>
+<#if application.actionBarSherlock>
 android.library.reference.1=../actionbarsherlock
 </#if>

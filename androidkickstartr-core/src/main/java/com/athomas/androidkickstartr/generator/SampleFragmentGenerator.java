@@ -5,8 +5,7 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.athomas.androidkickstartr.model.Application;
-import com.athomas.androidkickstartr.model.State;
+import com.athomas.androidkickstartr.AppDetails;
 import com.athomas.androidkickstartr.util.CodeModelHelper;
 import com.athomas.androidkickstartr.util.RefHelper;
 import com.sun.codemodel.JAnnotationUse;
@@ -27,26 +26,24 @@ public class SampleFragmentGenerator implements Generator {
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 	private RefHelper ref;
 	private JDefinedClass jClass;
-	private Application application;
-	private final State state;
+	private final AppDetails appDetails;
 	private CodeModelHelper codeModelHelper;
 
-	public SampleFragmentGenerator(State state, Application application) {
-		this.state = state;
-		this.application = application;
+	public SampleFragmentGenerator(AppDetails state) {
+		this.appDetails = state;
 	}
 
 	public JCodeModel generate(JCodeModel jCodeModel, RefHelper ref) throws IOException {
 		this.ref = ref;
-		codeModelHelper = new CodeModelHelper(ref, state);
+		codeModelHelper = new CodeModelHelper(ref, appDetails);
 
 		try {
-			jClass = jCodeModel._class(application.getSampleFragmentPackage());
+			jClass = jCodeModel._class(appDetails.getSampleFragmentPackage());
 
-			if (state.isRoboguice() && state.isActionBarSherlock()) {
+			if (appDetails.isRoboguice() && appDetails.isActionBarSherlock()) {
 				// public class SampleFragment extends RoboSherlockFragment {
-				jClass._extends(ref.ref(application.getRoboSherlockFragmentPackage()));
-			} else if (state.isRoboguice()) {
+				jClass._extends(ref.ref(appDetails.getRoboSherlockFragmentPackage()));
+			} else if (appDetails.isRoboguice()) {
 				// public class SampleFragment extends RoboFragment {
 				jClass._extends(ref.roboFragment());
 			} else {
@@ -55,10 +52,10 @@ public class SampleFragmentGenerator implements Generator {
 			}
 
 			// private TextView labelText;
-			JFieldVar labelTextField = jClass.field(state.isAndroidAnnotations() || state.isRoboguice() ? JMod.NONE : JMod.PRIVATE, ref.textView(), "labelText");
+			JFieldVar labelTextField = jClass.field(appDetails.isAndroidAnnotations() || appDetails.isRoboguice() ? JMod.NONE : JMod.PRIVATE, ref.textView(), "labelText");
 
 			JBlock onCreateViewMethodBody;
-			if (state.isAndroidAnnotations()) {
+			if (appDetails.isAndroidAnnotations()) {
 				// @EFragment(R.layout.fragment_sample)
 				jClass.annotate(ref.efragment()).param("value", ref.r().staticRef("layout").ref("fragment_sample"));
 
@@ -73,7 +70,7 @@ public class SampleFragmentGenerator implements Generator {
 
 				extractArguments(labelTextField, onCreateViewMethodBody);
 				
-			} else if (state.isRoboguice()) {
+			} else if (appDetails.isRoboguice()) {
 				// @InjectView(R.id.label_text)
 				JAnnotationUse injectViewAnnotation = labelTextField.annotate(ref.injectView());
 				JFieldRef field = ref.r().staticRef("id").ref("label_text");

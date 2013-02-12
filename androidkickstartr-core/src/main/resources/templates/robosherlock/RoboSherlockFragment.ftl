@@ -1,4 +1,4 @@
-package ${Application.packageName}.robosherlock;
+package ${application.packageName}.robosherlock;
 
 import roboguice.RoboGuice;
 import android.os.Bundle;

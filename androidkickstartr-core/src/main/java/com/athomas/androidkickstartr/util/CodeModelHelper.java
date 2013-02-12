@@ -1,6 +1,6 @@
 package com.athomas.androidkickstartr.util;
 
-import com.athomas.androidkickstartr.model.State;
+import com.athomas.androidkickstartr.AppDetails;
 import com.sun.codemodel.JAnnotationUse;
 import com.sun.codemodel.JBlock;
 import com.sun.codemodel.JExpr;
@@ -13,9 +13,9 @@ import com.sun.codemodel.JVar;
 public class CodeModelHelper {
 
 	private RefHelper ref;
-	private State state;
+	private AppDetails state;
 
-	public CodeModelHelper(RefHelper ref, State state) {
+	public CodeModelHelper(RefHelper ref, AppDetails state) {
 		this.ref = ref;
 		this.state = state;
 	}
