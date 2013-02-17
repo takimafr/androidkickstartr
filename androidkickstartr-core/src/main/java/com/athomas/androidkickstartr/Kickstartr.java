@@ -1,11 +1,14 @@
 package com.athomas.androidkickstartr;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.FileFilterUtils;
+import org.apache.commons.io.filefilter.IOFileFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -70,9 +73,7 @@ public class Kickstartr {
 		}
 
 		try {
-			File androidResDir = fileHelper.getTargetAndroidResDir();
-			File sourceResDir = fileHelper.getResDir();
-			FileUtils.copyDirectory(sourceResDir, androidResDir);
+			copyResDir();
 			LOGGER.debug("res dir copied.");
 		} catch (IOException e) {
 			LOGGER.error("problem occurs during the resources copying", e);
@@ -164,6 +165,34 @@ public class Kickstartr {
 			generator.generate(jCodeModel, refHelper);
 		}
 		jCodeModel.build(fileHelper.getTargetSourceDir());
+	}
+	
+	private void copyResDir() throws IOException {
+		File androidResDir = fileHelper.getTargetAndroidResDir();
+		File sourceResDir = fileHelper.getResDir();
+		
+		FileFilter filter = null;
+		List<IOFileFilter> fileFilters = new ArrayList<IOFileFilter>();
+		
+		if (!appDetails.isListNavigation() && !appDetails.isTabNavigation()) {
+			// Exclude arrays.xml from the copy
+			IOFileFilter resArraysFilter = FileFilterUtils.nameFileFilter("arrays.xml");
+		    IOFileFilter fileFilter = FileFilterUtils.notFileFilter(resArraysFilter);
+		    fileFilters.add(fileFilter);
+		}
+		
+		if (!appDetails.isViewPager()) {
+			// Exclude fragment_sample.xml from the copy
+			IOFileFilter resFragmentSampleFilter = FileFilterUtils.nameFileFilter("fragment_sample.xml");
+		    IOFileFilter fileFilter = FileFilterUtils.notFileFilter(resFragmentSampleFilter);
+		    fileFilters.add(fileFilter);
+		}
+		
+		if (!fileFilters.isEmpty()) {
+			filter = FileFilterUtils.and(fileFilters.toArray(new IOFileFilter[fileFilters.size()]));
+		}
+		
+		FileUtils.copyDirectory(sourceResDir, androidResDir, filter);
 	}
 
 	public void clean() {
