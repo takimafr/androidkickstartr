@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
+import org.eclipse.egit.github.core.Repository;
+import org.eclipse.jgit.api.errors.GitAPIException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +18,7 @@ import com.athomas.androidkickstartr.generator.RestClientGenerator;
 import com.athomas.androidkickstartr.generator.SampleFragmentGenerator;
 import com.athomas.androidkickstartr.generator.ViewPagerAdapterGenerator;
 import com.athomas.androidkickstartr.util.FileHelper;
+import com.athomas.androidkickstartr.util.GitHubber;
 import com.athomas.androidkickstartr.util.LibraryHelper;
 import com.athomas.androidkickstartr.util.RefHelper;
 import com.athomas.androidkickstartr.util.ResourcesUtils;
@@ -53,7 +56,7 @@ public class Kickstartr {
 		}
 	}
 
-	public File start() {
+	private void createDirectory() {
 		LOGGER.info("generation of " + appDetails + " : " + appDetails);
 
 		if (appDetails.isRestTemplate() || appDetails.isAcra()) {
@@ -66,7 +69,6 @@ public class Kickstartr {
 			LOGGER.debug("source code generated from templates.");
 		} catch (IOException e) {
 			LOGGER.error("generated code file not generated", e);
-			return null;
 		}
 
 		try {
@@ -76,7 +78,6 @@ public class Kickstartr {
 			LOGGER.debug("res dir copied.");
 		} catch (IOException e) {
 			LOGGER.error("problem occurs during the resources copying", e);
-			return null;
 		}
 
 		if (appDetails.isMaven()) {
@@ -96,10 +97,8 @@ public class Kickstartr {
 			LOGGER.debug("files generated from templates.");
 		} catch (IOException e) {
 			LOGGER.error("problem during ftl files loading", e);
-			return null;
 		} catch (TemplateException e) {
 			LOGGER.error("problem during template processing", e);
-			return null;
 		}
 
 		try {
@@ -117,27 +116,37 @@ public class Kickstartr {
 			}
 		} catch (IOException e) {
 			LOGGER.error("a problem occured during the org.eclipse.jdt.apt.core.prefs copying", e);
-			return null;
 		}
 
 		LibraryHelper libraryManager = new LibraryHelper(appDetails, fileHelper);
 		libraryManager.go();
 		LOGGER.debug("libraries copied");
-
-		File zipFile = null;
-		try {
-			File targetDir = fileHelper.getTargetDir();
-			zipFile = new File(targetDir, appDetails.getName() + "-AndroidKickstartr.zip");
-			Zipper.zip(fileHelper.getFinalDir(), zipFile);
-			LOGGER.debug("application sources zipped");
-		} catch (IOException e) {
-			LOGGER.error("a problem occured during the compression", e);
-			return null;
-		}
-
-		LOGGER.debug("AndroidKickstartR generation done");
-		return zipFile;
 	}
+	
+	public File startZip() {
+        createDirectory();
+        File zipFile = null;
+        try {
+            File targetDir = fileHelper.getTargetDir();
+            zipFile = new File(targetDir, appDetails.getName() + "-AndroidKickstartr.zip");
+            Zipper.zip(fileHelper.getFinalDir(), zipFile);
+            LOGGER.debug("application sources zipped");
+        } catch (IOException e) {
+            LOGGER.error("a problem occured during the compression", e);
+            return null;
+        }
+
+        LOGGER.debug("AndroidKickstartR generation done");
+        return zipFile;
+    }
+	
+    public Repository startGithub(String accessToken) throws IOException, GitAPIException {
+        LOGGER.debug("Github creation started");
+        createDirectory();
+        GitHubber gitHubber = new GitHubber(accessToken);
+        Repository repository = gitHubber.createCommit(fileHelper.getFinalDir(), fileHelper.getProjectDir().getName());
+        return repository;
+    }
 
 	private void generateSourceCode() throws IOException {
 		List<Generator> generators = new ArrayList<Generator>();

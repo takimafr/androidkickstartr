@@ -1,24 +1,62 @@
 package com.athomas.androidkickstartr;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.eclipse.egit.github.core.Repository;
+import org.eclipse.jgit.api.errors.GitAPIException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.athomas.androidkickstartr.util.StringUtils;
 
 @Path("/")
 public class Main {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
+
+	private static final String PROTOCOL = "http";
+	private static final String HOSTNAME = "localhost";
+	private static final int HOSTPORT = 8000;
+
+	// Remember to add these properties to your JVM on deploy (-Did="XXXXXXX"
+	// -Dsecret="XXXXXXX")
+	private static final String CLIENT_ID = System.getProperty("id");
+	private static final String CLIENT_SECRET = System.getProperty("secret");
+
+	private static final String ACCESS_TOKEN = "accessToken";
+	private static final String ERROR = "error";
+	private static final String SUCCESS = "success";
 
 	@POST
 	@Produces("application/zip")
@@ -43,11 +81,15 @@ public class Main {
 			@FormParam("packageName") String packageName,//
 			@FormParam("name") String name,//
 			@FormParam("activity") String activity,//
-			@FormParam("activityLayout") String activityLayout//
+			@FormParam("activityLayout") String activityLayout,//
+
+			// Github access token
+			@FormParam("accessToken") String accessToken//
 	) {
 
 		boolean listNavigation = false;
 		boolean tabNavigation = false;
+		boolean git = false;
 
 		if (navigationType != null) {
 			tabNavigation = navigationType.equals("tabNavigation");
@@ -65,6 +107,10 @@ public class Main {
 		}
 		if (StringUtils.isEmpty(activityLayout)) {
 			activityLayout = "activity_main";
+		}
+
+		if (!StringUtils.isEmpty(accessToken)) {
+			git = true;
 		}
 
 		if (viewPager && !actionBarSherlock && !viewPagerIndicator && !supportV4) {
@@ -97,31 +143,120 @@ public class Main {
 				acra(acra). //
 				eclipse(eclipse). //
 				proguard(proguard). //
+				git(git). //
 				build();
 
 		final Kickstartr kickstarter = new Kickstartr(appDetails);
-		final File file = kickstarter.start();
 
-		if (file == null) {
-			return Response.serverError().build();
-		}
+		if (!git) {
+			LOGGER.debug("No github asked");
+			final File file = kickstarter.startZip();
 
-		StreamingOutput output = new StreamingOutput() {
-			public void write(OutputStream output) throws IOException, WebApplicationException {
-				try {
-					FileUtils.copyFile(file, output);
-					kickstarter.clean();
-				} catch (Exception e) {
-					throw new WebApplicationException(e);
-				}
+			if (file == null) {
+				return Response.serverError().build();
 			}
-		};
 
-		return Response //
-				.ok(output) //
-				.header("Content-Length", file.length()) //
-				.header("Content-Disposition", "attachment; filename=" + file.getName()) //
-				.build();
+			StreamingOutput output = new StreamingOutput() {
+				public void write(OutputStream output) throws IOException, WebApplicationException {
+					try {
+						FileUtils.copyFile(file, output);
+						kickstarter.clean();
+					} catch (Exception e) {
+						throw new WebApplicationException(e);
+					}
+				}
+			};
+
+			return Response //
+					.ok(output) //
+					.header("Content-Length", file.length()) //
+					.header("Content-Disposition", "attachment; filename=" + file.getName()) //
+					.build();
+		} else {
+			LOGGER.debug("Github output asked");
+			Repository repository = null;
+			try {
+				repository = kickstarter.startGithub(accessToken);
+			} catch (IOException e) {
+				e.printStackTrace();
+				return Response.seeOther(
+						createAndroidKickstartRUriWithAccessToken(accessToken, ERROR, "Unable to create or access repository : " + e.getMessage())).build();
+			} catch (GitAPIException e) {
+				e.printStackTrace();
+				return Response.seeOther(
+						createAndroidKickstartRUriWithAccessToken(accessToken, ERROR, "Unable to create or access repository : " + e.getMessage())).build();
+			} finally {
+				kickstarter.clean();
+			}
+			if (repository != null)
+				return Response.seeOther(
+						createAndroidKickstartRUriWithAccessToken(accessToken, SUCCESS,
+								"Repository successfully created! You can access it now at the following address : &repositoryUrl=" + repository.getHtmlUrl()))
+						.build();
+			else
+				return Response.serverError().build();
+		}
 	}
 
+	@GET
+	@Path("getAccessToken")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAccessToken(@QueryParam("code") String code) throws ClientProtocolException, IOException, URISyntaxException {
+		HttpClient httpclient = new DefaultHttpClient();
+		HttpPost postRequest = new HttpPost("https://github.com/login/oauth/access_token");
+
+		List<NameValuePair> nameValuePair = new ArrayList<NameValuePair>(3);
+		nameValuePair.add(new BasicNameValuePair("client_id", CLIENT_ID));
+		nameValuePair.add(new BasicNameValuePair("client_secret", CLIENT_SECRET));
+		nameValuePair.add(new BasicNameValuePair("code", code));
+
+		postRequest.setEntity(new UrlEncodedFormEntity(nameValuePair));
+
+		HttpResponse response = httpclient.execute(postRequest);
+		if (response.getStatusLine().getStatusCode() != 200) {
+			return Response.temporaryRedirect(
+					createAndroidKickstartRUri(ERROR, "Unexpected status code : " + response.getStatusLine().getStatusCode() + " "
+							+ response.getStatusLine().getReasonPhrase())).build();
+		} else {
+			HttpEntity entity = response.getEntity();
+			BufferedReader br = new BufferedReader(new InputStreamReader(entity.getContent()));
+			String buf;
+
+			Pattern pattern = Pattern.compile("(\\w{40})");
+			while ((buf = br.readLine()) != null) {
+				Matcher matcher = pattern.matcher(buf);
+				if (matcher.find()) {
+					return Response.temporaryRedirect(createAndroidKickstartRUri(ACCESS_TOKEN, matcher.group())).build();
+				}
+			}
+		}
+		return Response.temporaryRedirect(createAndroidKickstartRUri(ERROR, "Couldn't retrieve access token")).build();
+	}
+
+	// HELPERS
+
+	private static URI createAndroidKickstartRUriWithAccessToken(String accessToken, String parameterName, String parameterValue) {
+		return createAndroidKickstartRUri(new String[] { ACCESS_TOKEN, parameterName }, new String[] { accessToken, parameterValue });
+	}
+
+	private static URI createAndroidKickstartRUri(String parameterName, String parameterValue) {
+		return createAndroidKickstartRUri(new String[] { parameterName }, new String[] { parameterValue });
+	}
+
+	private static URI createAndroidKickstartRUri(String[] parameterNames, String[] parameterValues) {
+		try {
+			return new URI(PROTOCOL, null, HOSTNAME, HOSTPORT, null, createParametersString(parameterNames, parameterValues), null);
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	private static String createParametersString(String[] parameterNames, String[] parameterValues) {
+		StringBuilder builder = new StringBuilder();
+		for (int i = 0; i < parameterNames.length; i++) {
+			builder.append(parameterNames[i]).append("=").append(parameterValues[i]).append("&");
+		}
+		return builder.deleteCharAt(builder.length() - 1).toString();
+	}
 }

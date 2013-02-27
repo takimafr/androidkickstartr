@@ -92,6 +92,11 @@ public class TemplatesFileHelper {
 				LOGGER.debug("RoboSherlockFragmentActivity.java created");
 			}
 		}
+		
+        if (appDetails.isGit()) {
+            processTemplate(cfg, params, "Readme.ftl", fileHelper.getTargetReadmeFile());
+            LOGGER.debug("README.md created");
+        }
 	}
 
 	private void processTemplate(Configuration cfg, HashMap<String, Object> params, String templateFile, File targetFile) throws IOException, TemplateException {
