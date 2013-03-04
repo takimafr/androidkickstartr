@@ -1,4 +1,4 @@
-target=android-16
+target=android-${application.targetSdk}
 <#if application.actionBarSherlock>
 android.library.reference.1=../actionbarsherlock
 </#if>

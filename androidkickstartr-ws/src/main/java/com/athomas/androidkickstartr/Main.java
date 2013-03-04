@@ -43,7 +43,14 @@ public class Main {
 			@FormParam("packageName") String packageName,//
 			@FormParam("name") String name,//
 			@FormParam("activity") String activity,//
-			@FormParam("activityLayout") String activityLayout//
+			@FormParam("activityLayout") String activityLayout,//
+
+            //sdk min target
+            @FormParam("sdkMinTarget") int sdkMinTarget,//
+            //sdk target
+            @FormParam("sdkTarget") int sdkTarget,//
+            //sdk max target
+            @FormParam("sdkMaxTarget") int sdkMaxTarget//
 	) {
 
 		boolean listNavigation = false;
@@ -67,6 +74,26 @@ public class Main {
 			activityLayout = "activity_main";
 		}
 
+        if (sdkMinTarget<8 || sdkMinTarget>17) {
+            sdkMinTarget = 8;
+        }
+
+        if (sdkTarget<8 || sdkTarget>17) {
+            sdkTarget = 17;
+        }
+
+        if (sdkMinTarget > sdkTarget){
+            sdkMinTarget = 8;
+            sdkTarget = 17;
+        }
+
+        if(sdkMinTarget > sdkMaxTarget || sdkTarget > sdkMaxTarget) {
+            sdkMaxTarget=17;
+            sdkMinTarget=8;
+            sdkTarget=17;
+        }
+
+
 		if (viewPager && !actionBarSherlock && !viewPagerIndicator && !supportV4) {
 			supportV4 = true;
 		}
@@ -78,8 +105,9 @@ public class Main {
 				name(name).//
 				activity(activity).//
 				activityLayout(activityLayout).//
-				minSdk(8).//
-				targetSdk(16).//
+				minSdk(sdkMinTarget).//
+				targetSdk(sdkTarget).//
+                maxSdk(sdkMaxTarget).//
 				permissions(new ArrayList<String>()).//
 
 				// Libraries
@@ -99,8 +127,8 @@ public class Main {
 				proguard(proguard). //
 				build();
 
-		final Kickstartr kickstarter = new Kickstartr(appDetails);
-		final File file = kickstarter.start();
+		final Kickstartr kickStarter = new Kickstartr(appDetails);
+		final File file = kickStarter.start();
 
 		if (file == null) {
 			return Response.serverError().build();
@@ -110,7 +138,7 @@ public class Main {
 			public void write(OutputStream output) throws IOException, WebApplicationException {
 				try {
 					FileUtils.copyFile(file, output);
-					kickstarter.clean();
+					kickStarter.clean();
 				} catch (Exception e) {
 					throw new WebApplicationException(e);
 				}
