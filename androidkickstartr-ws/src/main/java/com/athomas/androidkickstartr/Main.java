@@ -48,7 +48,9 @@ public class Main {
             //sdk min target
             @FormParam("sdkMinTarget") int sdkMinTarget,//
             //sdk target
-            @FormParam("sdkTarget") int sdkTarget//
+            @FormParam("sdkTarget") int sdkTarget,//
+            //sdk max target
+            @FormParam("sdkMaxTarget") int sdkMaxTarget//
 	) {
 
 		boolean listNavigation = false;
@@ -85,6 +87,11 @@ public class Main {
             sdkTarget = 17;
         }
 
+        if(sdkMinTarget > sdkMaxTarget || sdkTarget > sdkMaxTarget) {
+            sdkMaxTarget=17;
+            sdkMinTarget=8;
+            sdkTarget=17;
+        }
 
 
 		if (viewPager && !actionBarSherlock && !viewPagerIndicator && !supportV4) {
@@ -100,6 +107,7 @@ public class Main {
 				activityLayout(activityLayout).//
 				minSdk(sdkMinTarget).//
 				targetSdk(sdkTarget).//
+                maxSdk(sdkMaxTarget).//
 				permissions(new ArrayList<String>()).//
 
 				// Libraries

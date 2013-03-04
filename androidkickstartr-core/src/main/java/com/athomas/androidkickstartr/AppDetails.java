@@ -15,6 +15,7 @@ public class AppDetails {
 	private String name;
 	private int minSdk;
 	private int targetSdk;
+    private int maxSdk;
 	private List<String> permissions;
 	private String activity;
 	private String activityLayout;
@@ -49,6 +50,10 @@ public class AppDetails {
 	public int getTargetSdk() {
 		return targetSdk;
 	}
+
+    public int getMaxSdk() {
+        return maxSdk;
+    }
 
 	public List<String> getPermissions() {
 		return permissions;
@@ -186,6 +191,9 @@ public class AppDetails {
 				", acra=" + acra + //
 				", eclipse=" + eclipse + //
 				", proguard=" + proguard + //
+                ", minSdk=" + minSdk + //
+                ", maxSdk=" + maxSdk + //
+                ", targetSdk=" + targetSdk + //
 				"]";
 
 	}
@@ -225,6 +233,11 @@ public class AppDetails {
 			state.targetSdk = targetSdk;
 			return this;
 		}
+
+        public Builder maxSdk(int maxSdk) {
+            state.maxSdk = maxSdk;
+            return this;
+        }
 
 		public Builder permissions(List<String> permissions) {
 			state.permissions = permissions;

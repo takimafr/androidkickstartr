@@ -5,7 +5,8 @@
 
 	<uses-sdk
 		android:minSdkVersion="${application.minSdk}"
-		android:targetSdkVersion="${application.targetSdk}" />
+		android:targetSdkVersion="${application.targetSdk}"
+        android:maxSdkVersion="${application.maxSdk}" />
 	
 	<#list application.permissions as permission>
 		<uses-permission android:name="${permission}" />

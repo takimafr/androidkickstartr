@@ -37,6 +37,7 @@ public class KickstartrMavenTest {
 				activityLayout("activity_main").//
 				minSdk(8).//
 				targetSdk(16).//
+                maxSdk(17).
 				permissions(new ArrayList<String>());
 	}
 
