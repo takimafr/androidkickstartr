@@ -41,8 +41,8 @@ public class LibraryHelper {
 			}
 
 			if (state.isRestTemplate()) {
-				copyToLibs("spring-android-core-1.0.0.RELEASE.jar");
-				copyToLibs("spring-android-rest-template-1.0.0.RELEASE.jar");
+				copyToLibs("spring-android-core-1.0.1.RELEASE.jar");
+				copyToLibs("spring-android-rest-template-1.0.1.RELEASE.jar");
 			}
 
 			if (state.isSupportV4()) {

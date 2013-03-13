@@ -37,7 +37,7 @@
 		<support-v4.version>r7</support-v4.version>
 		</#if>
 		<#if application.restTemplate>
-		<spring-android-rest-template.version>1.0.0.RELEASE</spring-android-rest-template.version>
+		<spring-android-rest-template.version>1.0.1.RELEASE</spring-android-rest-template.version>
 		</#if>
 		<#if application.acra>
 		<acra.version>4.4.0</acra.version>
