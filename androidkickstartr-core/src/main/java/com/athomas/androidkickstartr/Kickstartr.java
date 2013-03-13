@@ -45,85 +45,7 @@ public class Kickstartr {
 		extractResources(appDetails);
 	}
 
-	private void extractResources(AppDetails appDetails) {
-		try {
-			File resourcesDir = fileHelper.getKickstartrResourcesDir();
-			if (resourcesDir.exists() || resourcesDir.list() == null || resourcesDir.list().length == 0) {
-				ResourcesUtils.copyResourcesTo(resourcesDir, "org.eclipse.jdt.apt.core.prefs");
-			}
-		} catch (IOException e) {
-			LOGGER.error("an error occured during the resources extraction", e);
-		}
-	}
-
-	private void createDirectory() {
-		LOGGER.info("generation of " + appDetails + " : " + appDetails);
-
-		if (appDetails.isRestTemplate() || appDetails.isAcra()) {
-			List<String> permissions = appDetails.getPermissions();
-			permissions.add("android.permission.INTERNET");
-		}
-
-		try {
-			generateSourceCode();
-			LOGGER.debug("source code generated from templates.");
-		} catch (IOException e) {
-			LOGGER.error("generated code file not generated", e);
-		}
-
-		try {
-			File androidResDir = fileHelper.getTargetAndroidResDir();
-			File sourceResDir = fileHelper.getResDir();
-			FileUtils.copyDirectory(sourceResDir, androidResDir);
-			LOGGER.debug("res dir copied.");
-		} catch (IOException e) {
-			LOGGER.error("problem occurs during the resources copying", e);
-		}
-
-		if (appDetails.isMaven()) {
-			// create src/text/java - it avoids an error when import to Eclipse
-			File targetTestDir = fileHelper.getTargetTestDir();
-			File removeMe = new File(targetTestDir, "REMOVE.ME");
-			try {
-				removeMe.createNewFile();
-			} catch (IOException e) {
-				LOGGER.error("an error occured during the REMOVE.ME file creation", e);
-			}
-		}
-
-		try {
-			TemplatesFileHelper templatesFileHelper = new TemplatesFileHelper(appDetails, fileHelper);
-			templatesFileHelper.generate();
-			LOGGER.debug("files generated from templates.");
-		} catch (IOException e) {
-			LOGGER.error("problem during ftl files loading", e);
-		} catch (TemplateException e) {
-			LOGGER.error("problem during template processing", e);
-		}
-
-		try {
-			if (appDetails.isEclipse()) {
-				if (appDetails.isAndroidAnnotations()) {
-					File targetEclipseJdtAptCorePrefsFile = fileHelper.getTargetEclipseJdtAptCorePrefsFile();
-					File eclipseJdtAptCorePrefs = fileHelper.getEclipseJdtAptCorePrefs();
-					FileUtils.copyFile(eclipseJdtAptCorePrefs, targetEclipseJdtAptCorePrefsFile);
-					LOGGER.debug("org.eclipse.jdt.apt.core.prefs copied");
-				}
-				File targetEclipseJdtCorePrefsFile = fileHelper.getTargetEclipseJdtCorePrefsFile();
-				File eclipseJdtCorePrefs = fileHelper.getEclipseJdtCorePrefs();
-				FileUtils.copyFile(eclipseJdtCorePrefs, targetEclipseJdtCorePrefsFile);
-				LOGGER.debug("org.eclipse.jdt.core.prefs copied");
-			}
-		} catch (IOException e) {
-			LOGGER.error("a problem occured during the org.eclipse.jdt.apt.core.prefs copying", e);
-		}
-
-		LibraryHelper libraryManager = new LibraryHelper(appDetails, fileHelper);
-		libraryManager.go();
-		LOGGER.debug("libraries copied");
-	}
-	
-	public File startZip() {
+	public File zipify() {
         createDirectory();
         File zipFile = null;
         try {
@@ -140,7 +62,7 @@ public class Kickstartr {
         return zipFile;
     }
 	
-    public Repository startGithub(String accessToken) throws IOException, GitAPIException {
+    public Repository githubify(String accessToken) throws IOException, GitAPIException {
         LOGGER.debug("Github creation started");
         createDirectory();
         GitHubber gitHubber = new GitHubber(accessToken);
@@ -148,7 +70,85 @@ public class Kickstartr {
         return repository;
     }
 
-	private void generateSourceCode() throws IOException {
+    private void extractResources(AppDetails appDetails) {
+        try {
+            File resourcesDir = fileHelper.getKickstartrResourcesDir();
+            if (resourcesDir.exists() || resourcesDir.list() == null || resourcesDir.list().length == 0) {
+                ResourcesUtils.copyResourcesTo(resourcesDir, "org.eclipse.jdt.apt.core.prefs");
+            }
+        } catch (IOException e) {
+            LOGGER.error("an error occured during the resources extraction", e);
+        }
+    }
+
+    private void createDirectory() {
+        LOGGER.info("generation of " + appDetails + " : " + appDetails);
+
+        if (appDetails.isRestTemplate() || appDetails.isAcra()) {
+            List<String> permissions = appDetails.getPermissions();
+            permissions.add("android.permission.INTERNET");
+        }
+
+        try {
+            generateSourceCode();
+            LOGGER.debug("source code generated from templates.");
+        } catch (IOException e) {
+            LOGGER.error("generated code file not generated", e);
+        }
+
+        try {
+            File androidResDir = fileHelper.getTargetAndroidResDir();
+            File sourceResDir = fileHelper.getResDir();
+            FileUtils.copyDirectory(sourceResDir, androidResDir);
+            LOGGER.debug("res dir copied.");
+        } catch (IOException e) {
+            LOGGER.error("problem occurs during the resources copying", e);
+        }
+
+        if (appDetails.isMaven()) {
+            // create src/text/java - it avoids an error when import to Eclipse
+            File targetTestDir = fileHelper.getTargetTestDir();
+            File removeMe = new File(targetTestDir, "REMOVE.ME");
+            try {
+                removeMe.createNewFile();
+            } catch (IOException e) {
+                LOGGER.error("an error occured during the REMOVE.ME file creation", e);
+            }
+        }
+
+        try {
+            TemplatesFileHelper templatesFileHelper = new TemplatesFileHelper(appDetails, fileHelper);
+            templatesFileHelper.generate();
+            LOGGER.debug("files generated from templates.");
+        } catch (IOException e) {
+            LOGGER.error("problem during ftl files loading", e);
+        } catch (TemplateException e) {
+            LOGGER.error("problem during template processing", e);
+        }
+
+        try {
+            if (appDetails.isEclipse()) {
+                if (appDetails.isAndroidAnnotations()) {
+                    File targetEclipseJdtAptCorePrefsFile = fileHelper.getTargetEclipseJdtAptCorePrefsFile();
+                    File eclipseJdtAptCorePrefs = fileHelper.getEclipseJdtAptCorePrefs();
+                    FileUtils.copyFile(eclipseJdtAptCorePrefs, targetEclipseJdtAptCorePrefsFile);
+                    LOGGER.debug("org.eclipse.jdt.apt.core.prefs copied");
+                }
+                File targetEclipseJdtCorePrefsFile = fileHelper.getTargetEclipseJdtCorePrefsFile();
+                File eclipseJdtCorePrefs = fileHelper.getEclipseJdtCorePrefs();
+                FileUtils.copyFile(eclipseJdtCorePrefs, targetEclipseJdtCorePrefsFile);
+                LOGGER.debug("org.eclipse.jdt.core.prefs copied");
+            }
+        } catch (IOException e) {
+            LOGGER.error("a problem occured during the org.eclipse.jdt.apt.core.prefs copying", e);
+        }
+
+        LibraryHelper libraryManager = new LibraryHelper(appDetails, fileHelper);
+        libraryManager.go();
+        LOGGER.debug("libraries copied");
+    }
+
+    private void generateSourceCode() throws IOException {
 		List<Generator> generators = new ArrayList<Generator>();
 
 		generators.add(new MainActivityGenerator(appDetails));

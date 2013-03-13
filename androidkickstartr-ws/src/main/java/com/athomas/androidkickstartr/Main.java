@@ -23,6 +23,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
 
+import com.athomas.androidkickstartr.util.GithubUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -45,16 +46,11 @@ public class Main {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
 
-	private static final String PROTOCOL = "http";
-	private static final String HOSTNAME = "localhost";
-	private static final int HOSTPORT = 8000;
-
 	// Remember to add these properties to your JVM on deploy (-Did="XXXXXXX"
 	// -Dsecret="XXXXXXX")
 	private static final String CLIENT_ID = System.getProperty("id");
 	private static final String CLIENT_SECRET = System.getProperty("secret");
 
-	private static final String ACCESS_TOKEN = "accessToken";
 	private static final String ERROR = "error";
 	private static final String SUCCESS = "success";
 
@@ -150,7 +146,7 @@ public class Main {
 
 		if (!git) {
 			LOGGER.debug("No github asked");
-			final File file = kickstarter.startZip();
+			final File file = kickstarter.zipify();
 
 			if (file == null) {
 				return Response.serverError().build();
@@ -176,21 +172,21 @@ public class Main {
 			LOGGER.debug("Github output asked");
 			Repository repository = null;
 			try {
-				repository = kickstarter.startGithub(accessToken);
+				repository = kickstarter.githubify(accessToken);
 			} catch (IOException e) {
 				e.printStackTrace();
 				return Response.seeOther(
-						createAndroidKickstartRUriWithAccessToken(accessToken, ERROR, "Unable to create or access repository : " + e.getMessage())).build();
+                        GithubUtils.createAndroidKickstartRUriWithAccessToken(accessToken, ERROR, "Unable to create or access repository : " + e.getMessage())).build();
 			} catch (GitAPIException e) {
 				e.printStackTrace();
 				return Response.seeOther(
-						createAndroidKickstartRUriWithAccessToken(accessToken, ERROR, "Unable to create or access repository : " + e.getMessage())).build();
+						GithubUtils.createAndroidKickstartRUriWithAccessToken(accessToken, ERROR, "Unable to create or access repository : " + e.getMessage())).build();
 			} finally {
 				kickstarter.clean();
 			}
 			if (repository != null)
 				return Response.seeOther(
-						createAndroidKickstartRUriWithAccessToken(accessToken, SUCCESS,
+						GithubUtils.createAndroidKickstartRUriWithAccessToken(accessToken, SUCCESS,
 								"Repository successfully created! You can access it now at the following address : &repositoryUrl=" + repository.getHtmlUrl()))
 						.build();
 			else
@@ -199,7 +195,7 @@ public class Main {
 	}
 
 	@GET
-	@Path("getAccessToken")
+	@Path("token")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAccessToken(@QueryParam("code") String code) throws ClientProtocolException, IOException, URISyntaxException {
 		HttpClient httpclient = new DefaultHttpClient();
@@ -215,48 +211,20 @@ public class Main {
 		HttpResponse response = httpclient.execute(postRequest);
 		if (response.getStatusLine().getStatusCode() != 200) {
 			return Response.temporaryRedirect(
-					createAndroidKickstartRUri(ERROR, "Unexpected status code : " + response.getStatusLine().getStatusCode() + " "
+					GithubUtils.createAndroidKickstartRUri(ERROR, "Unexpected status code : " + response.getStatusLine().getStatusCode() + " "
 							+ response.getStatusLine().getReasonPhrase())).build();
 		} else {
 			HttpEntity entity = response.getEntity();
-			BufferedReader br = new BufferedReader(new InputStreamReader(entity.getContent()));
-			String buf;
+			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(entity.getContent()));
+			String line;
 
-			Pattern pattern = Pattern.compile("(\\w{40})");
-			while ((buf = br.readLine()) != null) {
-				Matcher matcher = pattern.matcher(buf);
-				if (matcher.find()) {
-					return Response.temporaryRedirect(createAndroidKickstartRUri(ACCESS_TOKEN, matcher.group())).build();
+			while ((line = bufferedReader.readLine()) != null) {
+                String accessToken = GithubUtils.findAccessTokenInString(line);
+				if (accessToken != null) {
+					return Response.temporaryRedirect(GithubUtils.createAndroidKickstartRUri(GithubUtils.ACCESS_TOKEN, accessToken)).build();
 				}
 			}
 		}
-		return Response.temporaryRedirect(createAndroidKickstartRUri(ERROR, "Couldn't retrieve access token")).build();
-	}
-
-	// HELPERS
-
-	private static URI createAndroidKickstartRUriWithAccessToken(String accessToken, String parameterName, String parameterValue) {
-		return createAndroidKickstartRUri(new String[] { ACCESS_TOKEN, parameterName }, new String[] { accessToken, parameterValue });
-	}
-
-	private static URI createAndroidKickstartRUri(String parameterName, String parameterValue) {
-		return createAndroidKickstartRUri(new String[] { parameterName }, new String[] { parameterValue });
-	}
-
-	private static URI createAndroidKickstartRUri(String[] parameterNames, String[] parameterValues) {
-		try {
-			return new URI(PROTOCOL, null, HOSTNAME, HOSTPORT, null, createParametersString(parameterNames, parameterValues), null);
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	private static String createParametersString(String[] parameterNames, String[] parameterValues) {
-		StringBuilder builder = new StringBuilder();
-		for (int i = 0; i < parameterNames.length; i++) {
-			builder.append(parameterNames[i]).append("=").append(parameterValues[i]).append("&");
-		}
-		return builder.deleteCharAt(builder.length() - 1).toString();
+		return Response.temporaryRedirect(GithubUtils.createAndroidKickstartRUri(ERROR, "Couldn't retrieve access token")).build();
 	}
 }
