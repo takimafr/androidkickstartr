@@ -178,6 +178,8 @@ $("#list").hide();
 
 $("span[class=help-inline]").hide();
 
+// Github
+
 function getUrlVars() {
     var vars = [], hash;
     var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
