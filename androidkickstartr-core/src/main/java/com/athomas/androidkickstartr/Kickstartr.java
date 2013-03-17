@@ -9,6 +9,8 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.FileFilterUtils;
 import org.apache.commons.io.filefilter.IOFileFilter;
+import org.eclipse.egit.github.core.Repository;
+import org.eclipse.jgit.api.errors.GitAPIException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +21,7 @@ import com.athomas.androidkickstartr.generator.RestClientGenerator;
 import com.athomas.androidkickstartr.generator.SampleFragmentGenerator;
 import com.athomas.androidkickstartr.generator.ViewPagerAdapterGenerator;
 import com.athomas.androidkickstartr.util.FileHelper;
+import com.athomas.androidkickstartr.util.GitHubber;
 import com.athomas.androidkickstartr.util.LibraryHelper;
 import com.athomas.androidkickstartr.util.RefHelper;
 import com.athomas.androidkickstartr.util.ResourcesUtils;
@@ -45,102 +48,116 @@ public class Kickstartr {
 		extractResources(appDetails);
 	}
 
-	private void extractResources(AppDetails appDetails) {
-		try {
-			File resourcesDir = fileHelper.getKickstartrResourcesDir();
-			if (resourcesDir.exists() || resourcesDir.list() == null || resourcesDir.list().length == 0) {
-				ResourcesUtils.copyResourcesTo(resourcesDir, "org.eclipse.jdt.apt.core.prefs");
-			}
-		} catch (IOException e) {
-			LOGGER.error("an error occured during the resources extraction", e);
-		}
-	}
+	public File zipify() {
+        createDirectory();
+        File zipFile = null;
+        try {
+            File targetDir = fileHelper.getTargetDir();
+            zipFile = new File(targetDir, appDetails.getName() + "-AndroidKickstartr.zip");
+            Zipper.zip(fileHelper.getFinalDir(), zipFile);
+            LOGGER.debug("application sources zipped");
+        } catch (IOException e) {
+            LOGGER.error("a problem occured during the compression", e);
+            return null;
+        }
 
-	public File start() {
-		LOGGER.info("generation of " + appDetails + " : " + appDetails);
+        LOGGER.debug("AndroidKickstartR generation done");
+        return zipFile;
+    }
+	
+    public Repository githubify(String accessToken) throws IOException, GitAPIException {
+        LOGGER.debug("Github creation started");
+        createDirectory();
+        GitHubber gitHubber = new GitHubber(accessToken);
+        Repository repository = gitHubber.createCommit(fileHelper.getFinalDir(), fileHelper.getProjectDir().getName());
+        return repository;
+    }
 
-		if (appDetails.isRestTemplate() || appDetails.isAcra()) {
-			List<String> permissions = appDetails.getPermissions();
-			permissions.add("android.permission.INTERNET");
-		}
+    private void extractResources(AppDetails appDetails) {
+        try {
+            File resourcesDir = fileHelper.getKickstartrResourcesDir();
+            if (resourcesDir.exists() || resourcesDir.list() == null || resourcesDir.list().length == 0) {
+                ResourcesUtils.copyResourcesTo(resourcesDir, "org.eclipse.jdt.apt.core.prefs");
+            }
+        } catch (IOException e) {
+            LOGGER.error("an error occured during the resources extraction", e);
+        }
+    }
 
-		try {
-			generateSourceCode();
-			LOGGER.debug("source code generated from templates.");
-		} catch (IOException e) {
-			LOGGER.error("generated code file not generated", e);
-			return null;
-		}
+    private void createDirectory() {
+        LOGGER.info("generation of " + appDetails + " : " + appDetails);
 
+        if (appDetails.isRestTemplate() || appDetails.isAcra()) {
+            List<String> permissions = appDetails.getPermissions();
+            permissions.add("android.permission.INTERNET");
+        }
 		try {
 			copyResDir();
 			LOGGER.debug("res dir copied.");
 		} catch (IOException e) {
 			LOGGER.error("problem occurs during the resources copying", e);
-			return null;
 		}
 
-		if (appDetails.isMaven()) {
-			// create src/text/java - it avoids an error when import to Eclipse
-			File targetTestDir = fileHelper.getTargetTestDir();
-			File removeMe = new File(targetTestDir, "REMOVE.ME");
-			try {
-				removeMe.createNewFile();
-			} catch (IOException e) {
-				LOGGER.error("an error occured during the REMOVE.ME file creation", e);
-			}
-		}
+        try {
+            generateSourceCode();
+            LOGGER.debug("source code generated from templates.");
+        } catch (IOException e) {
+            LOGGER.error("generated code file not generated", e);
+        }
 
-		try {
-			TemplatesFileHelper templatesFileHelper = new TemplatesFileHelper(appDetails, fileHelper);
-			templatesFileHelper.generate();
-			LOGGER.debug("files generated from templates.");
-		} catch (IOException e) {
-			LOGGER.error("problem during ftl files loading", e);
-			return null;
-		} catch (TemplateException e) {
-			LOGGER.error("problem during template processing", e);
-			return null;
-		}
+        try {
+            File androidResDir = fileHelper.getTargetAndroidResDir();
+            File sourceResDir = fileHelper.getResDir();
+            FileUtils.copyDirectory(sourceResDir, androidResDir);
+            LOGGER.debug("res dir copied.");
+        } catch (IOException e) {
+            LOGGER.error("problem occurs during the resources copying", e);
+        }
 
-		try {
-			if (appDetails.isEclipse()) {
-				if (appDetails.isAndroidAnnotations()) {
-					File targetEclipseJdtAptCorePrefsFile = fileHelper.getTargetEclipseJdtAptCorePrefsFile();
-					File eclipseJdtAptCorePrefs = fileHelper.getEclipseJdtAptCorePrefs();
-					FileUtils.copyFile(eclipseJdtAptCorePrefs, targetEclipseJdtAptCorePrefsFile);
-					LOGGER.debug("org.eclipse.jdt.apt.core.prefs copied");
-				}
-				File targetEclipseJdtCorePrefsFile = fileHelper.getTargetEclipseJdtCorePrefsFile();
-				File eclipseJdtCorePrefs = fileHelper.getEclipseJdtCorePrefs();
-				FileUtils.copyFile(eclipseJdtCorePrefs, targetEclipseJdtCorePrefsFile);
-				LOGGER.debug("org.eclipse.jdt.core.prefs copied");
-			}
-		} catch (IOException e) {
-			LOGGER.error("a problem occured during the org.eclipse.jdt.apt.core.prefs copying", e);
-			return null;
-		}
+        if (appDetails.isMaven()) {
+            // create src/text/java - it avoids an error when import to Eclipse
+            File targetTestDir = fileHelper.getTargetTestDir();
+            File removeMe = new File(targetTestDir, "REMOVE.ME");
+            try {
+                removeMe.createNewFile();
+            } catch (IOException e) {
+                LOGGER.error("an error occured during the REMOVE.ME file creation", e);
+            }
+        }
 
-		LibraryHelper libraryManager = new LibraryHelper(appDetails, fileHelper);
-		libraryManager.go();
-		LOGGER.debug("libraries copied");
+        try {
+            TemplatesFileHelper templatesFileHelper = new TemplatesFileHelper(appDetails, fileHelper);
+            templatesFileHelper.generate();
+            LOGGER.debug("files generated from templates.");
+        } catch (IOException e) {
+            LOGGER.error("problem during ftl files loading", e);
+        } catch (TemplateException e) {
+            LOGGER.error("problem during template processing", e);
+        }
 
-		File zipFile = null;
-		try {
-			File targetDir = fileHelper.getTargetDir();
-			zipFile = new File(targetDir, appDetails.getName() + "-AndroidKickstartr.zip");
-			Zipper.zip(fileHelper.getFinalDir(), zipFile);
-			LOGGER.debug("application sources zipped");
-		} catch (IOException e) {
-			LOGGER.error("a problem occured during the compression", e);
-			return null;
-		}
+        try {
+            if (appDetails.isEclipse()) {
+                if (appDetails.isAndroidAnnotations()) {
+                    File targetEclipseJdtAptCorePrefsFile = fileHelper.getTargetEclipseJdtAptCorePrefsFile();
+                    File eclipseJdtAptCorePrefs = fileHelper.getEclipseJdtAptCorePrefs();
+                    FileUtils.copyFile(eclipseJdtAptCorePrefs, targetEclipseJdtAptCorePrefsFile);
+                    LOGGER.debug("org.eclipse.jdt.apt.core.prefs copied");
+                }
+                File targetEclipseJdtCorePrefsFile = fileHelper.getTargetEclipseJdtCorePrefsFile();
+                File eclipseJdtCorePrefs = fileHelper.getEclipseJdtCorePrefs();
+                FileUtils.copyFile(eclipseJdtCorePrefs, targetEclipseJdtCorePrefsFile);
+                LOGGER.debug("org.eclipse.jdt.core.prefs copied");
+            }
+        } catch (IOException e) {
+            LOGGER.error("a problem occured during the org.eclipse.jdt.apt.core.prefs copying", e);
+        }
 
-		LOGGER.debug("AndroidKickstartR generation done");
-		return zipFile;
-	}
+        LibraryHelper libraryManager = new LibraryHelper(appDetails, fileHelper);
+        libraryManager.go();
+        LOGGER.debug("libraries copied");
+    }
 
-	private void generateSourceCode() throws IOException {
+    private void generateSourceCode() throws IOException {
 		List<Generator> generators = new ArrayList<Generator>();
 
 		generators.add(new MainActivityGenerator(appDetails));

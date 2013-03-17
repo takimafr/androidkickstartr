@@ -73,6 +73,10 @@ public class FileHelper {
 	public File getTargetProjectDir() {
 		return getDir(getProjectPath());
 	}
+	
+	public File getProjectDir() {
+		return getDir(getProjectPath());
+	}
 
 	public File getFinalDir() {
 		return getDir(getFinalPath());
@@ -151,6 +155,10 @@ public class FileHelper {
 	public File getTargetProjectPropertiesFile() throws IOException {
 		return createFile(getProjectPath() + "/project.properties");
 	}
+	
+    public File getTargetReadmeFile() throws IOException {
+        return createFile(getFinalPath() + "/README.md");
+    }
 
 	public File getTargetRoboSherlockActivityFile() throws IOException {
 		return createFile(getTargetSourcePath() + "/" + packageName.replace(".", "/") + "/robosherlock/RoboSherlockActivity.java");

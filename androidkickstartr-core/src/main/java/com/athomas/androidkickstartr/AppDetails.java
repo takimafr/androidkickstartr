@@ -33,6 +33,7 @@ public class AppDetails {
 	private boolean acra;
 	private boolean eclipse;
 	private boolean proguard;
+	private boolean git;
 
 	public String getPackageName() {
 		return packageName;
@@ -170,6 +171,10 @@ public class AppDetails {
 		return proguard;
 	}
 
+	public boolean isGit() {
+		return git;
+	}
+
 	@Override
 	public String toString() {
 		return "State [actionBarSherlock=" + actionBarSherlock + //
@@ -186,6 +191,7 @@ public class AppDetails {
 				", acra=" + acra + //
 				", eclipse=" + eclipse + //
 				", proguard=" + proguard + //
+				", git=" + git + //
 				"]";
 
 	}
@@ -316,6 +322,11 @@ public class AppDetails {
 
 		public Builder proguard(boolean proguard) {
 			state.proguard = proguard;
+			return this;
+		}
+
+		public Builder git(boolean git) {
+			state.git = git;
 			return this;
 		}
 

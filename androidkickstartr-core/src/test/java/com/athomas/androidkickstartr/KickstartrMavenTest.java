@@ -440,7 +440,7 @@ public class KickstartrMavenTest {
 
 	private File launchKickstartr() {
 		kickstartr = new Kickstartr(appDetails);
-		return kickstartr.start();
+		return kickstartr.zipify();
 	}
 
 }
