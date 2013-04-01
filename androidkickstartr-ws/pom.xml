@@ -48,6 +48,28 @@
 	</pluginRepositories>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources/</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>*.properties</include>
+				</includes>
+				<excludes>
+					<exclude>logback.xml</exclude>
+				</excludes>
+			</resource>
+			<resource>
+				<directory>src/main/resources/</directory>
+				<filtering>false</filtering>
+				<includes>
+					<include>logback.xml</include>
+				</includes>
+				<excludes>
+					<exclude>*.properties</exclude>
+				</excludes>
+			</resource>
+		</resources>
 		<finalName>android-kickstartr-ws</finalName>
 		<plugins>
 			<plugin>

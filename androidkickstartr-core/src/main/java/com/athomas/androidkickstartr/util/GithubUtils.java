@@ -14,8 +14,8 @@ public class GithubUtils {
 
     public static final String ACCESS_TOKEN = "accessToken";
     private static final String PROTOCOL = "http";
-    private static final String HOSTNAME = "localhost";
-    private static final int HOSTPORT = 8000;
+    private static final String HOSTNAME = "androidkickstartr.com";
+    private static final int HOSTPORT = 80;
 
     public static URI createAndroidKickstartRUriWithAccessToken(String accessToken, String parameterName, String parameterValue) {
         return createAndroidKickstartRUri(new String[]{ACCESS_TOKEN, parameterName}, new String[]{accessToken, parameterValue});
