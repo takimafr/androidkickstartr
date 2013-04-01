@@ -6,6 +6,15 @@
     margin-top:10px;
 }
 
+#github-request {
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+.notice {
+    margin-top: 10px;
+}
+
 .masthead {
     background-color: #222222;
     color: white;

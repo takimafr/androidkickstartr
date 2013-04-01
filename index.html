@@ -75,21 +75,20 @@
     </div>
 </div>
  <div class="notice">
-<div class="container pagination-centered">
-  <div class="alert alert-error" id="alert-error" style="display: none;">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <div class="container pagination-centered">
+    <div class="alert alert-error" id="alert-error" style="display: none;">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    <div class="alert alert-success" id="alert-success" style="display: none;">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    <div class="alert alert-info" id="alert-info" style="display: none;">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
   </div>
-  <div class="alert alert-success" id="alert-success" style="display: none;">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-  </div>
-  <div class="alert alert-info" id="alert-info" style="display: none;">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-  </div>
-</div>
-<div class="container pagination-centered" id="githubRequest">
-  Want to push your project to <strong>Github</strong>? Retrieve your access token first:
-  <a class="btn btn-large btn-success"
-     href="https://github.com/login/oauth/authorize?client_id=4861cf00b8ad4e3e7e8f&scope=repo">Connect to Github</a>
+<div class="container pagination-centered" id="github-request">
+  Want to push your project to <strong>Github</strong>?
+  <a href="https://github.com/login/oauth/authorize?client_id=7073b373c6eb8f8a289a&scope=repo">Connect to Github</a> first.
 </div>
 <div class="container libraries">
   <div class="row">
@@ -365,15 +364,6 @@ window.jQuery || document.write('<script src="js/vendor/jquery-1.8.1.min.js"><\/
 <script src="js/vendor/bootstrap.min.js">
 </script>
 <script src="js/main.js">
-</script>
-<script>
-  $(document).ready(function () {
-    // Access Token
-    $('#accessToken').val(getAccessTokenVar());
-    setError('#alert-error');
-    setSuccess('#alert-success');
-    setInformation('#alert-info');
-  });
 </script>
 </body>
 </html>

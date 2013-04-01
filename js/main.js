@@ -241,10 +241,19 @@ function setSuccess(divClass) {
 function setInformation(divClass) {
     var token = getAccessTokenVar();
     if (token != "") {
-        var message = '<p>Access token retrieved from Github : <strong>' + token + '</strong>.</p><p class="text-center">You can now get your application uploaded there using the button at the end of the form.</p>';
+        var message = '<p class="text-center">You can now get your application uploaded there using the button at the end of the form.</p>';
         $(divClass).append(message);
         $(divClass).show();
-        $('#githubRequest').hide();
+        $('#github-request').hide();
         $('#download').text("Push on Github");
     }
 }
+
+
+$(document).ready(function () {
+    // Access Token
+    $('#accessToken').val(getAccessTokenVar());
+    setError('#alert-error');
+    setSuccess('#alert-success');
+    setInformation('#alert-info');
+});
