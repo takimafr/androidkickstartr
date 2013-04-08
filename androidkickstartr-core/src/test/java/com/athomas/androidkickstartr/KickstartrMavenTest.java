@@ -63,6 +63,7 @@ public class KickstartrMavenTest {
 		goals.add("clean");
 		goals.add("install");
 		goals.add("android:deploy");
+		goals.add("android:run");
 		request.setGoals(goals);
 		request.setShowErrors(true);
 		request.setDebug(false);
