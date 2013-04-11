@@ -201,7 +201,7 @@
 
 .footer {
     color:white;
-    height: 265px;
+    height: 290px;
     font-weight: 200;
     line-height: 1.25;
     font-size: 16px;
@@ -220,6 +220,15 @@
     font-size: 14px;
     margin-top: 170px;
     text-align: center;
+    margin-bottom: 0px;
+}
+
+.footer .attribution {
+    font-size: 10px;
+    text-align: center;
+    margin-top: 0px;
+    color: gray;
+    margin-bottom: 0px;
 }
 
 .kicker {
