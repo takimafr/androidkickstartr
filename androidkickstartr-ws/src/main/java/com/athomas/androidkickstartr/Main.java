@@ -80,14 +80,6 @@ public class Main {
 		}
 	}
 
-	@GET
-	@Path("test")
-	public Response test() {
-		LOGGER.debug("GITHUB_ID = " + GITHUB_ID);
-		LOGGER.debug("GITHUB_SECRET = " + GITHUB_SECRET);
-		return Response.noContent().build();
-	}
-
 	@POST
 	@Produces("application/zip")
 	public Response go(//
