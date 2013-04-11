@@ -80,28 +80,30 @@ public class MainActivityGenerator implements Generator {
 
 			afterViewsBody = createAfterViewsMethod();
 
-			JFieldVar textViewField = null;
-			if (!appDetails.isViewPager()) {
-				textViewField = createTextViewField("hello");
-				codeModelHelper.doViewById(afterViewsBody, "hello", textViewField);
-			}
+			if (!appDetails.isSample()) {
+				JFieldVar textViewField = null;
+				if (!appDetails.isViewPager()) {
+					textViewField = createTextViewField("hello");
+					codeModelHelper.doViewById(afterViewsBody, "hello", textViewField);
+				}
 
-			if (appDetails.isRestTemplate() && appDetails.isAndroidAnnotations()) {
-				addRestClient(textViewField);
+				if (appDetails.isRestTemplate() && appDetails.isAndroidAnnotations()) {
+					addRestClient(textViewField);
+				}
+
+
+				if (appDetails.isTabNavigation() || appDetails.isListNavigation()) {
+					createAndInitLocationsField();
+				}
+
+				if (appDetails.isViewPager()) {
+					addViewPager(jCodeModel);
+				}
+				createConfigureActionBar();
 			}
 
 			createOnCreateOptionsMenu();
-
-			if (appDetails.isTabNavigation() || appDetails.isListNavigation()) {
-				createAndInitLocationsField();
-			}
-
-			if (appDetails.isViewPager()) {
-				addViewPager(jCodeModel);
-			}
-
-			createConfigureActionBar();
-
+			
 		} catch (JClassAlreadyExistsException e1) {
 			LOGGER.error("Classname already exists", e1);
 		}

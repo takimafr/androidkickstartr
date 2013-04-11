@@ -49,6 +49,7 @@ public class AppDetails {
 	private boolean eclipse;
 	private boolean proguard;
 	private boolean git;
+	private boolean sample;
 
 	public String getPackageName() {
 		return packageName;
@@ -190,6 +191,10 @@ public class AppDetails {
 		return git;
 	}
 
+	public boolean isSample() {
+		return sample;
+	}
+
 	@Override
 	public String toString() {
 		return "State [actionBarSherlock=" + actionBarSherlock + //
@@ -207,6 +212,7 @@ public class AppDetails {
 				", eclipse=" + eclipse + //
 				", proguard=" + proguard + //
 				", git=" + git + //
+				", sample=" + sample + //
 				"]";
 
 	}
@@ -342,6 +348,11 @@ public class AppDetails {
 
 		public Builder git(boolean git) {
 			state.git = git;
+			return this;
+		}
+
+		public Builder sample(boolean sample) {
+			state.sample = sample;
 			return this;
 		}
 

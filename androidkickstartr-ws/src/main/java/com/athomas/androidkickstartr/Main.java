@@ -98,6 +98,7 @@ public class Main {
 			@FormParam("viewPagerIndicator") boolean viewPagerIndicator,//
 			@FormParam("roboguice") boolean roboguice,//
 			@FormParam("proguard") boolean proguard,//
+			@FormParam("sample") boolean sample,//
 
 			// Application
 			@FormParam("packageName") String packageName,//
@@ -165,6 +166,7 @@ public class Main {
 				acra(acra). //
 				eclipse(eclipse). //
 				proguard(proguard). //
+				sample(sample). //
 				git(git). //
 				build();
 
