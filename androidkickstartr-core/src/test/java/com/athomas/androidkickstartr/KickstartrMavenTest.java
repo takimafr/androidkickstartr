@@ -146,6 +146,18 @@ public class KickstartrMavenTest {
 	}
 
 	@Test
+	public void generateProject_maven_abs_sample() {
+		appDetails = builder.//
+				maven(true). //
+				actionBarSherlock(true).//
+				sample(true). //
+				build();
+
+		File file = launchKickstartr();
+		Assert.assertNotNull(file);
+	}
+
+	@Test
 	public void generateProject_maven_abs_viewpager() {
 		appDetails = builder.//
 				maven(true). //
@@ -437,6 +449,25 @@ public class KickstartrMavenTest {
 	}
 
 	@Test
+	public void generateProject_maven_abs_list_aa_rest_acra_nine_viewpager_proguard_sample() {
+		appDetails = builder.//
+				maven(true). //
+				actionBarSherlock(true). //
+				listNavigation(true). //
+				androidAnnotations(true). //
+				restTemplate(true).//
+				acra(true). //
+				nineOldAndroids(true). //
+				viewPager(true). //
+				proguard(true). //
+				sample(true). //
+				build();
+
+		File file = launchKickstartr();
+		Assert.assertNotNull(file);
+	}
+
+	@Test
 	public void generateProject_maven_abs_list_rest_acra_nine_viewpager_roboguice_proguard() {
 		appDetails = builder.//
 				maven(true). //
@@ -448,6 +479,25 @@ public class KickstartrMavenTest {
 				viewPager(true). //
 				roboguice(true). //
 				proguard(true). //
+				build();
+
+		File file = launchKickstartr();
+		Assert.assertNotNull(file);
+	}
+
+	@Test
+	public void generateProject_maven_abs_list_rest_acra_nine_viewpager_roboguice_proguard_sample() {
+		appDetails = builder.//
+				maven(true). //
+				actionBarSherlock(true). //
+				listNavigation(true). //
+				restTemplate(true).//
+				acra(true). //
+				nineOldAndroids(true). //
+				viewPager(true). //
+				roboguice(true). //
+				proguard(true). //
+				sample(true). //
 				build();
 
 		File file = launchKickstartr();

@@ -15,13 +15,13 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<!-- Plugins -->
-		<android-maven-plugin.version>3.5.0</android-maven-plugin.version>
+		<android-maven-plugin.version>3.5.1</android-maven-plugin.version>
 		<maven-compiler-plugin.version>2.3.2</maven-compiler-plugin.version>
 		<api.platform>16</api.platform>
 
 		<!-- Dependencies -->
 		<#if application.androidAnnotations>
-		<androidannotations.version>2.7</androidannotations.version>
+		<androidannotations.version>2.7.1</androidannotations.version>
 		</#if>
 		<#if application.actionBarSherlock>
 		<actionBarSherlock.version>4.2.0</actionBarSherlock.version>

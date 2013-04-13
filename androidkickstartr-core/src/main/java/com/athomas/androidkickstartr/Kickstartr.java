@@ -180,16 +180,16 @@ public class Kickstartr {
 
 		generators.add(new MainActivityGenerator(appDetails));
 
-		if (appDetails.isViewPager()) {
+		if (appDetails.isViewPager() && !appDetails.isSample()) {
 			generators.add(new ViewPagerAdapterGenerator(appDetails));
 			generators.add(new SampleFragmentGenerator(appDetails));
 		}
 
-		if (appDetails.isRestTemplate() && appDetails.isAndroidAnnotations()) {
+		if (appDetails.isRestTemplate() && appDetails.isAndroidAnnotations() && !appDetails.isSample()) {
 			generators.add(new RestClientGenerator(appDetails));
 		}
 
-		if (appDetails.isAcra()) {
+		if (appDetails.isAcra() && !appDetails.isSample()) {
 			generators.add(new ApplicationGenerator(appDetails));
 		}
 
@@ -215,14 +215,14 @@ public class Kickstartr {
 		FileFilter filter = null;
 		List<IOFileFilter> fileFilters = new ArrayList<IOFileFilter>();
 
-		if (!appDetails.isListNavigation() && !appDetails.isTabNavigation()) {
+		if (!appDetails.isListNavigation() && !appDetails.isTabNavigation() && appDetails.isSample()) {
 			// Exclude arrays.xml from the copy
 			IOFileFilter resArraysFilter = FileFilterUtils.nameFileFilter("arrays.xml");
 			IOFileFilter fileFilter = FileFilterUtils.notFileFilter(resArraysFilter);
 			fileFilters.add(fileFilter);
 		}
 
-		if (!appDetails.isViewPager()) {
+		if (!appDetails.isViewPager() && appDetails.isSample()) {
 			// Exclude fragment_sample.xml from the copy
 			IOFileFilter resFragmentSampleFilter = FileFilterUtils.nameFileFilter("fragment_sample.xml");
 			IOFileFilter fileFilter = FileFilterUtils.notFileFilter(resFragmentSampleFilter);

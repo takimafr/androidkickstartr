@@ -50,6 +50,7 @@ public class AppDetails {
 	private boolean proguard;
 	private boolean git;
 	private boolean robolectric;
+	private boolean sample;
 
 	public String getPackageName() {
 		return packageName;
@@ -199,8 +200,8 @@ public class AppDetails {
 		return robolectric;
 	}
 
-	public void setRobolectric(boolean robolectric) {
-		this.robolectric = robolectric;
+	public boolean isSample() {
+		return sample;
 	}
 
 	@Override
@@ -221,6 +222,7 @@ public class AppDetails {
 				", proguard=" + proguard + //
 				", git=" + git + //
 				", robolectric=" + robolectric + //
+				", sample=" + sample + //
 				"]";
 
 	}
@@ -361,6 +363,11 @@ public class AppDetails {
 
 		public Builder robolectric(boolean robolectric) {
 			instance.robolectric = robolectric;
+			return this;
+		}
+
+		public Builder sample(boolean sample) {
+			instance.sample = sample;
 			return this;
 		}
 

@@ -66,7 +66,7 @@ public class Main {
 	private static String GITHUB_SECRET;
 	private static String GITHUB_ID;
 
-	// Initialize the 
+	// Initialize the
 	static {
 		Properties prop = new Properties();
 		try {
@@ -99,6 +99,7 @@ public class Main {
 			@FormParam("roboguice") boolean roboguice,//
 			@FormParam("proguard") boolean proguard,//
 			@FormParam("robolectric") boolean robolectric,//
+			@FormParam("sample") boolean sample,//
 
 			// Application
 			@FormParam("packageName") String packageName,//
@@ -166,6 +167,7 @@ public class Main {
 				acra(acra). //
 				eclipse(eclipse). //
 				proguard(proguard). //
+				sample(sample). //
 				git(git). //
 				robolectric(robolectric). //
 				build();
@@ -211,7 +213,9 @@ public class Main {
 				kickstarter.clean();
 			}
 			if (repository != null)
-				return Response.seeOther(GithubUtils.createAndroidKickstartRUriWithAccessToken(accessToken, SUCCESS, "Repository successfully created! You can access it now at the following address : &repositoryUrl=" + repository.getHtmlUrl())).build();
+				return Response.seeOther(
+						GithubUtils.createAndroidKickstartRUriWithAccessToken(accessToken, SUCCESS, "Repository successfully created! You can access it now at the following address : &repositoryUrl="
+								+ repository.getHtmlUrl())).build();
 			else
 				return Response.serverError().build();
 		}
@@ -233,7 +237,8 @@ public class Main {
 
 		HttpResponse response = httpclient.execute(postRequest);
 		if (response.getStatusLine().getStatusCode() != 200) {
-			return Response.temporaryRedirect(GithubUtils.createAndroidKickstartRUri(ERROR, "Unexpected status code : " + response.getStatusLine().getStatusCode() + " " + response.getStatusLine().getReasonPhrase())).build();
+			return Response.temporaryRedirect(
+					GithubUtils.createAndroidKickstartRUri(ERROR, "Unexpected status code : " + response.getStatusLine().getStatusCode() + " " + response.getStatusLine().getReasonPhrase())).build();
 		} else {
 			HttpEntity entity = response.getEntity();
 			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(entity.getContent()));
