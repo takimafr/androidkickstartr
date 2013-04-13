@@ -116,6 +116,9 @@
     @com.google.inject.Inject <init>(...);
 }
 
+# from https://groups.google.com/forum/?fromgroups=#!topic/roboguice/vcA1Z0biPqI
+-keep class com.google.inject.** { *; } 
+
 # There's no way to keep all @Observes methods, so use the On*Event convention to identify event handlers
 -keepclassmembers class * { 
     void *(**On*Event);
@@ -124,6 +127,7 @@
 -keep public class roboguice.**
 
 -dontwarn roboguice.**
+
 </#if>
 
 <#if application.restTemplate>
