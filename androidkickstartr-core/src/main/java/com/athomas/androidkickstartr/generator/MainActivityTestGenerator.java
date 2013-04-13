@@ -68,8 +68,8 @@ public class MainActivityTestGenerator implements Generator {
 			}
 
 			// Create test methods
-			if (appDetails.isSample()) {
-				createTestAppName(activity);
+			createTestAppName(activity);
+			if (!appDetails.isSample()) {
 				if (appDetails.isViewPager()) {
 					createTestPagerNotNull(component);
 				} else {
@@ -131,7 +131,7 @@ public class MainActivityTestGenerator implements Generator {
 	}
 
 	private JMethod createTestMethod(String methodName) {
-		JMethod testMethod = jClass.method(JMod.PUBLIC, jCodeModel.VOID, "methodName");
+		JMethod testMethod = jClass.method(JMod.PUBLIC, jCodeModel.VOID, methodName);
 		testMethod.annotate(ref.test());
 		testMethod._throws(Exception.class);
 		return testMethod;
