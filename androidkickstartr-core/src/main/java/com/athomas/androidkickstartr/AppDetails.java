@@ -49,6 +49,7 @@ public class AppDetails {
 	private boolean eclipse;
 	private boolean proguard;
 	private boolean git;
+	private boolean robolectric;
 
 	public String getPackageName() {
 		return packageName;
@@ -190,9 +191,17 @@ public class AppDetails {
 		return git;
 	}
 
+	public boolean isRobolectric() {
+		return robolectric;
+	}
+
+	public void setRobolectric(boolean robolectric) {
+		this.robolectric = robolectric;
+	}
+
 	@Override
 	public String toString() {
-		return "State [actionBarSherlock=" + actionBarSherlock + //
+		return "AppDetails [actionBarSherlock=" + actionBarSherlock + //
 				", listNavigation=" + listNavigation + //
 				", tabNavigation=" + tabNavigation + //
 				", viewPager=" + viewPager + //
@@ -207,16 +216,17 @@ public class AppDetails {
 				", eclipse=" + eclipse + //
 				", proguard=" + proguard + //
 				", git=" + git + //
+				", robolectric=" + robolectric + //
 				"]";
 
 	}
 
 	public static class Builder {
 
-		private AppDetails state;
+		private AppDetails instance;
 
 		public Builder() {
-			state = new AppDetails();
+			instance = new AppDetails();
 		}
 
 		public Builder packageName(String packageName) {
@@ -224,7 +234,7 @@ public class AppDetails {
 			if (!matcher.matches())
 				throw new IllegalArgumentException("Package name '" + packageName + "' is invalid");
 
-			state.packageName = packageName;
+			instance.packageName = packageName;
 			return this;
 		}
 
@@ -233,22 +243,22 @@ public class AppDetails {
 			if (!matcher.matches())
 				throw new IllegalArgumentException("Application name '" + name + "' is invalid");
 
-			state.name = name;
+			instance.name = name;
 			return this;
 		}
 
 		public Builder minSdk(int minSdk) {
-			state.minSdk = minSdk;
+			instance.minSdk = minSdk;
 			return this;
 		}
 
 		public Builder targetSdk(int targetSdk) {
-			state.targetSdk = targetSdk;
+			instance.targetSdk = targetSdk;
 			return this;
 		}
 
 		public Builder permissions(List<String> permissions) {
-			state.permissions = permissions;
+			instance.permissions = permissions;
 			return this;
 		}
 
@@ -257,7 +267,7 @@ public class AppDetails {
 			if (!matcher.matches())
 				throw new IllegalArgumentException("Activity name '" + activity + "' is invalid");
 
-			state.activity = activity;
+			instance.activity = activity;
 			return this;
 		}
 
@@ -266,104 +276,113 @@ public class AppDetails {
 			if (!matcher.matches())
 				throw new IllegalArgumentException("Activity layout name '" + activityLayout + "' is invalid");
 
-			state.activityLayout = activityLayout;
+			instance.activityLayout = activityLayout;
 			return this;
 		}
 
 		public Builder actionBarSherlock(boolean actionBarSherlock) {
-			state.actionBarSherlock = actionBarSherlock;
+			instance.actionBarSherlock = actionBarSherlock;
 			return this;
 		}
 
 		public Builder listNavigation(boolean listNavigation) {
-			state.listNavigation = listNavigation;
+			instance.listNavigation = listNavigation;
 			return this;
 		}
 
 		public Builder tabNavigation(boolean tabNavigation) {
-			state.tabNavigation = tabNavigation;
+			instance.tabNavigation = tabNavigation;
 			return this;
 		}
 
 		public Builder viewPager(boolean viewPager) {
-			state.viewPager = viewPager;
+			instance.viewPager = viewPager;
 			return this;
 		}
 
 		public Builder viewPagerIndicator(boolean viewPagerIndicator) {
-			state.viewPagerIndicator = viewPagerIndicator;
+			instance.viewPagerIndicator = viewPagerIndicator;
 			return this;
 		}
 
 		public Builder roboguice(boolean roboguice) {
-			state.roboguice = roboguice;
+			instance.roboguice = roboguice;
 			return this;
 		}
 
 		public Builder androidAnnotations(boolean androidAnnotations) {
-			state.androidAnnotations = androidAnnotations;
+			instance.androidAnnotations = androidAnnotations;
 			return this;
 		}
 
 		public Builder restTemplate(boolean restTemplate) {
-			state.restTemplate = restTemplate;
+			instance.restTemplate = restTemplate;
 			return this;
 		}
 
 		public Builder maven(boolean maven) {
-			state.maven = maven;
+			instance.maven = maven;
 			return this;
 		}
 
 		public Builder nineOldAndroids(boolean nineOldAndroids) {
-			state.nineOldAndroids = nineOldAndroids;
+			instance.nineOldAndroids = nineOldAndroids;
 			return this;
 		}
 
 		public Builder supportV4(boolean supportV4) {
-			state.supportV4 = supportV4;
+			instance.supportV4 = supportV4;
 			return this;
 		}
 
 		public Builder acra(boolean acra) {
-			state.acra = acra;
+			instance.acra = acra;
 			return this;
 		}
 
 		public Builder eclipse(boolean eclipse) {
-			state.eclipse = eclipse;
+			instance.eclipse = eclipse;
 			return this;
 		}
 
 		public Builder proguard(boolean proguard) {
-			state.proguard = proguard;
+			instance.proguard = proguard;
 			return this;
 		}
 
 		public Builder git(boolean git) {
-			state.git = git;
+			instance.git = git;
+			return this;
+		}
+
+		public Builder robolectric(boolean robolectric) {
+			instance.robolectric = robolectric;
 			return this;
 		}
 
 		public AppDetails build() {
 
-			if (state.listNavigation && state.tabNavigation) {
+			if (instance.listNavigation && instance.tabNavigation) {
 				throw new IllegalArgumentException("list and tab navigations must not be implemented together.");
 			}
 
-			if (!state.actionBarSherlock && (state.listNavigation || state.tabNavigation)) {
+			if (!instance.actionBarSherlock && (instance.listNavigation || instance.tabNavigation)) {
 				throw new IllegalArgumentException("using listNavigation or tabNavigation needs actionBarSherlock.");
 			}
 
-			if (state.supportV4 && (state.actionBarSherlock || state.viewPagerIndicator)) {
+			if (instance.supportV4 && (instance.actionBarSherlock || instance.viewPagerIndicator)) {
 				throw new IllegalArgumentException("support V4 is already included.");
 			}
 
-			if (state.viewPager && !state.supportV4 && !state.actionBarSherlock && !state.viewPagerIndicator) {
+			if (instance.viewPager && !instance.supportV4 && !instance.actionBarSherlock && !instance.viewPagerIndicator) {
 				throw new IllegalArgumentException("ViewPager needs support v4.");
 			}
 
-			return state;
+			if (instance.robolectric && !instance.maven) {
+				throw new IllegalArgumentException("Robolectric is only supported with Maven right now.");
+			}
+
+			return instance;
 		}
 	}
 
