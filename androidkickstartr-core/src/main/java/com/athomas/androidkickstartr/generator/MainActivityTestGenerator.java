@@ -63,7 +63,6 @@ public class MainActivityTestGenerator implements Generator {
 				JFieldVar pager = jClass.field(JMod.PRIVATE, ref.viewPager(), "pager");
 				codeModelHelper.doFindViewById(createSetUpMethod, "pager", pager, activity);
 				createTestPagerNotNull(pager);
-
 			} else {
 				JFieldVar textView = jClass.field(JMod.PRIVATE, ref.textView(), "hello");
 				codeModelHelper.doFindViewById(createSetUpMethod, "hello", textView, activity);
@@ -72,48 +71,6 @@ public class MainActivityTestGenerator implements Generator {
 		} catch (JClassAlreadyExistsException e1) {
 			LOGGER.error("Classname already exists", e1);
 		}
-	}
-
-	private JBlock createSetUpMethod(JFieldVar activity) {
-		JMethod setUp = jClass.method(JMod.PUBLIC, jCodeModel.VOID, "setUp");
-		setUp.annotate(ref.before());
-		setUp._throws(Exception.class);
-
-		JBlock setUpBody = setUp.body();
-
-		setUpBody.assign(activity, JExpr._new(ref.activity(appDetails, appDetails.isAndroidAnnotations())));
-		setUpBody.invoke(activity, "onCreate").arg(JExpr._null());
-
-		return setUpBody;
-	}
-
-	private void createTestPagerNotNull(JFieldVar pager) {
-		JMethod testContentTextView = jClass.method(JMod.PUBLIC, jCodeModel.VOID, "testPagerNotNull");
-		testContentTextView.annotate(ref.test());
-		testContentTextView._throws(Exception.class);
-
-		JBlock testContentTextViewBody = testContentTextView.body();
-		testContentTextViewBody.staticInvoke(ref.assertJunit(), "assertNotNull").arg(pager);
-	}
-
-	private void createTestAppName(JFieldVar activity) {
-		JMethod testAppName = jClass.method(JMod.PUBLIC, jCodeModel.VOID, "testAppName");
-		testAppName.annotate(ref.test());
-		testAppName._throws(Exception.class);
-
-		JBlock testAppNameBody = testAppName.body();
-		JVar appName = testAppNameBody.decl(ref.string(), "appName", activity.invoke("getResources").invoke("getString").arg(ref.r().staticRef("string").ref("app_name")));
-		testAppNameBody.staticInvoke(ref.assertJunit(), "assertThat").arg(appName).arg(ref.coreMatchers().staticInvoke("equalTo").arg(appDetails.getName()));
-	}
-
-	private void createTestContentTextView(JFieldVar textView) {
-		JMethod testContentTextView = jClass.method(JMod.PUBLIC, jCodeModel.VOID, "testContentTextView");
-		testContentTextView.annotate(ref.test());
-		testContentTextView._throws(Exception.class);
-
-		JBlock testContentTextViewBody = testContentTextView.body();
-		JVar textContent = testContentTextViewBody.decl(ref.string(), "textContent", textView.invoke("getText").invoke("toString"));
-		testContentTextViewBody.staticInvoke(ref.assertJunit(), "assertThat").arg(textContent).arg(ref.coreMatchers().staticInvoke("equalTo").arg("Hello world!"));
 	}
 
 	private void createTestActivity() {
@@ -128,4 +85,47 @@ public class MainActivityTestGenerator implements Generator {
 		}
 		runWithAnnotation.param("value", field);
 	}
+
+	private JBlock createSetUpMethod(JFieldVar activity) {
+		// Method setUp
+		JMethod setUp = jClass.method(JMod.PUBLIC, jCodeModel.VOID, "setUp");
+		setUp.annotate(ref.before());
+		setUp._throws(Exception.class);
+
+		JBlock setUpBody = setUp.body();
+
+		// declare tested activity and create it
+		setUpBody.assign(activity, JExpr._new(ref.activity(appDetails, appDetails.isAndroidAnnotations())));
+		setUpBody.invoke(activity, "onCreate").arg(JExpr._null());
+
+		return setUpBody;
+	}
+
+	private void createTestPagerNotNull(JFieldVar pager) {
+		JMethod testContentTextView = createTestMethod("testPagerNotNull");
+		JBlock testContentTextViewBody = testContentTextView.body();
+		testContentTextViewBody.staticInvoke(ref.assertJunit(), "assertNotNull").arg(pager);
+	}
+
+	private void createTestAppName(JFieldVar activity) {
+		JMethod testAppName = createTestMethod("testAppName");
+		JBlock testAppNameBody = testAppName.body();
+		JVar appName = testAppNameBody.decl(ref.string(), "appName", activity.invoke("getResources").invoke("getString").arg(ref.r().staticRef("string").ref("app_name")));
+		testAppNameBody.staticInvoke(ref.assertJunit(), "assertThat").arg(appName).arg(ref.coreMatchers().staticInvoke("equalTo").arg(appDetails.getName()));
+	}
+
+	private void createTestContentTextView(JFieldVar textView) {
+		JMethod testContentTextView = createTestMethod("testContentTextView");
+		JBlock testContentTextViewBody = testContentTextView.body();
+		JVar textContent = testContentTextViewBody.decl(ref.string(), "textContent", textView.invoke("getText").invoke("toString"));
+		testContentTextViewBody.staticInvoke(ref.assertJunit(), "assertThat").arg(textContent).arg(ref.coreMatchers().staticInvoke("equalTo").arg("Hello world!"));
+	}
+
+	private JMethod createTestMethod(String methodName) {
+		JMethod testMethod = jClass.method(JMod.PUBLIC, jCodeModel.VOID, "methodName");
+		testMethod.annotate(ref.test());
+		testMethod._throws(Exception.class);
+		return testMethod;
+	}
+
 }
