@@ -57,17 +57,26 @@ public class MainActivityTestGenerator implements Generator {
 			JFieldVar activity = jClass.field(JMod.PRIVATE, ref.ref(activityPackage), "activityTest");
 
 			JBlock createSetUpMethod = createSetUpMethod(activity);
-			createTestAppName(activity);
 
+			JFieldVar component = null;
 			if (appDetails.isViewPager()) {
-				JFieldVar pager = jClass.field(JMod.PRIVATE, ref.viewPager(), "pager");
-				codeModelHelper.doFindViewById(createSetUpMethod, "pager", pager, activity);
-				createTestPagerNotNull(pager);
+				component = jClass.field(JMod.PRIVATE, ref.viewPager(), "pager");
+				codeModelHelper.doFindViewById(createSetUpMethod, "pager", component, activity);
 			} else {
-				JFieldVar textView = jClass.field(JMod.PRIVATE, ref.textView(), "hello");
-				codeModelHelper.doFindViewById(createSetUpMethod, "hello", textView, activity);
-				createTestContentTextView(textView);
+				component = jClass.field(JMod.PRIVATE, ref.textView(), "hello");
+				codeModelHelper.doFindViewById(createSetUpMethod, "hello", component, activity);
 			}
+
+			// Create test methods
+			if (appDetails.isSample()) {
+				createTestAppName(activity);
+				if (appDetails.isViewPager()) {
+					createTestPagerNotNull(component);
+				} else {
+					createTestContentTextView(component);
+				}
+			}
+
 		} catch (JClassAlreadyExistsException e1) {
 			LOGGER.error("Classname already exists", e1);
 		}
