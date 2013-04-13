@@ -98,6 +98,7 @@ public class Main {
 			@FormParam("viewPagerIndicator") boolean viewPagerIndicator,//
 			@FormParam("roboguice") boolean roboguice,//
 			@FormParam("proguard") boolean proguard,//
+			@FormParam("robolectric") boolean robolectric,//
 
 			// Application
 			@FormParam("packageName") String packageName,//
@@ -166,6 +167,7 @@ public class Main {
 				eclipse(eclipse). //
 				proguard(proguard). //
 				git(git). //
+				robolectric(robolectric). //
 				build();
 
 		final Kickstartr kickstarter = new Kickstartr(appDetails);
