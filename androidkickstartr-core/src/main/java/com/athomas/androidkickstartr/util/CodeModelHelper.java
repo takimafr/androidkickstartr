@@ -47,7 +47,7 @@ public class CodeModelHelper {
 		}
 	}
 
-	private void doFindViewById(JBlock afterViewsBody, String id, JFieldVar field) {
+	public void doFindViewById(JBlock afterViewsBody, String id, JFieldVar field) {
 		doFindViewById(afterViewsBody, id, field, null);
 	}
 

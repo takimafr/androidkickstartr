@@ -87,6 +87,10 @@ public class AppDetails {
 		return packageName + "." + activity;
 	}
 
+	public String getActivityTestPackage() {
+		return getActivityPackage() + "Test";
+	}
+
 	public String getRestClientPackage() {
 		return packageName + ".rest.RestClient";
 	}
