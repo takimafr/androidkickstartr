@@ -21,7 +21,7 @@
 
 		<!-- Dependencies -->
 		<#if application.androidAnnotations>
-		<androidannotations.version>2.7</androidannotations.version>
+		<androidannotations.version>2.7.1</androidannotations.version>
 		</#if>
 		<#if application.actionBarSherlock>
 		<actionBarSherlock.version>4.2.0</actionBarSherlock.version>

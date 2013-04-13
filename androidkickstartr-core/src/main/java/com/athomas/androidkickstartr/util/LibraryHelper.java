@@ -47,8 +47,8 @@ public class LibraryHelper {
 
 		if (!state.isMaven()) {
 			if (state.isAndroidAnnotations()) {
-				copyToLibs("androidannotations-api-2.7.jar");
-				copyToCompileLibs("androidannotations-2.7.jar");
+				copyToLibs("androidannotations-api-2.7.1.jar");
+				copyToCompileLibs("androidannotations-2.7.1.jar");
 			}
 
 			if (state.isNineOldAndroids()) {
@@ -71,7 +71,7 @@ public class LibraryHelper {
 			if (state.isRoboguice()) {
 				copyToLibs("roboguice-2.0.jar");
 				copyToLibs("guice-3.0-no_aop.jar");
-				//Required since Guice 3.0
+				// Required since Guice 3.0
 				copyToLibs("javax.inject-1.jar");
 			}
 		}
