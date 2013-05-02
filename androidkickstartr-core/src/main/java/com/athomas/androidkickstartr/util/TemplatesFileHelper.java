@@ -91,7 +91,7 @@ public class TemplatesFileHelper {
 			LOGGER.debug("proguard.cfg created");
 		}
 
-		if (appDetails.isAndroidAnnotations()) {
+		if (appDetails.isAndroidAnnotations() && appDetails.isEclipse()) {
 			processTemplate(cfg, params, "FactoryPath.ftl", fileHelper.getTargetFactoryPathFile());
 			LOGGER.debug("factorypath.xml created");
 		}
