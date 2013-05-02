@@ -45,6 +45,10 @@
 		<#if application.roboguice>
 		<roboguice.version>2.0</roboguice.version>
 		</#if>
+		<#if application.robolectric>
+		<junit.version>4.11</junit.version>
+		<robolectric.version>2.0-alpha-2</robolectric.version>
+		</#if>
 	</properties>
 
 	<dependencies>
@@ -145,6 +149,25 @@
 			<#noparse>
 			<version>${roboguice.version}</version>
 			</#noparse>
+		</dependency>
+		</#if>
+		<#if application.robolectric>
+		<!-- Tests -->
+		<dependency>
+			<groupId>org.robolectric</groupId>
+			<artifactId>robolectric</artifactId>
+			<#noparse>
+			<version>${robolectric.version}</version>
+			</#noparse>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<#noparse>
+			<version>${junit.version}</version>
+			</#noparse>
+			<scope>test</scope>
 		</dependency>
 		</#if>
 	</dependencies>

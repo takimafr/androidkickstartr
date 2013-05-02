@@ -107,11 +107,23 @@ public class TemplatesFileHelper {
 				LOGGER.debug("RoboSherlockFragmentActivity.java created");
 			}
 		}
-		
-        if (appDetails.isGit()) {
-            processTemplate(cfg, params, "Readme.ftl", fileHelper.getTargetReadmeFile());
-            LOGGER.debug("README.md created");
-        }
+
+		if (appDetails.isGit()) {
+			processTemplate(cfg, params, "Readme.ftl", fileHelper.getTargetReadmeFile());
+			LOGGER.debug("README.md created");
+		}
+
+		if (appDetails.isRobolectric()) {
+			if (appDetails.isActionBarSherlock()) {
+				processTemplate(cfg, params, "robolectric/ABSRobolectricTestRunner.ftl", fileHelper.getTargetRobolectricTestRunnerFile());
+				processTemplate(cfg, params, "robolectric/MockActionBar.ftl", fileHelper.getTargetRobolectricMockActionBarFile());
+				processTemplate(cfg, params, "robolectric/MockActionBarSherlock.ftl", fileHelper.getTargetRobolectricMockActionBarSherlockFile());
+				processTemplate(cfg, params, "robolectric/MockSherlockMenuInflater.ftl", fileHelper.getTargetRobolectricMockSherlockMenuInflaterFile());
+				if (appDetails.isTabNavigation()) {
+					processTemplate(cfg, params, "robolectric/MockTab.ftl", fileHelper.getTargetRobolectricMockTabFile());
+				}
+			}
+		}
 	}
 
 	private void processTemplate(Configuration cfg, HashMap<String, Object> params, String templateFile, File targetFile) throws IOException, TemplateException {

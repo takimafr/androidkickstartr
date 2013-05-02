@@ -32,6 +32,7 @@ import org.slf4j.LoggerFactory;
 import com.athomas.androidkickstartr.generator.ApplicationGenerator;
 import com.athomas.androidkickstartr.generator.Generator;
 import com.athomas.androidkickstartr.generator.MainActivityGenerator;
+import com.athomas.androidkickstartr.generator.MainActivityTestGenerator;
 import com.athomas.androidkickstartr.generator.RestClientGenerator;
 import com.athomas.androidkickstartr.generator.SampleFragmentGenerator;
 import com.athomas.androidkickstartr.generator.ViewPagerAdapterGenerator;
@@ -52,12 +53,14 @@ public class Kickstartr {
 
 	private AppDetails appDetails;
 	private JCodeModel jCodeModel;
+	private JCodeModel jCodeModelTest;
 	private FileHelper fileHelper;
 
 	public Kickstartr(AppDetails appDetails) {
 		this.appDetails = appDetails;
 
 		jCodeModel = new JCodeModel();
+		jCodeModelTest = new JCodeModel();
 		fileHelper = new FileHelper(appDetails.getName(), appDetails.getPackageName(), appDetails.isMaven());
 
 		extractResources(appDetails);
@@ -129,7 +132,7 @@ public class Kickstartr {
 			LOGGER.error("problem occurs during the resources copying", e);
 		}
 
-		if (appDetails.isMaven()) {
+		if (appDetails.isMaven() && !appDetails.isRobolectric()) {
 			// create src/text/java - it avoids an error when import to Eclipse
 			File targetTestDir = fileHelper.getTargetTestDir();
 			File removeMe = new File(targetTestDir, "REMOVE.ME");
@@ -197,6 +200,12 @@ public class Kickstartr {
 			generator.generate(jCodeModel, refHelper);
 		}
 		jCodeModel.build(fileHelper.getTargetSourceDir());
+
+		if (appDetails.isRobolectric()) {
+			MainActivityTestGenerator testGenerator = new MainActivityTestGenerator(appDetails);
+			testGenerator.generate(jCodeModelTest, refHelper);
+			jCodeModelTest.build(fileHelper.getTargetTestDir());
+		}
 	}
 
 	private void copyResDir() throws IOException {
@@ -219,7 +228,7 @@ public class Kickstartr {
 			IOFileFilter fileFilter = FileFilterUtils.notFileFilter(resFragmentSampleFilter);
 			fileFilters.add(fileFilter);
 		}
-		
+
 		if (!fileFilters.isEmpty()) {
 			filter = FileFilterUtils.and(fileFilters.toArray(new IOFileFilter[fileFilters.size()]));
 		}
