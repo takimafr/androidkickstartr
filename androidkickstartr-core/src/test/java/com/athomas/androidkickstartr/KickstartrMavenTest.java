@@ -39,9 +39,9 @@ import com.athomas.androidkickstartr.AppDetails.Builder;
 
 public class KickstartrMavenTest {
 
-	private Kickstartr kickstartr;
-	private AppDetails appDetails;
-	private Builder builder;
+	Kickstartr kickstartr;
+	AppDetails appDetails;
+	Builder builder;
 
 	@Before
 	public void before() {
@@ -504,7 +504,7 @@ public class KickstartrMavenTest {
 		Assert.assertNotNull(file);
 	}
 
-	private File launchKickstartr() {
+	public File launchKickstartr() {
 		kickstartr = new Kickstartr(appDetails);
 		return kickstartr.zipify();
 	}

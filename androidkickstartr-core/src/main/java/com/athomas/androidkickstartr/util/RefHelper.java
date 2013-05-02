@@ -17,6 +17,7 @@ package com.athomas.androidkickstartr.util;
 
 import java.util.HashMap;
 
+import com.athomas.androidkickstartr.AppDetails;
 import com.sun.codemodel.JClass;
 import com.sun.codemodel.JCodeModel;
 
@@ -267,4 +268,41 @@ public class RefHelper {
 		return ref("org.springframework.http.converter.StringHttpMessageConverter");
 	}
 
+	/**
+	 * Robolectric
+	 */
+	public JClass runWith() {
+		return ref("org.junit.runner.RunWith");
+	}
+
+	public JClass absRobolectricTestRunner(AppDetails appDetails) {
+		return ref(appDetails.getPackageName() + ".test.ABSRobolectricTestRunner");
+	}
+
+	public JClass robolectricTestRunner() {
+		return ref("org.robolectric.RobolectricTestRunner");
+	}
+
+	public JClass before() {
+		return ref("org.junit.Before");
+	}
+
+	public JClass activity(AppDetails appDetails, boolean aa) {
+		String clazz = appDetails.getActivityPackage();
+		if (aa)
+			clazz = clazz + "_";
+		return ref(clazz);
+	}
+
+	public JClass test() {
+		return ref("org.junit.Test");
+	}
+
+	public JClass assertJunit() {
+		return ref("org.junit.Assert");
+	}
+
+	public JClass coreMatchers() {
+		return ref("org.hamcrest.CoreMatchers");
+	}
 }

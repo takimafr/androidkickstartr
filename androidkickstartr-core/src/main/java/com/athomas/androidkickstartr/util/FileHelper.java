@@ -53,8 +53,12 @@ public class FileHelper {
 		return dir;
 	}
 
+	public String getTargetTestPath() {
+		return getProjectPath() + "/src/test/java";
+	}
+
 	public File getTargetTestDir() {
-		File dir = new File(getProjectPath() + "/src/test/java");
+		File dir = new File(getTargetTestPath());
 		dir.mkdirs();
 		return dir;
 	}
@@ -88,7 +92,7 @@ public class FileHelper {
 	public File getTargetProjectDir() {
 		return getDir(getProjectPath());
 	}
-	
+
 	public File getProjectDir() {
 		return getDir(getProjectPath());
 	}
@@ -170,10 +174,10 @@ public class FileHelper {
 	public File getTargetProjectPropertiesFile() throws IOException {
 		return createFile(getProjectPath() + "/project.properties");
 	}
-	
-    public File getTargetReadmeFile() throws IOException {
-        return createFile(getFinalPath() + "/README.md");
-    }
+
+	public File getTargetReadmeFile() throws IOException {
+		return createFile(getFinalPath() + "/README.md");
+	}
 
 	public File getTargetRoboSherlockActivityFile() throws IOException {
 		return createFile(getTargetSourcePath() + "/" + packageName.replace(".", "/") + "/robosherlock/RoboSherlockActivity.java");
@@ -185,6 +189,26 @@ public class FileHelper {
 
 	public File getTargetRoboSherlockFragmentActivityFile() throws IOException {
 		return createFile(getTargetSourcePath() + "/" + packageName.replace(".", "/") + "/robosherlock/RoboSherlockFragmentActivity.java");
+	}
+
+	public File getTargetRobolectricTestRunnerFile() throws IOException {
+		return createFile(getTargetTestPath() + "/" + packageName.replace(".", "/") + "/test/ABSRobolectricTestRunner.java");
+	}
+
+	public File getTargetRobolectricMockActionBarFile() throws IOException {
+		return createFile(getTargetTestPath() + "/" + packageName.replace(".", "/") + "/test/mock/MockActionBar.java");
+	}
+
+	public File getTargetRobolectricMockActionBarSherlockFile() throws IOException {
+		return createFile(getTargetTestPath() + "/" + packageName.replace(".", "/") + "/test/mock/MockActionBarSherlock.java");
+	}
+
+	public File getTargetRobolectricMockSherlockMenuInflaterFile() throws IOException {
+		return createFile(getTargetTestPath() + "/" + packageName.replace(".", "/") + "/test/mock/MockSherlockMenuInflater.java");
+	}
+
+	public File getTargetRobolectricMockTabFile() throws IOException {
+		return createFile(getTargetTestPath() + "/" + packageName.replace(".", "/") + "/test/mock/MockTab.java");
 	}
 
 	public File getEclipseJdtAptCorePrefs() throws IOException {
