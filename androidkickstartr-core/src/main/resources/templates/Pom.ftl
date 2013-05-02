@@ -24,7 +24,7 @@
 		<androidannotations.version>2.7.1</androidannotations.version>
 		</#if>
 		<#if application.actionBarSherlock>
-		<actionBarSherlock.version>4.2.0</actionBarSherlock.version>
+		<actionBarSherlock.version>4.3.1</actionBarSherlock.version>
 		</#if>
 		<android.version>4.1.1.4</android.version>
 		<#if application.viewPagerIndicator >
