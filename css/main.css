@@ -2,10 +2,6 @@
     margin-top:7px;
 }
 
-#github {
-    margin-top:10px;
-}
-
 #github-request {
     margin-top: 20px;
     font-size: 16px;
@@ -260,7 +256,7 @@
 }
 
 .masthead {
-    padding: 50px 0 20px 0;
+    padding: 20px 0 20px 0;
 }
 
 .masthead h1 span{
@@ -346,7 +342,7 @@
 }
 
 .masthead {
-    padding: 20px 0 0 0;
+    padding: 10px 0 0 0;
     margin-bottom: 20px;
 }
 
@@ -427,7 +423,7 @@ body {
 }
 
 .masthead {
-    padding: 30px 0 0px 0;
+    padding: 15px 0 0px 0;
     margin-bottom: 20px;
 }
 
@@ -502,7 +498,7 @@ body {
 }
 
 .masthead {
-    padding: 30px 0 0px 0;
+    padding: 15px 0 0px 0;
     margin-bottom: 20px;
 }
 
