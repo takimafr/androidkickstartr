@@ -206,7 +206,9 @@ public class AppDetails {
 
 	@Override
 	public String toString() {
-		return "AppDetails [actionBarSherlock=" + actionBarSherlock + //
+		return "AppDetails [name=" + name + //
+				", packageName=" + packageName + //
+				", actionBarSherlock=" + actionBarSherlock + //
 				", listNavigation=" + listNavigation + //
 				", tabNavigation=" + tabNavigation + //
 				", viewPager=" + viewPager + //
