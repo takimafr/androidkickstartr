@@ -69,7 +69,7 @@ public class MainActivityTestGenerator implements Generator {
 
 			// Create test methods
 			createTestAppName(activity);
-			if (!appDetails.isSample()) {
+			if (appDetails.isSample()) {
 				if (appDetails.isViewPager()) {
 					createTestPagerNotNull(component);
 				} else {

@@ -80,7 +80,7 @@ public class MainActivityGenerator implements Generator {
 
 			afterViewsBody = createAfterViewsMethod();
 
-			if (!appDetails.isSample()) {
+			if (appDetails.isSample()) {
 				JFieldVar textViewField = null;
 				if (!appDetails.isViewPager()) {
 					textViewField = createTextViewField("hello");

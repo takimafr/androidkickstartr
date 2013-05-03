@@ -180,16 +180,16 @@ public class Kickstartr {
 
 		generators.add(new MainActivityGenerator(appDetails));
 
-		if (appDetails.isViewPager() && !appDetails.isSample()) {
+		if (appDetails.isViewPager() && appDetails.isSample()) {
 			generators.add(new ViewPagerAdapterGenerator(appDetails));
 			generators.add(new SampleFragmentGenerator(appDetails));
 		}
 
-		if (appDetails.isRestTemplate() && appDetails.isAndroidAnnotations() && !appDetails.isSample()) {
+		if (appDetails.isRestTemplate() && appDetails.isAndroidAnnotations() && appDetails.isSample()) {
 			generators.add(new RestClientGenerator(appDetails));
 		}
 
-		if (appDetails.isAcra() && !appDetails.isSample()) {
+		if (appDetails.isAcra() && appDetails.isSample()) {
 			generators.add(new ApplicationGenerator(appDetails));
 		}
 
