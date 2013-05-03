@@ -131,16 +131,19 @@ $("#kickstartr-form").submit(function() {
 
   if ($packageName != "" && !$packageValidation.test($packageName)) {
     $("span[class=help-inline]").show();
+    $('html, body').animate({scrollTop:0}, 'slow');
     return false;
   }
 
   if ($name != "" && !$nameValidation.test($name)) {
     $("span[class=help-inline]").show();
+    $('html, body').animate({scrollTop:0}, 'slow');
     return false;
   }
 
   if ($activity != "" && !$activityValidation.test($activity)) {
     $("span[class=help-inline]").show();
+    $('html, body').animate({scrollTop:0}, 'slow');
     return false;
   }
 
