@@ -1,13 +1,16 @@
 <configuration>
-  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+  <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>logs/androidkickstartr.%d{yyyy-MM}.log</fileNamePattern>
+      <maxHistory>6</maxHistory>
+    </rollingPolicy>
     <encoder>
-      <pattern>[%thread] %-5level %logger{36} - %msg%n</pattern>
+      <pattern>%date{ISO8601} [%thread] %-5level %logger{36} - %msg%n</pattern>
     </encoder>
   </appender>
 
-  <logger name="AndroidKickstarter" level="TRACE"/>
-
-  <root level="debug">
-    <appender-ref ref="STDOUT"/>
+  <root level="DEBUG">
+    <appender-ref ref="FILE"/>
   </root>
+  
 </configuration>
