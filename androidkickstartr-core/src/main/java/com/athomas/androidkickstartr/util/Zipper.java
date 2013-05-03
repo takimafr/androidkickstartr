@@ -22,9 +22,15 @@ import java.io.IOException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class Zipper {
 
+	private static String pathToRemove;
+
 	public static void zip(File srcFolder, File zipFile) throws IOException {
+		pathToRemove = srcFolder.getParent();
 		ZipOutputStream out = new ZipOutputStream(new FileOutputStream(zipFile));
 		addDir(srcFolder, out);
 		out.close();
@@ -43,7 +49,7 @@ public class Zipper {
 			FileInputStream in = new FileInputStream(file.getPath());
 
 			String zipPath = file.getPath();
-			zipPath = zipPath.replace("generated/", "");
+			zipPath = zipPath.replace(pathToRemove, "");
 			out.putNextEntry(new ZipEntry(zipPath));
 			int len;
 			while ((len = in.read(tmpBuf)) > 0) {

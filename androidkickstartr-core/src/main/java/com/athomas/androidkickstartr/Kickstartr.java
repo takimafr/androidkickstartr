@@ -57,11 +57,15 @@ public class Kickstartr {
 	private FileHelper fileHelper;
 
 	public Kickstartr(AppDetails appDetails) {
+		this(appDetails, null);
+	}
+
+	public Kickstartr(AppDetails appDetails, String targetDirName) {
 		this.appDetails = appDetails;
 
 		jCodeModel = new JCodeModel();
 		jCodeModelTest = new JCodeModel();
-		fileHelper = new FileHelper(appDetails.getName(), appDetails.getPackageName(), appDetails.isMaven());
+		fileHelper = new FileHelper(appDetails.getName(), appDetails.getPackageName(), appDetails.isMaven(), targetDirName);
 
 		extractResources(appDetails);
 	}
@@ -72,8 +76,10 @@ public class Kickstartr {
 		try {
 			File targetDir = fileHelper.getTargetDir();
 			zipFile = new File(targetDir, appDetails.getName() + "-AndroidKickstartr.zip");
+
+			LOGGER.debug("zipping " + fileHelper.getFinalDir().getPath() + " ...");
 			Zipper.zip(fileHelper.getFinalDir(), zipFile);
-			LOGGER.debug("application sources zipped");
+			LOGGER.debug("application sources zipped ");
 		} catch (IOException e) {
 			LOGGER.error("a problem occured during the compression", e);
 			return null;
@@ -240,6 +246,7 @@ public class Kickstartr {
 		File targetDir = fileHelper.getTargetDir();
 		try {
 			FileUtils.cleanDirectory(targetDir);
+			LOGGER.debug("removed directory " + targetDir.getAbsolutePath());
 		} catch (IOException e) {
 			LOGGER.error("a problem occured during target dir cleaning", e);
 		}

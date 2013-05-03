@@ -19,18 +19,43 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class FileHelper {
 
-	private static final String TARGET = "generated";
+	private final static Logger LOGGER = LoggerFactory.getLogger(FileHelper.class);
+
 	private String applicationName;
 	private String packageName;
 	private boolean maven;
 	private File resourcesTempDir;
+	private File targetTempDir;
 
-	public FileHelper(String applicationName, String packageName, boolean maven) {
+	public FileHelper(String applicationName, String packageName, boolean maven, String targetDirName) {
 		this.applicationName = applicationName;
 		this.packageName = packageName;
 		this.maven = maven;
+
+		if (targetDirName != null) {
+			targetTempDir = new File(targetDirName);
+			targetTempDir.mkdir();
+			return;
+		}
+
+		// create default temporary target folder
+		try {
+			targetTempDir = File.createTempFile("androidkickstartr-tmp", null);
+			LOGGER.debug("create tempory target dir [" + targetTempDir + "]");
+		} catch (IOException e) {
+			LOGGER.error("error during temporary target dir creation", e);
+		}
+		targetTempDir.delete();
+		targetTempDir.mkdir();
+	}
+
+	public File getTargetDir() {
+		return targetTempDir;
 	}
 
 	public File getKickstartrResourcesDir() throws IOException {
@@ -63,8 +88,12 @@ public class FileHelper {
 		return dir;
 	}
 
+	public String getFinalDirName() {
+		return applicationName + "-AndroidKickstartr";
+	}
+	
 	private String getFinalPath() {
-		return TARGET + "/" + applicationName + "-AndroidKickstartr";
+		return targetTempDir.getPath() + "/" + getFinalDirName();
 	}
 
 	private String getProjectPath() {
@@ -99,10 +128,6 @@ public class FileHelper {
 
 	public File getFinalDir() {
 		return getDir(getFinalPath());
-	}
-
-	public File getTargetDir() {
-		return getDir(TARGET);
 	}
 
 	public File getTargetLibsDir() throws IOException {

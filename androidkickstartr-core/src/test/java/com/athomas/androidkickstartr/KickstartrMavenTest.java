@@ -39,6 +39,8 @@ import com.athomas.androidkickstartr.AppDetails.Builder;
 
 public class KickstartrMavenTest {
 
+	private static final String TARGET_DIR_NAME = "generated";
+
 	Kickstartr kickstartr;
 	AppDetails appDetails;
 	Builder builder;
@@ -64,12 +66,12 @@ public class KickstartrMavenTest {
 	private void buildWithMaven() {
 		InvocationRequest request = new DefaultInvocationRequest();
 
-		File pom = new File("generated/MyApp-AndroidKickstartr/MyApp/pom.xml");
+		File pom = new File(TARGET_DIR_NAME + "/MyApp-AndroidKickstartr/MyApp/pom.xml");
 		Assert.assertNotNull(pom);
 		Assert.assertTrue(pom.exists());
 		request.setPomFile(pom);
 
-		File baseDir = new File("generated/MyApp-AndroidKickstartr/MyApp");
+		File baseDir = new File(TARGET_DIR_NAME + "/MyApp-AndroidKickstartr/MyApp");
 		Assert.assertNotNull(baseDir);
 		Assert.assertTrue(baseDir.exists());
 		request.setBaseDirectory(baseDir);
@@ -505,7 +507,7 @@ public class KickstartrMavenTest {
 	}
 
 	public File launchKickstartr() {
-		kickstartr = new Kickstartr(appDetails);
+		kickstartr = new Kickstartr(appDetails, TARGET_DIR_NAME);
 		return kickstartr.zipify();
 	}
 
