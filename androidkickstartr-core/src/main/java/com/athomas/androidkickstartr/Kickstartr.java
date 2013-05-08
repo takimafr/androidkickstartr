@@ -109,7 +109,7 @@ public class Kickstartr {
 	}
 
 	private void createDirectory() {
-		LOGGER.info("generation of " + appDetails + " : " + appDetails);
+		LOGGER.info("generation of " + appDetails);
 
 		if (appDetails.isRestTemplate() || appDetails.isAcra()) {
 			List<String> permissions = appDetails.getPermissions();
