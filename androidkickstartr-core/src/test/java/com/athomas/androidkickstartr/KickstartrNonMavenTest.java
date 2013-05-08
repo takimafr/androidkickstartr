@@ -15,52 +15,15 @@
  */
 package com.athomas.androidkickstartr;
 
-import java.io.File;
-import java.util.ArrayList;
-
-import junit.framework.Assert;
-
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
-import com.athomas.androidkickstartr.AppDetails.Builder;
-
-/**
- * Requires a device or emulator connected
- * 
- */
-
-public class KickstartrNonMavenTest {
-
-	private Kickstartr kickstartr;
-	private AppDetails appDetails;
-	private Builder builder;
-
-	@Before
-	public void tearUp() {
-		builder = new AppDetails.Builder().//
-				packageName("com.androidkickstartr.app").//
-				name("MyApp").//
-				activity("MainActivity").//
-				activityLayout("activity_main").//
-				minSdk(8).//
-				targetSdk(16).//
-				permissions(new ArrayList<String>());
-	}
-
-	@After
-	public void cleanProject() {
-		kickstartr.clean();
-	}
+public class KickstartrNonMavenTest extends AbstractKickstartrTest {
 
 	@Test
 	public void generateProject() {
 		appDetails = builder.build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
-
+		testNonMaven();
 	}
 
 	@Test
@@ -69,9 +32,7 @@ public class KickstartrNonMavenTest {
 				proguard(true).//
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
-
+		testNonMaven();
 	}
 
 	@Test
@@ -81,8 +42,7 @@ public class KickstartrNonMavenTest {
 				supportV4(true). //
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testNonMaven();
 	}
 
 	@Test
@@ -91,8 +51,7 @@ public class KickstartrNonMavenTest {
 				actionBarSherlock(true).//
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testNonMaven();
 	}
 
 	@Test
@@ -102,8 +61,7 @@ public class KickstartrNonMavenTest {
 				viewPager(true). //
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testNonMaven();
 	}
 
 	@Test
@@ -113,8 +71,7 @@ public class KickstartrNonMavenTest {
 				tabNavigation(true). //
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testNonMaven();
 	}
 
 	@Test
@@ -125,8 +82,7 @@ public class KickstartrNonMavenTest {
 				viewPager(true). //
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testNonMaven();
 	}
 
 	@Test
@@ -136,8 +92,7 @@ public class KickstartrNonMavenTest {
 				listNavigation(true). //
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testNonMaven();
 	}
 
 	@Test
@@ -148,8 +103,7 @@ public class KickstartrNonMavenTest {
 				viewPager(true). //
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testNonMaven();
 	}
 
 	@Test
@@ -158,8 +112,7 @@ public class KickstartrNonMavenTest {
 				androidAnnotations(true).//
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testNonMaven();
 	}
 
 	@Test
@@ -169,8 +122,7 @@ public class KickstartrNonMavenTest {
 				actionBarSherlock(true).//
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testNonMaven();
 	}
 
 	@Test
@@ -180,8 +132,7 @@ public class KickstartrNonMavenTest {
 				restTemplate(true).//
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testNonMaven();
 	}
 
 	@Test
@@ -192,8 +143,7 @@ public class KickstartrNonMavenTest {
 				acra(true). //
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testNonMaven();
 	}
 
 	@Test
@@ -202,8 +152,7 @@ public class KickstartrNonMavenTest {
 				roboguice(true).//
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testNonMaven();
 	}
 
 	@Test
@@ -213,8 +162,7 @@ public class KickstartrNonMavenTest {
 				actionBarSherlock(true).//
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testNonMaven();
 	}
 
 	@Test
@@ -225,8 +173,7 @@ public class KickstartrNonMavenTest {
 				supportV4(true).//
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testNonMaven();
 	}
 
 	@Test
@@ -237,8 +184,7 @@ public class KickstartrNonMavenTest {
 				viewPager(true).//
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testNonMaven();
 	}
 
 	@Test
@@ -250,8 +196,7 @@ public class KickstartrNonMavenTest {
 				acra(true). //
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testNonMaven();
 	}
 
 	@Test
@@ -264,8 +209,7 @@ public class KickstartrNonMavenTest {
 				nineOldAndroids(true). //
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testNonMaven();
 	}
 
 	@Test
@@ -279,8 +223,7 @@ public class KickstartrNonMavenTest {
 				viewPager(true). //
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testNonMaven();
 	}
 
 	@Test
@@ -295,8 +238,7 @@ public class KickstartrNonMavenTest {
 				viewPager(true). //
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testNonMaven();
 	}
 
 	@Test
@@ -312,8 +254,7 @@ public class KickstartrNonMavenTest {
 				roboguice(true). //
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testNonMaven();
 	}
 
 	@Test
@@ -328,8 +269,7 @@ public class KickstartrNonMavenTest {
 				viewPager(true). //
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testNonMaven();
 	}
 
 	@Test
@@ -344,8 +284,7 @@ public class KickstartrNonMavenTest {
 				roboguice(true). //
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testNonMaven();
 	}
 
 	@Test
@@ -361,8 +300,7 @@ public class KickstartrNonMavenTest {
 				proguard(true).//
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testNonMaven();
 	}
 
 	@Test
@@ -378,13 +316,7 @@ public class KickstartrNonMavenTest {
 				proguard(true).//
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
-	}
-
-	private File launchKickstartr() {
-		kickstartr = new Kickstartr(appDetails);
-		return kickstartr.zipify();
+		testNonMaven();
 	}
 
 }
