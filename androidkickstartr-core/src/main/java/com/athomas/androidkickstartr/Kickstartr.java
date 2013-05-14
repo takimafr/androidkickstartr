@@ -195,7 +195,7 @@ public class Kickstartr {
 			generators.add(new RestClientGenerator(appDetails));
 		}
 
-		if (appDetails.isAcra() && appDetails.isSample()) {
+		if (appDetails.isAcra()) {
 			generators.add(new ApplicationGenerator(appDetails));
 		}
 
