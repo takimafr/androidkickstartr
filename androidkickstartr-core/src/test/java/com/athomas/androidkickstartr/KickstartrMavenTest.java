@@ -15,92 +15,19 @@
  */
 package com.athomas.androidkickstartr;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.NoSuchElementException;
-
-import junit.framework.Assert;
-
-import org.apache.maven.shared.invoker.DefaultInvocationRequest;
-import org.apache.maven.shared.invoker.DefaultInvoker;
-import org.apache.maven.shared.invoker.InvocationRequest;
-import org.apache.maven.shared.invoker.InvocationResult;
-import org.apache.maven.shared.invoker.MavenInvocationException;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-
-import com.athomas.androidkickstartr.AppDetails.Builder;
 
 /**
  * Requires a device or emulator connected
  * 
  */
 
-public class KickstartrMavenTest {
+public class KickstartrMavenTest extends AbstractKickstartrTest {
 
-	private static final String TARGET_DIR_NAME = "generated";
-
-	Kickstartr kickstartr;
-	AppDetails appDetails;
-	Builder builder;
-
-	@Before
-	public void before() {
-		builder = new AppDetails.Builder().//
-				packageName("com.androidkickstartr.app").//
-				name("MyApp").//
-				activity("MainActivity").//
-				activityLayout("activity_main").//
-				minSdk(8).//
-				targetSdk(16).//
-				permissions(new ArrayList<String>());
-	}
-
-	@After
+	@Override
 	public void cleanProject() {
 		buildWithMaven();
-		kickstartr.clean();
-	}
-
-	private void buildWithMaven() {
-		InvocationRequest request = new DefaultInvocationRequest();
-
-		File pom = new File(TARGET_DIR_NAME + "/MyApp-AndroidKickstartr/MyApp/pom.xml");
-		Assert.assertNotNull(pom);
-		Assert.assertTrue(pom.exists());
-		request.setPomFile(pom);
-
-		File baseDir = new File(TARGET_DIR_NAME + "/MyApp-AndroidKickstartr/MyApp");
-		Assert.assertNotNull(baseDir);
-		Assert.assertTrue(baseDir.exists());
-		request.setBaseDirectory(baseDir);
-
-		ArrayList<String> goals = new ArrayList<String>();
-		goals.add("clean");
-		goals.add("install");
-		goals.add("android:deploy");
-		goals.add("android:run");
-		request.setGoals(goals);
-		request.setShowErrors(true);
-		request.setDebug(false);
-
-		DefaultInvoker invoker = new DefaultInvoker();
-		String mavenHome = System.getenv("MAVEN_HOME");
-
-		if (mavenHome == null)
-			throw new NoSuchElementException("Compilation impossible because you do not have a $MAVEN_HOME variable declared in your environment.");
-
-		invoker.setMavenHome(new File(mavenHome));
-		InvocationResult result;
-		try {
-			result = invoker.execute(request);
-
-			Assert.assertTrue(result.getExitCode() == 0);
-			Assert.assertTrue(result.getExecutionException() == null);
-		} catch (MavenInvocationException e) {
-			e.printStackTrace();
-		}
+		super.cleanProject();
 	}
 
 	@Test
@@ -109,8 +36,7 @@ public class KickstartrMavenTest {
 				maven(true). //
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testMaven();
 	}
 
 	@Test
@@ -120,8 +46,7 @@ public class KickstartrMavenTest {
 				proguard(true).//
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testMaven();
 	}
 
 	@Test
@@ -132,8 +57,7 @@ public class KickstartrMavenTest {
 				supportV4(true). //
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testMaven();
 	}
 
 	@Test
@@ -143,8 +67,7 @@ public class KickstartrMavenTest {
 				actionBarSherlock(true).//
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testMaven();
 	}
 
 	@Test
@@ -155,8 +78,7 @@ public class KickstartrMavenTest {
 				sample(true). //
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testMaven();
 	}
 
 	@Test
@@ -167,8 +89,7 @@ public class KickstartrMavenTest {
 				viewPager(true). //
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testMaven();
 	}
 
 	@Test
@@ -179,8 +100,7 @@ public class KickstartrMavenTest {
 				tabNavigation(true). //
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testMaven();
 	}
 
 	@Test
@@ -192,8 +112,7 @@ public class KickstartrMavenTest {
 				tabNavigation(true). //
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testMaven();
 	}
 
 	@Test
@@ -204,8 +123,7 @@ public class KickstartrMavenTest {
 				listNavigation(true). //
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testMaven();
 	}
 
 	@Test
@@ -217,8 +135,7 @@ public class KickstartrMavenTest {
 				listNavigation(true). //
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testMaven();
 	}
 
 	@Test
@@ -228,8 +145,7 @@ public class KickstartrMavenTest {
 				androidAnnotations(true).//
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testMaven();
 	}
 
 	@Test
@@ -240,8 +156,7 @@ public class KickstartrMavenTest {
 				actionBarSherlock(true).//
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testMaven();
 	}
 
 	@Test
@@ -252,8 +167,7 @@ public class KickstartrMavenTest {
 				restTemplate(true).//
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testMaven();
 	}
 
 	@Test
@@ -265,8 +179,7 @@ public class KickstartrMavenTest {
 				acra(true). //
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testMaven();
 	}
 
 	@Test
@@ -276,8 +189,7 @@ public class KickstartrMavenTest {
 				roboguice(true).//
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testMaven();
 	}
 
 	@Test
@@ -288,8 +200,7 @@ public class KickstartrMavenTest {
 				actionBarSherlock(true). //
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testMaven();
 	}
 
 	@Test
@@ -301,8 +212,7 @@ public class KickstartrMavenTest {
 				supportV4(true). //
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testMaven();
 	}
 
 	@Test
@@ -314,8 +224,7 @@ public class KickstartrMavenTest {
 				viewPager(true).//
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testMaven();
 	}
 
 	@Test
@@ -328,8 +237,7 @@ public class KickstartrMavenTest {
 				acra(true). //
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testMaven();
 	}
 
 	@Test
@@ -343,8 +251,7 @@ public class KickstartrMavenTest {
 				nineOldAndroids(true). //
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testMaven();
 	}
 
 	@Test
@@ -359,8 +266,7 @@ public class KickstartrMavenTest {
 				viewPager(true). //
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testMaven();
 	}
 
 	@Test
@@ -376,8 +282,7 @@ public class KickstartrMavenTest {
 				viewPager(true). //
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testMaven();
 	}
 
 	@Test
@@ -394,8 +299,7 @@ public class KickstartrMavenTest {
 				roboguice(true). //
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testMaven();
 	}
 
 	@Test
@@ -411,8 +315,7 @@ public class KickstartrMavenTest {
 				viewPager(true). //
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testMaven();
 	}
 
 	@Test
@@ -428,8 +331,7 @@ public class KickstartrMavenTest {
 				roboguice(true). //
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testMaven();
 	}
 
 	@Test
@@ -446,8 +348,7 @@ public class KickstartrMavenTest {
 				proguard(true). //
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testMaven();
 	}
 
 	@Test
@@ -465,8 +366,7 @@ public class KickstartrMavenTest {
 				sample(true). //
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testMaven();
 	}
 
 	@Test
@@ -483,8 +383,7 @@ public class KickstartrMavenTest {
 				proguard(true). //
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testMaven();
 	}
 
 	@Test
@@ -502,13 +401,7 @@ public class KickstartrMavenTest {
 				sample(true). //
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
-	}
-
-	public File launchKickstartr() {
-		kickstartr = new Kickstartr(appDetails, TARGET_DIR_NAME);
-		return kickstartr.zipify();
+		testMaven();
 	}
 
 }
