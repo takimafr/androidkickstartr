@@ -138,14 +138,16 @@ public class Kickstartr {
 			LOGGER.error("problem occurs during the resources copying", e);
 		}
 
-		if (appDetails.isMaven() && !appDetails.isRobolectric()) {
-			// create src/text/java - it avoids an error when import to Eclipse
-			File targetTestDir = fileHelper.getTargetTestDir();
-			File removeMe = new File(targetTestDir, "REMOVE.ME");
-			try {
-				removeMe.createNewFile();
-			} catch (IOException e) {
-				LOGGER.error("an error occured during the REMOVE.ME file creation", e);
+		if (appDetails.isEclipse()) {
+			if (appDetails.isMaven() && !appDetails.isRobolectric()) {
+				// create src/text/java - it avoids an error when import to Eclipse
+				File targetTestDir = fileHelper.getTargetTestDir();
+				File removeMe = new File(targetTestDir, "REMOVE.ME");
+				try {
+					removeMe.createNewFile();
+				} catch (IOException e) {
+					LOGGER.error("an error occured during the REMOVE.ME file creation", e);
+				}
 			}
 		}
 
