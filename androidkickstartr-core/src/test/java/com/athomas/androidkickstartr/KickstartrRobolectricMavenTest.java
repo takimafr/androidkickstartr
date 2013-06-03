@@ -1,12 +1,18 @@
 package com.athomas.androidkickstartr;
 
-import java.io.File;
-
-import junit.framework.Assert;
-
 import org.junit.Test;
 
-public class KickstartrRobolectricMavenTest extends KickstartrMavenTest {
+/**
+ * Requires a device or emulator connected
+ * 
+ */
+public class KickstartrRobolectricMavenTest extends AbstractKickstartrTest {
+
+	@Override
+	public void cleanProject() {
+		buildWithMaven();
+		super.cleanProject();
+	}
 
 	@Test
 	public void generateProject_maven_abs_tab_robolectric() {
@@ -17,8 +23,7 @@ public class KickstartrRobolectricMavenTest extends KickstartrMavenTest {
 				robolectric(true). //
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testMaven();
 	}
 
 	@Test
@@ -30,8 +35,7 @@ public class KickstartrRobolectricMavenTest extends KickstartrMavenTest {
 				robolectric(true). //
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testMaven();
 	}
 
 	@Test
@@ -44,8 +48,7 @@ public class KickstartrRobolectricMavenTest extends KickstartrMavenTest {
 				robolectric(true). //
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testMaven();
 	}
 
 	@Test
@@ -56,8 +59,7 @@ public class KickstartrRobolectricMavenTest extends KickstartrMavenTest {
 				robolectric(true). //
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testMaven();
 	}
 
 	@Test
@@ -67,8 +69,7 @@ public class KickstartrRobolectricMavenTest extends KickstartrMavenTest {
 				robolectric(true). //
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testMaven();
 	}
 
 	@Test
@@ -81,8 +82,7 @@ public class KickstartrRobolectricMavenTest extends KickstartrMavenTest {
 				acra(true). //
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testMaven();
 	}
 
 	@Test
@@ -93,8 +93,7 @@ public class KickstartrRobolectricMavenTest extends KickstartrMavenTest {
 				robolectric(true).//
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testMaven();
 	}
 
 	@Test
@@ -111,8 +110,7 @@ public class KickstartrRobolectricMavenTest extends KickstartrMavenTest {
 				robolectric(true).//
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testMaven();
 	}
 
 	@Test
@@ -130,8 +128,7 @@ public class KickstartrRobolectricMavenTest extends KickstartrMavenTest {
 				robolectric(true).//
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testMaven();
 	}
 
 	@Test
@@ -149,8 +146,7 @@ public class KickstartrRobolectricMavenTest extends KickstartrMavenTest {
 				robolectric(true).//
 				build();
 
-		File file = launchKickstartr();
-		Assert.assertNotNull(file);
+		testMaven();
 	}
 
 }
