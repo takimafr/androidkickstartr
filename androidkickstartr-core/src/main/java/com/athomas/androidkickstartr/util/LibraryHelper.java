@@ -38,7 +38,9 @@ public class LibraryHelper {
 
 	public void go() {
 		if (state.isActionBarSherlock()) {
-			copyLibraryToProject("ActionBarSherlock/actionbarsherlock");
+			if (state.isEclipse() || !state.isMaven()) {
+				copyLibraryToProject("ActionBarSherlock/actionbarsherlock");
+			}
 		}
 
 		if (state.isViewPagerIndicator()) {
