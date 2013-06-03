@@ -1,6 +1,13 @@
+-optimizationpasses 5
+-dontusemixedcaseclassnames
+-dontskipnonpubliclibraryclasses
 -dontpreverify
--optimizations !code/simplification/arithmetic,!field/*,!class/merging/*
 -verbose
+-optimizations !code/simplification/arithmetic,!field/*,!class/merging/*,!code/allocation/variable
+-ignorewarnings
+-renamesourcefileattribute SourceFile
+-keepattributes SourceFile,LineNumberTable,*Annotation*,Signature
+ 
 
 -keepattributes *Annotation*
 
@@ -116,15 +123,15 @@
     @com.google.inject.Inject <init>(...);
 }
 
-# from https://groups.google.com/forum/?fromgroups=#!topic/roboguice/vcA1Z0biPqI
--keep class com.google.inject.** { *; } 
+-keep class com.google.inject.** { *; }
+-keep class javax.inject.** { *; }
+-keep class javax.annotation.** { *; }
+-keep class roboguice.** { *; }
 
 # There's no way to keep all @Observes methods, so use the On*Event convention to identify event handlers
 -keepclassmembers class * { 
     void *(**On*Event);
 }
-
--keep public class roboguice.**
 
 -dontwarn roboguice.**
 
