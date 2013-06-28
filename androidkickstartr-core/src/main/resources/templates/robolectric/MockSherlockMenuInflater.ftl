@@ -1,8 +1,8 @@
-package ${application.packageName}.test.mock;
+package ${application.packageName}.absmock;
 
 import static org.robolectric.Robolectric.shadowOf;
 
-import org.robolectric.internal.Implementation;
+import org.robolectric.annotation.Implementation;
 import org.robolectric.res.MenuNode;
 import org.robolectric.res.ResName;
 import org.robolectric.res.ResourceLoader;

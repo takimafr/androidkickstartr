@@ -1,4 +1,4 @@
-package ${application.packageName}.test.mock;
+package ${application.packageName}.absmock;
 
 import android.graphics.drawable.Drawable;
 import android.view.View;
