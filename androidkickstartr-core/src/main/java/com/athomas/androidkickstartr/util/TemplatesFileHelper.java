@@ -115,12 +115,14 @@ public class TemplatesFileHelper {
 
 		if (appDetails.isRobolectric()) {
 			if (appDetails.isActionBarSherlock()) {
-				processTemplate(cfg, params, "robolectric/ABSRobolectricTestRunner.ftl", fileHelper.getTargetRobolectricTestRunnerFile());
 				processTemplate(cfg, params, "robolectric/MockActionBar.ftl", fileHelper.getTargetRobolectricMockActionBarFile());
 				processTemplate(cfg, params, "robolectric/MockActionBarSherlock.ftl", fileHelper.getTargetRobolectricMockActionBarSherlockFile());
 				processTemplate(cfg, params, "robolectric/MockSherlockMenuInflater.ftl", fileHelper.getTargetRobolectricMockSherlockMenuInflaterFile());
 				if (appDetails.isTabNavigation()) {
 					processTemplate(cfg, params, "robolectric/MockTab.ftl", fileHelper.getTargetRobolectricMockTabFile());
+				}
+				if (!appDetails.isEclipse()) {
+					processTemplate(cfg, params, "robolectric/CustomTestRunner.ftl", fileHelper.getTargetRobolectricCustomTestRunnerFile());
 				}
 			}
 		}

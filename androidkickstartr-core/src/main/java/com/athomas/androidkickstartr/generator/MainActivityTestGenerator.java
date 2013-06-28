@@ -13,7 +13,6 @@ import com.sun.codemodel.JBlock;
 import com.sun.codemodel.JClassAlreadyExistsException;
 import com.sun.codemodel.JCodeModel;
 import com.sun.codemodel.JDefinedClass;
-import com.sun.codemodel.JExpr;
 import com.sun.codemodel.JExpression;
 import com.sun.codemodel.JFieldVar;
 import com.sun.codemodel.JMethod;
@@ -58,18 +57,19 @@ public class MainActivityTestGenerator implements Generator {
 
 			JBlock createSetUpMethod = createSetUpMethod(activity);
 
-			JFieldVar component = null;
-			if (appDetails.isViewPager()) {
-				component = jClass.field(JMod.PRIVATE, ref.viewPager(), "pager");
-				codeModelHelper.doFindViewById(createSetUpMethod, "pager", component, activity);
-			} else {
-				component = jClass.field(JMod.PRIVATE, ref.textView(), "hello");
-				codeModelHelper.doFindViewById(createSetUpMethod, "hello", component, activity);
-			}
-
-			// Create test methods
 			createTestAppName(activity);
+
 			if (appDetails.isSample()) {
+				JFieldVar component = null;
+				if (appDetails.isViewPager()) {
+					component = jClass.field(JMod.PRIVATE, ref.viewPager(), "pager");
+					codeModelHelper.doFindViewById(createSetUpMethod, "pager", component, activity);
+				} else {
+					component = jClass.field(JMod.PRIVATE, ref.textView(), "hello");
+					codeModelHelper.doFindViewById(createSetUpMethod, "hello", component, activity);
+				}
+
+				// Create test methods
 				if (appDetails.isViewPager()) {
 					createTestPagerNotNull(component);
 				} else {
@@ -87,8 +87,8 @@ public class MainActivityTestGenerator implements Generator {
 		// @RunWith
 		JAnnotationUse runWithAnnotation = jClass.annotate(ref.runWith());
 		JExpression field = null;
-		if (appDetails.isActionBarSherlock()) {
-			field = ref.absRobolectricTestRunner(appDetails).dotclass();
+		if (appDetails.isActionBarSherlock() && !appDetails.isEclipse()) {
+			field = ref.customTestRunner(appDetails).dotclass();
 		} else {
 			field = ref.robolectricTestRunner().dotclass();
 		}
@@ -103,9 +103,14 @@ public class MainActivityTestGenerator implements Generator {
 
 		JBlock setUpBody = setUp.body();
 
+		if (appDetails.isActionBarSherlock()) {
+			setUpBody.staticInvoke(ref.sActionBarSherlock(), "registerImplementation").arg(ref.mockActionBarSherlock(appDetails.getPackageName()).dotclass());
+			setUpBody.staticInvoke(ref.sActionBarSherlock(), "unregisterImplementation").arg(ref.sActionBarSherlockCompat().dotclass());
+			setUpBody.staticInvoke(ref.sActionBarSherlock(), "unregisterImplementation").arg(ref.sActionBarSherlockNative().dotclass());
+		}
+
 		// declare tested activity and create it
-		setUpBody.assign(activity, JExpr._new(ref.activity(appDetails, appDetails.isAndroidAnnotations())));
-		setUpBody.invoke(activity, "onCreate").arg(JExpr._null());
+		setUpBody.assign(activity, ref.robolectric().staticInvoke("buildActivity").arg(ref.activity(appDetails, appDetails.isAndroidAnnotations()).dotclass()).invoke("create").invoke("get"));
 
 		return setUpBody;
 	}
@@ -120,14 +125,14 @@ public class MainActivityTestGenerator implements Generator {
 		JMethod testAppName = createTestMethod("testAppName");
 		JBlock testAppNameBody = testAppName.body();
 		JVar appName = testAppNameBody.decl(ref.string(), "appName", activity.invoke("getResources").invoke("getString").arg(ref.r().staticRef("string").ref("app_name")));
-		testAppNameBody.staticInvoke(ref.assertJunit(), "assertThat").arg(appName).arg(ref.coreMatchers().staticInvoke("equalTo").arg(appDetails.getName()));
+		testAppNameBody.staticInvoke(ref.assertJunit(), "assertEquals").arg(appName).arg(appDetails.getName());
 	}
 
 	private void createTestContentTextView(JFieldVar textView) {
 		JMethod testContentTextView = createTestMethod("testContentTextView");
 		JBlock testContentTextViewBody = testContentTextView.body();
 		JVar textContent = testContentTextViewBody.decl(ref.string(), "textContent", textView.invoke("getText").invoke("toString"));
-		testContentTextViewBody.staticInvoke(ref.assertJunit(), "assertThat").arg(textContent).arg(ref.coreMatchers().staticInvoke("equalTo").arg("Hello world!"));
+		testContentTextViewBody.staticInvoke(ref.assertJunit(), "assertEquals").arg(textContent).arg("Hello world!");
 	}
 
 	private JMethod createTestMethod(String methodName) {
