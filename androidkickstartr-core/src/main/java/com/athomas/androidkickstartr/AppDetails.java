@@ -56,8 +56,9 @@ public class AppDetails {
 	private boolean robolectric;
 	private boolean sample;
     private List<Library> libraries;
+    private boolean eventbus;
 
-	public String getPackageName() {
+    public String getPackageName() {
 		return packageName;
 	}
 
@@ -238,7 +239,11 @@ public class AppDetails {
 
 	}
 
-	public static class Builder {
+    public boolean isEventbus() {
+        return eventbus;
+    }
+
+    public static class Builder {
 
 		private AppDetails instance;
 
@@ -388,6 +393,12 @@ public class AppDetails {
             instance.libraries.add(Libraries.junit());
 			return this;
 		}
+
+        public Builder eventbus(boolean eventbus) {
+            instance.eventbus = eventbus;
+            instance.libraries.add(Libraries.eventbus());
+            return this;
+        }
 
 		public Builder sample(boolean sample) {
 			instance.sample = sample;

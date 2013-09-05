@@ -287,21 +287,37 @@ public class KickstartrNonMavenTest extends AbstractKickstartrTest {
 		testNonMaven();
 	}
 
-	@Test
-	public void generateProject_abs_list_aa_rest_acra_nine_viewpager_proguard() {
-		appDetails = builder.//
-				actionBarSherlock(true). //
-				listNavigation(true). //
-				androidAnnotations(true). //
-				restTemplate(true).//
-				acra(true). //
-				nineOldAndroids(true). //
-				viewPager(true). //
-				proguard(true).//
-				build();
+    @Test
+    public void generateProject_abs_list_aa_rest_acra_nine_viewpager_proguard() {
+        appDetails = builder.//
+                actionBarSherlock(true). //
+                listNavigation(true). //
+                androidAnnotations(true). //
+                restTemplate(true).//
+                acra(true). //
+                nineOldAndroids(true). //
+                viewPager(true). //
+                proguard(true).//
+                build();
 
-		testNonMaven();
-	}
+        testNonMaven();
+    }
+    @Test
+    public void generateProject_abs_list_aa_rest_acra_nine_viewpager_eventbus_proguard() {
+        appDetails = builder.//
+                actionBarSherlock(true). //
+                listNavigation(true). //
+                androidAnnotations(true). //
+                restTemplate(true).//
+                acra(true). //
+                nineOldAndroids(true). //
+                eventbus(true). //
+                viewPager(true). //
+                proguard(true).//
+                build();
+
+        testNonMaven();
+    }
 
 	@Test
 	public void generateProject_abs_list_rest_acra_nine_viewpager_roboguice_proguard() {

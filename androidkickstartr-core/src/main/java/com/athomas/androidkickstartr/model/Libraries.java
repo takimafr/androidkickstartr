@@ -162,4 +162,18 @@ public final class Libraries {
                         get()).
                 build();
     }
+
+    public static Library eventbus() {
+        return Library.build().
+                version("2.0.2").
+                name("eventbus").
+                jar(Jar.jar().
+                        name("eventbus-2.0.2.jar").
+                        get()).
+                maven(MavenDep.dep().
+                        groupId("de.greenrobot").
+                        artifactId("eventbus").
+                        get()).
+                build();
+    }
 }

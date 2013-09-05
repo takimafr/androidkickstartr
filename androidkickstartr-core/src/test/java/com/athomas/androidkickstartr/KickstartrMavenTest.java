@@ -60,6 +60,17 @@ public class KickstartrMavenTest extends AbstractKickstartrTest {
 		testMaven();
 	}
 
+
+    @Test
+    public void generateProject_maven_eventbus() {
+        appDetails = builder.//
+                maven(true). //
+                eventbus(true). //
+                build();
+
+        testMaven();
+    }
+
 	@Test
 	public void generateProject_maven_abs() {
 		appDetails = builder.//
@@ -370,7 +381,7 @@ public class KickstartrMavenTest extends AbstractKickstartrTest {
 	}
 
 	@Test
-	public void generateProject_maven_abs_list_rest_acra_nine_viewpager_roboguice_proguard() {
+	public void generateProject_maven_abs_list_rest_acra_nine_viewpager_roboguice_proguard_eventbus() {
 		appDetails = builder.//
 				maven(true). //
 				actionBarSherlock(true). //
@@ -381,13 +392,14 @@ public class KickstartrMavenTest extends AbstractKickstartrTest {
 				viewPager(true). //
 				roboguice(true). //
 				proguard(true). //
+                eventbus(true). //
 				build();
 
 		testMaven();
 	}
 
 	@Test
-	public void generateProject_maven_abs_list_rest_acra_nine_viewpager_roboguice_proguard_sample() {
+	public void generateProject_maven_abs_list_rest_acra_nine_viewpager_roboguice_proguard_eventbus_sample() {
 		appDetails = builder.//
 				maven(true). //
 				actionBarSherlock(true). //
@@ -398,6 +410,7 @@ public class KickstartrMavenTest extends AbstractKickstartrTest {
 				viewPager(true). //
 				roboguice(true). //
 				proguard(true). //
+                eventbus(true). //
 				sample(true). //
 				build();
 

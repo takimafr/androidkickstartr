@@ -84,22 +84,25 @@ public class Main {
 	@Produces("application/zip")
 	public Response go(//
 
-			// State
+            // State
+            @FormParam("sample") boolean sample,//
+            @FormParam("maven") boolean maven,//
+            @FormParam("eclipse") boolean eclipse,//
+            @FormParam("proguard") boolean proguard,//
+
+            // Libraries
 			@FormParam("actionBarSherlock") boolean actionBarSherlock,//
 			@FormParam("navigationType") String navigationType,//
 			@FormParam("androidAnnotations") boolean androidAnnotations,//
 			@FormParam("restTemplate") boolean restTemplate,//
-			@FormParam("maven") boolean maven,//
 			@FormParam("nineOldAndroids") boolean nineOldAndroids,//
 			@FormParam("supportV4") boolean supportV4,//
 			@FormParam("acra") boolean acra,//
-			@FormParam("eclipse") boolean eclipse,//
 			@FormParam("viewPager") boolean viewPager,//
 			@FormParam("viewPagerIndicator") boolean viewPagerIndicator,//
 			@FormParam("roboguice") boolean roboguice,//
-			@FormParam("proguard") boolean proguard,//
 			@FormParam("robolectric") boolean robolectric,//
-			@FormParam("sample") boolean sample,//
+            @FormParam("eventbus") boolean eventbus,//
 
 			// Application
 			@FormParam("packageName") String packageName,//
@@ -164,6 +167,7 @@ public class Main {
 				maven(maven). //
 				nineOldAndroids(nineOldAndroids). //
 				supportV4(supportV4). //
+                eventbus(eventbus). //
 				acra(acra). //
 				eclipse(eclipse). //
 				proguard(proguard). //
