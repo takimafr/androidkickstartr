@@ -303,7 +303,7 @@ public class KickstartrNonMavenTest extends AbstractKickstartrTest {
         testNonMaven();
     }
     @Test
-    public void generateProject_abs_list_aa_rest_acra_nine_viewpager_eventbus_iconify_proguard() {
+    public void generateProject_abs_list_aa_rest_acra_nine_viewpager_eventbus_iconify_robospice_proguard() {
         appDetails = builder.//
                 actionBarSherlock(true). //
                 listNavigation(true). //
@@ -313,15 +313,16 @@ public class KickstartrNonMavenTest extends AbstractKickstartrTest {
                 nineOldAndroids(true). //
                 eventbus(true). //
                 iconify(true). //
+                robospice(true). //
                 viewPager(true). //
-                proguard(true).//
+                proguard(true). //
                 build();
 
         testNonMaven();
     }
 
 	@Test
-	public void generateProject_abs_list_rest_acra_nine_viewpager_roboguice_iconify_proguard() {
+	public void generateProject_abs_list_rest_acra_nine_viewpager_roboguice_iconify_robospice_proguard() {
 		appDetails = builder.//
 				actionBarSherlock(true). //
 				listNavigation(true). //
@@ -330,6 +331,7 @@ public class KickstartrNonMavenTest extends AbstractKickstartrTest {
 				nineOldAndroids(true). //
 				viewPager(true). //
 				roboguice(true). //
+                robospice(true). //
                 iconify(true). //
 				proguard(true).//
 				build();

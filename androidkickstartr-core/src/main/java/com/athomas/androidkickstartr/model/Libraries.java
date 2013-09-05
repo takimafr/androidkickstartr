@@ -190,4 +190,18 @@ public final class Libraries {
                         get()).
                 build();
     }
+
+    public static Library robospice() {
+        return Library.build().
+                version("1.4.6").
+                name("robospice").
+                jar(Jar.jar().
+                        name("robospice-1.4.6.jar").
+                        get()).
+                maven(MavenDep.dep().
+                        groupId("com.octo.android.robospice").
+                        artifactId("robospice").
+                        get()).
+                build();
+    }
 }

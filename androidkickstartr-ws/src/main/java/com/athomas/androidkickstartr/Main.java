@@ -102,8 +102,10 @@ public class Main {
 			@FormParam("viewPagerIndicator") boolean viewPagerIndicator,//
 			@FormParam("roboguice") boolean roboguice,//
 			@FormParam("robolectric") boolean robolectric,//
+
             @FormParam("eventbus") boolean eventbus,//
             @FormParam("iconify") boolean iconify,//
+            @FormParam("robospice") boolean robospice,//
 
 			// Application
 			@FormParam("packageName") String packageName,//
@@ -170,6 +172,7 @@ public class Main {
 				supportV4(supportV4). //
                 eventbus(eventbus). //
                 iconify(iconify). //
+                robospice(robospice). //
 				acra(acra). //
 				eclipse(eclipse). //
 				proguard(proguard). //

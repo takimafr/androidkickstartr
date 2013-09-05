@@ -422,6 +422,13 @@ public class AppDetails {
             return this;
         }
 
+        public Builder robospice(boolean robospice) {
+            if (robospice) {
+                instance.libraries.add(Libraries.robospice());
+            }
+            return this;
+        }
+
 		public Builder sample(boolean sample) {
 			instance.sample = sample;
 			return this;

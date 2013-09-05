@@ -399,7 +399,8 @@ public class KickstartrMavenTest extends AbstractKickstartrTest {
 	}
 
 	@Test
-	public void generateProject_maven_abs_list_rest_acra_nine_viewpager_roboguice_proguard_eventbus_iconify_sample() {
+	public void
+    generateProject_maven_abs_list_rest_acra_nine_viewpager_roboguice_proguard_eventbus_iconify_robospice_sample() {
 		appDetails = builder.//
 				maven(true). //
 				actionBarSherlock(true). //
@@ -412,6 +413,7 @@ public class KickstartrMavenTest extends AbstractKickstartrTest {
 				proguard(true). //
                 eventbus(true). //
                 iconify(true). //
+                roboguice(true). //
 				sample(true). //
 				build();
 
