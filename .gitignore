@@ -1,7 +1,14 @@
+# Eclipse
 .settings
 .classpath
 .project
 
+# IntelliJ Idea
+*.iml
+*.idea
+
 tmp
 target
 generated
+
+
