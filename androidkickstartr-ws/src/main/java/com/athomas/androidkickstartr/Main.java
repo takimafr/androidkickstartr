@@ -103,6 +103,7 @@ public class Main {
 			@FormParam("roboguice") boolean roboguice,//
 			@FormParam("robolectric") boolean robolectric,//
             @FormParam("eventbus") boolean eventbus,//
+            @FormParam("iconify") boolean iconify,//
 
 			// Application
 			@FormParam("packageName") String packageName,//
@@ -168,6 +169,7 @@ public class Main {
 				nineOldAndroids(nineOldAndroids). //
 				supportV4(supportV4). //
                 eventbus(eventbus). //
+                iconify(iconify). //
 				acra(acra). //
 				eclipse(eclipse). //
 				proguard(proguard). //

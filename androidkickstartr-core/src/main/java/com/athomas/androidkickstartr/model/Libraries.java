@@ -176,4 +176,18 @@ public final class Libraries {
                         get()).
                 build();
     }
+
+    public static Library iconify() {
+        return Library.build().
+                version("1.0.1").
+                name("iconify").
+                jar(Jar.jar().
+                        name("android-iconify-1.0.1.jar").
+                        get()).
+                maven(MavenDep.dep().
+                        groupId("com.joanzapata.android").
+                        artifactId("android-iconify").
+                        get()).
+                build();
+    }
 }

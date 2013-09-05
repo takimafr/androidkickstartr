@@ -397,6 +397,11 @@ public class AppDetails {
         public Builder eventbus(boolean eventbus) {
             instance.eventbus = eventbus;
             instance.libraries.add(Libraries.eventbus());
+
+        public Builder iconify(boolean iconify) {
+            if (iconify) {
+                instance.libraries.add(Libraries.iconify());
+            }
             return this;
         }
 
