@@ -67,7 +67,7 @@ public class Kickstartr {
 		jCodeModelTest = new JCodeModel();
 		fileHelper = new FileHelper(appDetails.getName(), appDetails.getPackageName(), appDetails.isMaven(), targetDirName);
 
-		extractResources(appDetails);
+		extractResources();
 	}
 
 	public File zipify() {
@@ -97,7 +97,7 @@ public class Kickstartr {
 		return repository;
 	}
 
-	private void extractResources(AppDetails appDetails) {
+	private void extractResources() {
 		try {
 			File resourcesDir = fileHelper.getKickstartrResourcesDir();
 			if (resourcesDir.exists() || resourcesDir.list() == null || resourcesDir.list().length == 0) {
