@@ -15,6 +15,10 @@
  */
 package com.athomas.androidkickstartr;
 
+import com.athomas.androidkickstartr.model.Libraries;
+import com.athomas.androidkickstartr.model.Library;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -51,6 +55,7 @@ public class AppDetails {
 	private boolean git;
 	private boolean robolectric;
 	private boolean sample;
+    private List<Library> libraries;
 
 	public String getPackageName() {
 		return packageName;
@@ -135,6 +140,10 @@ public class AppDetails {
 	public String getApplicationClassName() {
 		return name + "Application";
 	}
+
+    public List<Library> getLibraries() {
+        return libraries;
+    }
 
 	public boolean isActionBarSherlock() {
 		return actionBarSherlock;
@@ -235,6 +244,7 @@ public class AppDetails {
 
 		public Builder() {
 			instance = new AppDetails();
+            instance.libraries = new ArrayList<Library>();
 		}
 
 		public Builder packageName(String packageName) {
@@ -290,6 +300,7 @@ public class AppDetails {
 
 		public Builder actionBarSherlock(boolean actionBarSherlock) {
 			instance.actionBarSherlock = actionBarSherlock;
+            instance.libraries.add(Libraries.actionBarSherlock());
 			return this;
 		}
 
@@ -310,21 +321,25 @@ public class AppDetails {
 
 		public Builder viewPagerIndicator(boolean viewPagerIndicator) {
 			instance.viewPagerIndicator = viewPagerIndicator;
+            instance.libraries.add(Libraries.viewPagerIndicator());
 			return this;
 		}
 
 		public Builder roboguice(boolean roboguice) {
 			instance.roboguice = roboguice;
+            instance.libraries.add(Libraries.roboguice());
 			return this;
 		}
 
 		public Builder androidAnnotations(boolean androidAnnotations) {
 			instance.androidAnnotations = androidAnnotations;
+            instance.libraries.add(Libraries.androidAnnotations());
 			return this;
 		}
 
 		public Builder restTemplate(boolean restTemplate) {
 			instance.restTemplate = restTemplate;
+            instance.libraries.add(Libraries.restTemplate());
 			return this;
 		}
 
@@ -335,16 +350,19 @@ public class AppDetails {
 
 		public Builder nineOldAndroids(boolean nineOldAndroids) {
 			instance.nineOldAndroids = nineOldAndroids;
+            instance.libraries.add(Libraries.nineOldAndroids());
 			return this;
 		}
 
 		public Builder supportV4(boolean supportV4) {
 			instance.supportV4 = supportV4;
+            instance.libraries.add(Libraries.supportV4());
 			return this;
 		}
 
 		public Builder acra(boolean acra) {
 			instance.acra = acra;
+            instance.libraries.add(Libraries.acra());
 			return this;
 		}
 
@@ -365,6 +383,9 @@ public class AppDetails {
 
 		public Builder robolectric(boolean robolectric) {
 			instance.robolectric = robolectric;
+            instance.libraries.add(Libraries.robolectric());
+            // robolectric need junit
+            instance.libraries.add(Libraries.junit());
 			return this;
 		}
 

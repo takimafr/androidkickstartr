@@ -130,13 +130,9 @@ public class FileHelper {
 		return getDir(getFinalPath());
 	}
 
-	public File getTargetLibsDir() throws IOException {
-		return getDir(getProjectPath() + "/libs");
-	}
-
-	public File getTargetExtCompileDir() throws IOException {
-		return getDir(getProjectPath() + "/compile-libs");
-	}
+    public File getTargetDir(String dir) {
+       return getDir(getProjectPath() + dir);
+    }
 
 	public File getTargetAndroidManifestFile() throws IOException {
 		return createFile(getProjectPath() + "/AndroidManifest.xml");

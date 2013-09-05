@@ -20,35 +20,10 @@
 		<api.platform>16</api.platform>
 
 		<!-- Dependencies -->
-		<#if application.androidAnnotations>
-		<androidannotations.version>2.7.1</androidannotations.version>
-		</#if>
-		<#if application.actionBarSherlock>
-		<actionBarSherlock.version>4.3.1</actionBarSherlock.version>
-		</#if>
 		<android.version>4.1.1.4</android.version>
-		<#if application.viewPagerIndicator >
-		<viewpagerindicator.version>2.4.0</viewpagerindicator.version>
-		</#if>
-		<#if application.nineOldAndroids>
-		<nineoldandroids.version>2.4.0</nineoldandroids.version>
-		</#if>
-		<#if application.supportV4>
-		<support-v4.version>r7</support-v4.version>
-		</#if>
-		<#if application.restTemplate>
-		<spring-android-rest-template.version>1.0.1.RELEASE</spring-android-rest-template.version>
-		</#if>
-		<#if application.acra>
-		<acra.version>4.4.0</acra.version>
-		</#if>
-		<#if application.roboguice>
-		<roboguice.version>2.0</roboguice.version>
-		</#if>
-		<#if application.robolectric>
-		<junit.version>4.11</junit.version>
-		<robolectric.version>2.1.1</robolectric.version>
-		</#if>
+        <#list application.libraries as lib>
+            <${lib.name}.version>${lib.version}</${lib.name}.version>
+        </#list>
 	</properties>
 
 	<dependencies>
@@ -60,116 +35,17 @@
 			<version>${android.version}</version>
 			</#noparse>
 		</dependency>
-		<#if application.androidAnnotations>
+        <#list application.libraries as lib>
+        <#list lib.mavenDeps as mvn>
 		<dependency>
-			<groupId>com.googlecode.androidannotations</groupId>
-			<artifactId>androidannotations</artifactId>
-			<#noparse>
-			<version>${androidannotations.version}</version>
-			</#noparse>
-			<scope>provided</scope>
+			<groupId>${mvn.groupId}</groupId>
+			<artifactId>${mvn.artifactId}</artifactId>
+			<version><#noparse>${</#noparse>${lib.name}.version<#noparse>}</#noparse></version>
+            <#if mvn.type??><type>${mvn.type}</type></#if>
+            <#if mvn.scope??><scope>${mvn.scope}</scope></#if>
 		</dependency>
-		<dependency>
-			<groupId>com.googlecode.androidannotations</groupId>
-			<artifactId>androidannotations-api</artifactId>
-			<#noparse>
-			<version>${androidannotations.version}</version>
-			</#noparse>
-		</dependency>
-		</#if>
-		<#if application.supportV4>
-		<dependency>
-			<groupId>com.google.android</groupId>
-			<artifactId>support-v4</artifactId>
-			<#noparse>
-			<version>${support-v4.version}</version>
-			</#noparse>
-		</dependency>
-		</#if>
-		<#if application.actionBarSherlock>
-		<dependency>
-			<groupId>com.actionbarsherlock</groupId>
-			<artifactId>actionbarsherlock</artifactId>
-			<#noparse>
-			<version>${actionBarSherlock.version}</version>
-			</#noparse>
-			<type>apklib</type>
-		</dependency>
-		<dependency>
-			<groupId>com.actionbarsherlock</groupId>
-			<artifactId>actionbarsherlock</artifactId>
-			<#noparse>
-			<version>${actionBarSherlock.version}</version>
-			</#noparse>
-			<type>jar</type>
-			<scope>provided</scope>
-		</dependency>
-		</#if>
-		<#if application.viewPagerIndicator>
-		<dependency>
-			<groupId>com.viewpagerindicator</groupId>
-			<artifactId>library</artifactId>
-			<#noparse>
-			<version>${viewpagerindicator.version}</version>
-			</#noparse>
-			<type>apklib</type>
-		</dependency>
-		</#if>
-		<#if application.nineOldAndroids>
-		<dependency>
-			<groupId>com.nineoldandroids</groupId>
-			<artifactId>library</artifactId>
-			<#noparse>
-			<version>${nineoldandroids.version}</version>
-			</#noparse>
-		</dependency>
-		</#if>
-		<#if application.restTemplate>
-		<dependency>
-			<groupId>org.springframework.android</groupId>
-			<artifactId>spring-android-rest-template</artifactId>
-			<#noparse>
-			<version>${spring-android-rest-template.version}</version>
-			</#noparse>
-		</dependency>
-		</#if>
-		<#if application.acra>
-		<dependency>
-			<groupId>ch.acra</groupId>
-			<artifactId>acra</artifactId>
-			<#noparse>
-			<version>${acra.version}</version>
-			</#noparse>
-		</dependency>
-		</#if>
-		<#if application.roboguice>
-		<dependency>
-            <groupId>org.roboguice</groupId>
-            <artifactId>roboguice</artifactId>
-			<#noparse>
-			<version>${roboguice.version}</version>
-			</#noparse>
-		</dependency>
-		</#if>
-		<#if application.robolectric>
-		<!-- Tests -->
-		<dependency>
-			<groupId>org.robolectric</groupId>
-			<artifactId>robolectric</artifactId>
-			<#noparse>
-			<version>${robolectric.version}</version>
-			</#noparse>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<#noparse>
-			<version>${junit.version}</version>
-			</#noparse>
-			<scope>test</scope>
-		</dependency>
-		</#if>
+        </#list>
+        </#list>
 	</dependencies>
 
 	<build>
