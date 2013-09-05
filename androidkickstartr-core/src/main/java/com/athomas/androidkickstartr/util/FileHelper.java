@@ -91,7 +91,7 @@ public class FileHelper {
 	public String getFinalDirName() {
 		return applicationName + "-AndroidKickstartr";
 	}
-	
+
 	private String getFinalPath() {
 		return targetTempDir.getPath() + "/" + getFinalDirName();
 	}
@@ -216,24 +216,24 @@ public class FileHelper {
 		return createFile(getTargetSourcePath() + "/" + packageName.replace(".", "/") + "/robosherlock/RoboSherlockFragmentActivity.java");
 	}
 
-	public File getTargetRobolectricTestRunnerFile() throws IOException {
-		return createFile(getTargetTestPath() + "/" + packageName.replace(".", "/") + "/test/ABSRobolectricTestRunner.java");
-	}
-
 	public File getTargetRobolectricMockActionBarFile() throws IOException {
-		return createFile(getTargetTestPath() + "/" + packageName.replace(".", "/") + "/test/mock/MockActionBar.java");
+		return createFile(getTargetTestPath() + "/" + packageName.replace(".", "/") + "/absmock/MockActionBar.java");
 	}
 
 	public File getTargetRobolectricMockActionBarSherlockFile() throws IOException {
-		return createFile(getTargetTestPath() + "/" + packageName.replace(".", "/") + "/test/mock/MockActionBarSherlock.java");
+		return createFile(getTargetTestPath() + "/" + packageName.replace(".", "/") + "/absmock/MockActionBarSherlock.java");
 	}
 
 	public File getTargetRobolectricMockSherlockMenuInflaterFile() throws IOException {
-		return createFile(getTargetTestPath() + "/" + packageName.replace(".", "/") + "/test/mock/MockSherlockMenuInflater.java");
+		return createFile(getTargetTestPath() + "/" + packageName.replace(".", "/") + "/absmock/MockSherlockMenuInflater.java");
 	}
 
 	public File getTargetRobolectricMockTabFile() throws IOException {
-		return createFile(getTargetTestPath() + "/" + packageName.replace(".", "/") + "/test/mock/MockTab.java");
+		return createFile(getTargetTestPath() + "/" + packageName.replace(".", "/") + "/absmock/MockTab.java");
+	}
+
+	public File getTargetRobolectricCustomTestRunnerFile() throws IOException {
+		return createFile(getTargetTestPath() + "/" + packageName.replace(".", "/") + "/absmock/CustomTestRunner.java");
 	}
 
 	public File getEclipseJdtAptCorePrefs() throws IOException {

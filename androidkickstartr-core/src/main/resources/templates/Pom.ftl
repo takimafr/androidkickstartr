@@ -47,7 +47,7 @@
 		</#if>
 		<#if application.robolectric>
 		<junit.version>4.11</junit.version>
-		<robolectric.version>2.0-alpha-2</robolectric.version>
+		<robolectric.version>2.1.1</robolectric.version>
 		</#if>
 	</properties>
 

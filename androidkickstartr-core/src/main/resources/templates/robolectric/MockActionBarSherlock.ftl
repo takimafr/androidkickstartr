@@ -1,6 +1,6 @@
-package ${application.packageName}.test.mock;
+package ${application.packageName}.absmock;
 
-import static org.robolectric.Robolectric.shadowOf;
+import org.robolectric.Robolectric;
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -26,12 +26,12 @@ public class MockActionBarSherlock extends ActionBarSherlockCompat {
 		LayoutInflater layoutInflater = LayoutInflater.from(mActivity);
 		View contentView = layoutInflater.inflate(layoutResId, null);
 
-		shadowOf(mActivity).setContentView(contentView);
+		Robolectric.shadowOf(mActivity).setContentView(contentView);
 	}
 
 	@Override
 	public void setContentView(View view) {
-		shadowOf(mActivity).setContentView(view);
+		Robolectric.shadowOf(mActivity).setContentView(view);
 	}
 
 	@Override

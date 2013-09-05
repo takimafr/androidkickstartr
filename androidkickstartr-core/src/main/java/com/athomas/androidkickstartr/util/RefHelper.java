@@ -226,6 +226,18 @@ public class RefHelper {
 		return ref("com.actionbarsherlock.app.ActionBar.Tab");
 	}
 
+	public JClass sActionBarSherlock() {
+		return ref("com.actionbarsherlock.ActionBarSherlock");
+	}
+
+	public JClass sActionBarSherlockCompat() {
+		return ref("com.actionbarsherlock.internal.ActionBarSherlockCompat");
+	}
+
+	public JClass sActionBarSherlockNative() {
+		return ref("com.actionbarsherlock.internal.ActionBarSherlockNative");
+	}
+
 	/**
 	 * Acra
 	 */
@@ -275,8 +287,8 @@ public class RefHelper {
 		return ref("org.junit.runner.RunWith");
 	}
 
-	public JClass absRobolectricTestRunner(AppDetails appDetails) {
-		return ref(appDetails.getPackageName() + ".test.ABSRobolectricTestRunner");
+	public JClass customTestRunner(AppDetails appDetails) {
+		return ref(appDetails.getPackageName() + ".absmock.CustomTestRunner");
 	}
 
 	public JClass robolectricTestRunner() {
@@ -302,7 +314,12 @@ public class RefHelper {
 		return ref("org.junit.Assert");
 	}
 
-	public JClass coreMatchers() {
-		return ref("org.hamcrest.CoreMatchers");
+	public JClass mockActionBarSherlock(String packageName) {
+		return ref(packageName + ".absmock.MockActionBarSherlock");
 	}
+
+	public JClass robolectric() {
+		return ref("org.robolectric.Robolectric");
+	}
+
 }
