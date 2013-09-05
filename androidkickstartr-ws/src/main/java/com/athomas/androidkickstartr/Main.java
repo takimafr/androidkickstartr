@@ -106,6 +106,8 @@ public class Main {
             @FormParam("eventbus") boolean eventbus,//
             @FormParam("iconify") boolean iconify,//
             @FormParam("robospice") boolean robospice,//
+            @FormParam("okhttp") boolean okhttp,//
+            @FormParam("retrofit") boolean retrofit,//
 
 			// Application
 			@FormParam("packageName") String packageName,//
@@ -173,6 +175,8 @@ public class Main {
                 eventbus(eventbus). //
                 iconify(iconify). //
                 robospice(robospice). //
+                retrofit(retrofit). //
+                okhttp(okhttp). //
 				acra(acra). //
 				eclipse(eclipse). //
 				proguard(proguard). //

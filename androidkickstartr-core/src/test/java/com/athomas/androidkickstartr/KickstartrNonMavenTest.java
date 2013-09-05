@@ -315,6 +315,8 @@ public class KickstartrNonMavenTest extends AbstractKickstartrTest {
                 iconify(true). //
                 robospice(true). //
                 viewPager(true). //
+                retrofit(true). //
+                okhttp(true). //
                 proguard(true). //
                 build();
 
@@ -322,7 +324,7 @@ public class KickstartrNonMavenTest extends AbstractKickstartrTest {
     }
 
 	@Test
-	public void generateProject_abs_list_rest_acra_nine_viewpager_roboguice_iconify_robospice_proguard() {
+	public void generateProject_full_proguard() {
 		appDetails = builder.//
 				actionBarSherlock(true). //
 				listNavigation(true). //
@@ -333,6 +335,8 @@ public class KickstartrNonMavenTest extends AbstractKickstartrTest {
 				roboguice(true). //
                 robospice(true). //
                 iconify(true). //
+                retrofit(true). //
+                okhttp(true). //
 				proguard(true).//
 				build();
 

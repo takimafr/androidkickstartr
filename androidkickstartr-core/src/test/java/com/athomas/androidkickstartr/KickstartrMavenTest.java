@@ -393,6 +393,8 @@ public class KickstartrMavenTest extends AbstractKickstartrTest {
 				roboguice(true). //
 				proguard(true). //
                 eventbus(true). //
+                retrofit(true). //
+                okhttp(true). //
 				build();
 
 		testMaven();
@@ -413,6 +415,8 @@ public class KickstartrMavenTest extends AbstractKickstartrTest {
 				proguard(true). //
                 eventbus(true). //
                 iconify(true). //
+                retrofit(true). //
+                okhttp(true). //
                 roboguice(true). //
 				sample(true). //
 				build();

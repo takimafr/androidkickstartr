@@ -204,4 +204,31 @@ public final class Libraries {
                         get()).
                 build();
     }
+
+    public static Library retrofit() {
+        return Library.build().
+                version("1.2.1").
+                name("retrofit").
+                jar(Jar.jar().
+                        name("retrofit-1.2.1.jar").
+                        get()).
+                maven(MavenDep.dep().
+                        groupId("com.squareup.retrofit").
+                        artifactId("retrofit").
+                        get()).
+                build();
+    }
+    public static Library okhttp() {
+        return Library.build().
+                version("1.2.1").
+                name("okhttp").
+                jar(Jar.jar().
+                        name("okhttp-1.2.1.jar").
+                        get()).
+                maven(MavenDep.dep().
+                        groupId("com.squareup.okhttp").
+                        artifactId("okhttp").
+                        get()).
+                build();
+    }
 }

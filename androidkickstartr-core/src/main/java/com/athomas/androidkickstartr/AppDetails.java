@@ -429,6 +429,20 @@ public class AppDetails {
             return this;
         }
 
+        public Builder retrofit(boolean retrofit) {
+            if (retrofit) {
+                instance.libraries.add(Libraries.retrofit());
+            }
+            return this;
+        }
+
+        public Builder okhttp(boolean okhttp) {
+            if (okhttp) {
+                instance.libraries.add(Libraries.okhttp());
+            }
+            return this;
+        }
+
 		public Builder sample(boolean sample) {
 			instance.sample = sample;
 			return this;
