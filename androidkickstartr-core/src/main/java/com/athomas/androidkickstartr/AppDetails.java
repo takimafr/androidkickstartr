@@ -56,7 +56,6 @@ public class AppDetails {
 	private boolean robolectric;
 	private boolean sample;
     private List<Library> libraries;
-    private boolean eventbus;
 
     public String getPackageName() {
 		return packageName;
@@ -239,10 +238,6 @@ public class AppDetails {
 
 	}
 
-    public boolean isEventbus() {
-        return eventbus;
-    }
-
     public static class Builder {
 
 		private AppDetails instance;
@@ -305,7 +300,9 @@ public class AppDetails {
 
 		public Builder actionBarSherlock(boolean actionBarSherlock) {
 			instance.actionBarSherlock = actionBarSherlock;
-            instance.libraries.add(Libraries.actionBarSherlock());
+            if (actionBarSherlock) {
+                instance.libraries.add(Libraries.actionBarSherlock());
+            }
 			return this;
 		}
 
@@ -326,25 +323,33 @@ public class AppDetails {
 
 		public Builder viewPagerIndicator(boolean viewPagerIndicator) {
 			instance.viewPagerIndicator = viewPagerIndicator;
-            instance.libraries.add(Libraries.viewPagerIndicator());
+            if (viewPagerIndicator) {
+                instance.libraries.add(Libraries.viewPagerIndicator());
+            }
 			return this;
 		}
 
 		public Builder roboguice(boolean roboguice) {
 			instance.roboguice = roboguice;
-            instance.libraries.add(Libraries.roboguice());
+            if (roboguice) {
+                instance.libraries.add(Libraries.roboguice());
+            }
 			return this;
 		}
 
 		public Builder androidAnnotations(boolean androidAnnotations) {
 			instance.androidAnnotations = androidAnnotations;
-            instance.libraries.add(Libraries.androidAnnotations());
+            if (androidAnnotations) {
+                instance.libraries.add(Libraries.androidAnnotations());
+            }
 			return this;
 		}
 
 		public Builder restTemplate(boolean restTemplate) {
 			instance.restTemplate = restTemplate;
-            instance.libraries.add(Libraries.restTemplate());
+            if (restTemplate) {
+                instance.libraries.add(Libraries.restTemplate());
+            }
 			return this;
 		}
 
@@ -355,19 +360,25 @@ public class AppDetails {
 
 		public Builder nineOldAndroids(boolean nineOldAndroids) {
 			instance.nineOldAndroids = nineOldAndroids;
-            instance.libraries.add(Libraries.nineOldAndroids());
+            if (nineOldAndroids) {
+                instance.libraries.add(Libraries.nineOldAndroids());
+            }
 			return this;
 		}
 
 		public Builder supportV4(boolean supportV4) {
 			instance.supportV4 = supportV4;
-            instance.libraries.add(Libraries.supportV4());
+            if (supportV4) {
+                instance.libraries.add(Libraries.supportV4());
+            }
 			return this;
 		}
 
 		public Builder acra(boolean acra) {
 			instance.acra = acra;
-            instance.libraries.add(Libraries.acra());
+            if (acra){
+                instance.libraries.add(Libraries.acra());
+            }
 			return this;
 		}
 
@@ -388,15 +399,21 @@ public class AppDetails {
 
 		public Builder robolectric(boolean robolectric) {
 			instance.robolectric = robolectric;
-            instance.libraries.add(Libraries.robolectric());
-            // robolectric need junit
-            instance.libraries.add(Libraries.junit());
+
+            if (robolectric) {
+                instance.libraries.add(Libraries.robolectric());
+                // robolectric need junit
+                instance.libraries.add(Libraries.junit());
+            }
 			return this;
 		}
 
         public Builder eventbus(boolean eventbus) {
-            instance.eventbus = eventbus;
-            instance.libraries.add(Libraries.eventbus());
+            if (eventbus) {
+                instance.libraries.add(Libraries.eventbus());
+            }
+            return this;
+        }
 
         public Builder iconify(boolean iconify) {
             if (iconify) {
